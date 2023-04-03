@@ -8,10 +8,10 @@ export default function GuestScreen() {
   return (
     
 
-    <ImageBackground source={require('../login_bg.png')} resizeMode="cover" style={styles.bgimage}>
+    <ImageBackground source={require('../assets/img/login_bg.png')} resizeMode="cover" style={styles.bgimage}>
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image source={require('../speech_logo.png')} style={styles.image}></Image>
+          <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>
         </View>
         <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonTitle}>Sign up</Text>
