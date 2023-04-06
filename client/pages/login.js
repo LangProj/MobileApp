@@ -1,39 +1,31 @@
 import React from 'react';
 
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { LinearGradient } from 'expo-linear-gradient';
 
-//1
+
+
 export default function SignUpScreen() {
   return (
-    <ImageBackground source={require('../assets/img/login_bg.png')} resizeMode="cover" style={styles.bgimage}>
-      <View style={styles.wrapper}>
-        <View style={styles.container}>
-          <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>
-          
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View>
+        <View style={styles.wrapper}>
+          <View style={styles.container}>
+            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
+          </View>
+          <TextInput placeholder="Email/phone" style={styles.textInput} />
+          <TextInput placeholder="Password" style={styles.textInput} />                      
           
         </View>
-        <TextInput placeholder="Email/phone" style={styles.textInput} />
-        <TextInput placeholder="Password" style={styles.textInput} />
-        
-        
-        
-        <TouchableOpacity style={styles.button}>
-          <LinearGradient
-            // Button Linear Gradient
-            colors={['#4ad3b6', '#5095e5']}
-            style={styles.lgradient}>
-            <Text style={styles.buttonTitle}>Log in</Text>
-          </LinearGradient>
-          
-          
+        <TouchableOpacity style={styles.button}>          
+          <Text style={styles.buttonTitle}>Log in</Text>                              
         </TouchableOpacity>
+        <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
       </View>
-      <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
-    </ImageBackground>
+    </ScrollView>
+    
     
   );
 }
@@ -64,7 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:50,
+    marginTop:170,
   },
   image:{
     width: 120,
@@ -78,16 +70,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    marginTop: 100,
+    marginTop: 130,
     maxHeight: 75,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: 350,
-    height: 50,
-    backgroundColor: 'lightgray',
+    height: 75,
+    backgroundColor: '#4f94e5',
     borderRadius: 55,
-    
+    marginBottom: 30,
   },
   buttonTitle:{
     fontSize:25,
@@ -103,7 +95,8 @@ const styles = StyleSheet.create({
     
   },
   textInput:{
-    maxHeight: 75,
+    maxHeight: 60,
+    minHeight:60,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -112,15 +105,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 55,
     marginBottom: 20,
-    paddingLeft:55,
-    borderColor:'#78ceff',
+    fontSize: 18,
+    borderColor:'#8ed7ff',
     borderWidth:2,
     borderRadius: 55,
+    textAlign: 'center',
+    
   },
   footer:{
     fontSize: 20,
     paddingBottom:30,
-    color:'#d3d1d7',
+    color:'black',
     textAlign:'center',
     
   },

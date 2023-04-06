@@ -1,32 +1,32 @@
 import React from 'react';
 
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
 
 
 
-export default function SignUpScreen() {
+export default function PasswordChangeScreen() {
   return (
-    
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>     
+      <View>
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                   
+            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
-          <TextInput placeholder="Email/phone" style={styles.textInput} />
-          <TextInput placeholder="Password" style={styles.textInput} />
-          <TextInput placeholder="Repeat password" style={styles.textInput} />               
+          <TextInput placeholder="Enter new password" style={styles.textInput} />
+          <TextInput placeholder="Repeat your password" style={styles.textInput} />                      
           
         </View>
         <TouchableOpacity style={styles.button}>          
-            <Text style={styles.buttonTitle}>Confirm</Text>                            
+          <Text style={styles.buttonTitle}>Confirm</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
       </View>
     </ScrollView>
+    
+    
   );
 }
 
@@ -34,11 +34,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    marginTop:100,
+    
     alignItems: 'center',
     justifyContent: 'flex-end',
     maxHeight: 100,
-
     marginBottom: 40,
   },
   lgradient: {
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:40,
+    marginTop:170,
   },
   image:{
     width: 120,
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    marginTop: 80,
+    marginTop: 130,
     minHeight: 75,
     maxHeight: 75,
     flex: 1,
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
   textInput:{
     maxHeight: 60,
     minHeight:60,
-    
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,32 +1,33 @@
 import React from 'react';
 
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
 
 
 
-export default function SignUpScreen() {
+export default function CodeConfirmationScreen() {
   return (
-    
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>     
+      <View style={styles.wrapper}>
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                   
+            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
-          <TextInput placeholder="Email/phone" style={styles.textInput} />
-          <TextInput placeholder="Password" style={styles.textInput} />
-          <TextInput placeholder="Repeat password" style={styles.textInput} />               
+          <Text style={styles.description}>A confirmation code has been sent to your email. To verify your account, enter the code in the field below</Text>
+          <TextInput placeholder="Your confirmation code" style={styles.textInput} />
+                              
           
         </View>
         <TouchableOpacity style={styles.button}>          
-            <Text style={styles.buttonTitle}>Confirm</Text>                            
+            <Text style={styles.buttonTitle}>Log in</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
       </View>
     </ScrollView>
+    
+    
   );
 }
 
@@ -34,11 +35,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    marginTop:100,
+    
     alignItems: 'center',
     justifyContent: 'flex-end',
     maxHeight: 100,
-
     marginBottom: 40,
   },
   lgradient: {
@@ -52,12 +52,19 @@ const styles = StyleSheet.create({
     
     borderRadius: 55,
   },
+  description: {
+    fontSize:21,
+    paddingLeft:50,
+    paddingRight:50,
+    paddingBottom:30,
+    textAlign:'center',
+  },
   wrapper: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:40,
+    marginTop:70,
   },
   image:{
     width: 120,
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    marginTop: 80,
+    marginTop: 140,
     minHeight: 75,
     maxHeight: 75,
     flex: 1,
@@ -113,7 +120,6 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderRadius: 55,
     textAlign: 'center',
-    
   },
   footer:{
     fontSize: 20,
