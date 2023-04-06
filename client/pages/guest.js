@@ -1,14 +1,12 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
 
 export default function GuestScreen() {
   return (
-    
-
-    <ImageBackground source={require('../assets/img/login_bg.png')} resizeMode="cover" style={styles.bgimage}>
+    <View>
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>
@@ -21,16 +19,8 @@ export default function GuestScreen() {
             <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
       </View>
-      
-
-
       <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
-    </ImageBackground>
-
-      
-    
-    
-    
+    </View> 
   );
 }
 
@@ -62,14 +52,16 @@ const styles = StyleSheet.create({
     
   },
   button:{
-    maxHeight: 75,
+    marginTop: 0,
+    maxHeight: 60,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: 350,
     height: 50,
-    backgroundColor: '#ffffff',
-    borderColor:'#78ceff',
+    backgroundColor: 'white',
+    borderRadius: 55,
+    borderColor:'#8ed7ff',
     borderWidth:2,
     borderRadius: 55,
   },
@@ -80,7 +72,10 @@ const styles = StyleSheet.create({
   orTitle:{
     fontSize:30,
     margin: 10,
-    color:'#ffffff',
+    color:'black',
+    marginBottom:20,
+    marginTop:20,
+    
   },
   name:{
     fontSize: 50,
@@ -90,7 +85,7 @@ const styles = StyleSheet.create({
   footer:{
     fontSize: 20,
     paddingBottom:30,
-    color:'#d3d1d7',
+    color:'black',
     textAlign:'center',
   },
   innerfooter:{
