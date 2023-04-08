@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const LocalizationSchema = mongoose.Schema(
     {
-        text: {
+        key: {
             type: String,
             required: true,
             unique: true,
