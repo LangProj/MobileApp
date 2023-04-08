@@ -7,7 +7,7 @@ import { Linking } from 'react-native';
 
 
 
-export default function CodeConfirmationScreen() {
+export default function CodeConfirmationScreen({ navigation }) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.wrapper}>

@@ -3,19 +3,22 @@ import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, Scrol
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function GuestScreen() {
+
+export default function GuestScreen({ navigation }) {
   return (
-    <View>
+    <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>
         </View>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonTitle}>Sign up</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
+            <Text style={styles.buttonTitle} >Sign up</Text>
         </TouchableOpacity>
         <Text style={styles.orTitle}>or</Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
       </View>
@@ -25,6 +28,11 @@ export default function GuestScreen() {
 }
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    flex:1,
+    alignItems:'center',
+    
+  },
   container: {
     flex: 1,
     flexDirection: 'row',

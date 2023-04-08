@@ -7,10 +7,10 @@ import { Linking } from 'react-native';
 
 
 
-export default function PasswordChangeScreen() {
+export default function PasswordChangeScreen({ navigation }) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>
+      <View style={styles.mainWrapper}>
         <View style={styles.wrapper}>
           <View style={styles.container}>
             <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
@@ -31,6 +31,10 @@ export default function PasswordChangeScreen() {
 }
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    flex:1,
+    alignItems:'center',   
+  },
   container: {
     flex: 1,
     flexDirection: 'row',

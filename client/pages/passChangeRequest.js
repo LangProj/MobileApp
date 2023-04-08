@@ -7,7 +7,7 @@ import { Linking } from 'react-native';
 
 
 
-export default function PasswordChangeRequestScreen() {
+export default function PasswordChangeRequestScreen({ navigation }) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>    
       <View style={styles.wrapper}>
@@ -20,7 +20,7 @@ export default function PasswordChangeRequestScreen() {
                               
           
         </View>
-        <TouchableOpacity style={styles.button}>          
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PasswordChange')}>          
             <Text style={styles.buttonTitle}>Send</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>

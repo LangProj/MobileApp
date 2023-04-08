@@ -7,11 +7,11 @@ import { Linking } from 'react-native';
 
 
 
-export default function SignUpScreen() {
+export default function SignUpScreen({ navigation }) {
   return (
     
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>     
+      <View style={styles.mainWrapper}>     
         <View style={styles.wrapper}>
           <View style={styles.container}>
             <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                   
@@ -21,7 +21,7 @@ export default function SignUpScreen() {
           <TextInput placeholder="Repeat password" style={styles.textInput} />               
           
         </View>
-        <TouchableOpacity style={styles.button}>          
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CodeConfirmation')}>          
             <Text style={styles.buttonTitle}>Confirm</Text>                            
         </TouchableOpacity>
         <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
@@ -31,6 +31,11 @@ export default function SignUpScreen() {
 }
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    flex:1,
+    alignItems:'center',
+    
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -59,6 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop:40,
   },
+
   image:{
     width: 120,
     height: 120,
