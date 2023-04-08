@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { registerValidation } from './validations/auth.js';
 import * as UserController from './controllers/UserController.js';
 
+import handleValidationErrors from './validations/handleValidationErrors.js';
 
 
 mongoose
@@ -15,7 +16,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/register', registerValidation, UserController.register);
+app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 
 app.listen(3000, ()=>{
     console.log('server is listening on port 3000');

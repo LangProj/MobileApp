@@ -7,6 +7,10 @@ const SettingsSchema = mongoose.Schema(
             type: String,
             default: "en",
         },
+        username: {
+            type: String,
+            unique: true,
+        },
         wordsPerDay: {
             type: Number,
             default: 10,

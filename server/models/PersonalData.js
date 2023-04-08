@@ -10,10 +10,6 @@ const PersonalDataSchema = mongoose.Schema(
             type: String,
             unique: true,
         },
-        username: {
-            type: String,
-            unique: true,
-        },
         passwordHash: {
             type: String,
             required: true,

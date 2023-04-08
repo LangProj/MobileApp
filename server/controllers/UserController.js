@@ -2,35 +2,28 @@ import jwt from 'jsonwebtoken';
 
 import bcrypt from 'bcrypt';
 
-import { validationResult } from 'express-validator';
-
 import UserModel from '../models/User.js';
+import PersonalDataModel from '../models/PersonalData.js';
+import { check } from 'express-validator';
 
 export const register = async (req, res) => {
     try {
-        errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array());
-        }
-
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
+        
 
-        const doc = new UserModel({
-            login: req.body.login,
-            email: req.body.email,
+        const doc = new PersonalDataModel({
+            email: (check(req.body.contact).isEmail()) ? req.body.contact : null,
+            phoneNumber: (check(req.body.contact).isMobilePhone()) ? req.body.contact : null,
             passwordHash: hash,
-            avatar: req.body.avatar,
-            motherTongue: req.body.motherTongue,
-            wordsToLearn: req.body.wordsToLearn,
         });
 
-        const user = await doc.save();
+        const userPersonalData = await doc.save();
 
         const token = jwt.sign(
             {
-                _id: user._id,
+                _id: userPersonalData._id,
             },
             "Phrase123",
             {
@@ -38,7 +31,7 @@ export const register = async (req, res) => {
             }
         );
 
-        const {passwordHash, ...userData} = user._doc;
+        const {passwordHash, ...userData} = userPersonalData._doc;
 
         res.json({
             ...userData,
