@@ -2,29 +2,18 @@ import mongoose from 'mongoose';
 
 const UserSchema = mongoose.Schema(
     {
-        login: {
-            type: String,
-            required: true,
-            unique: true,
+        personalData: {
+            type: Schema.Types.ObjectId,
+            requeired: true,
         },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        passwordHash: {
-            type: String,
+        settings: {
+            type: Schema.Types.ObjectId,
             required: true,
         },
-        avatar: URL,
-        motherTongue: {
-            type: String,
+        words: [Schema.Types.ObjectId],
+        subscription: {
+            type: Schema.Types.ObjectId,
             required: true,
-        },
-        wordsToLearn: {
-            type: Number,
-            required: true,
-            default: 10,
         },
     },
     {
