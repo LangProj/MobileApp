@@ -12,6 +12,12 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
         
+        const user = UserModel.findOne({personalData: {email: req.body.email}});
+        if (user) {
+            return res.json({
+                message: "Such email is already registred",
+            });
+        }
 
         const doc = new PersonalDataModel({
             email: (check(req.body.contact).isEmail()) ? req.body.contact : null,
