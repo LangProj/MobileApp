@@ -17,6 +17,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
+app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
 
 app.listen(3000, ()=>{
     console.log('server is listening on port 3000');

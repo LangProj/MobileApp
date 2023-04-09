@@ -45,3 +45,41 @@ export const register = async (req, res) => {
         });
     }
 };
+
+export const login = async (req, res) => {
+    try {
+        const user = UserModel.findOne({personalData: {email: req.body.email}});
+        if (!user) {
+            return res.status(404).json({
+                message: "User was not found",
+            });
+        }
+        if (!await bcrypt.compare(req.body.password, user._doc.personalData.passwordHash)) {
+            return res.status(404).json({
+                message: "Incorrect password",
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                _id: user._id,
+            },
+            'Phrase123',
+            {
+                expiresIn: '1d',
+            }
+        );
+
+        const {personalData, ...userData} = user._doc;
+
+        res.json({
+            ...userData,
+            token,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to sign in"
+        });
+    }
+}
