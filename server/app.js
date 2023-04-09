@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import { registerValidation } from './validations/auth.js';
+import { registerValidation, loginValidation } from './validations/auth.js';
 import * as UserController from './controllers/UserController.js';
 
 import handleValidationErrors from './validations/handleValidationErrors.js';

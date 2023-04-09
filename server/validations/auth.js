@@ -11,3 +11,7 @@ export const registerValidation = [
         return true;
     }),
 ];
+
+export const loginValidation = [
+    body('email', "Incorrect format").isEmail(),
+];
