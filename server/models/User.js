@@ -4,7 +4,7 @@ const UserSchema = mongoose.Schema(
     {
         personalData: {
             type: Schema.Types.ObjectId,
-            requeired: true,
+            required: true,
         },
         settings: {
             type: Schema.Types.ObjectId,

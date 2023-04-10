@@ -3,7 +3,10 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import UserModel from '../models/User.js';
+import SettingsModel from '../models/Settings.js';
 import PersonalDataModel from '../models/PersonalData.js';
+import SubscriptionModel from '../models/Subscription.js';
+
 import { check } from 'express-validator';
 
 export const register = async (req, res) => {
@@ -12,24 +15,36 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
         
-        const user = UserModel.findOne({personalData: {email: req.body.email}});
-        if (user) {
+        const userDoc = UserModel.findOne({personalData: {email: req.body.email}});
+        if (userDoc) {
             return res.json({
                 message: "Such email is already registred",
             });
         }
 
-        const doc = new PersonalDataModel({
+        const personalDataDoc = new PersonalDataModel({
             email: (check(req.body.contact).isEmail()) ? req.body.contact : null,
             phoneNumber: (check(req.body.contact).isMobilePhone()) ? req.body.contact : null,
             passwordHash: hash,
         });
+        const personalData = personalDataDoc.save()
 
-        const userPersonalData = await doc.save();
+        const settingsDoc = new SettingsModel();
+        const settings = settingsDoc.save();
+        
+
+        
+        const doc = new UserModel({
+            personalData: personalData._id,
+            settings: settings._id,
+            subscription: SubscriptionModel.findOne({name: "free"})._id,
+        });
+
+        const user = await doc.save();
 
         const token = jwt.sign(
             {
-                _id: userPersonalData._id,
+                _id: user._id,
             },
             "Phrase123",
             {

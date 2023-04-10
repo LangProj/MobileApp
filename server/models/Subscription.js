@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const SettingsSchema = mongoose.Schema(
     {
+        name: String,
         duration: String,
         price: Schema.Types.Decimal128,
         startDate: Date,
