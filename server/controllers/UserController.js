@@ -105,8 +105,6 @@ export const login = async (req, res) => {
     }
 }
 
-const SettingsModel = require('./models/settings');
-
 export const updateSettings = async (req, res) => {
     try {
         const userId = req.userId;

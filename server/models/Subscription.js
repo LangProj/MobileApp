@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const SettingsSchema = mongoose.Schema(
+const SubscriptionSchema = mongoose.Schema(
     {
         name: String,
         duration: String,
@@ -17,4 +17,4 @@ const SettingsSchema = mongoose.Schema(
     }
 );
 
-export default mongoose.model('Settings', SettingsSchema);
+export default mongoose.model('Subscription', SubscriptionSchema);
