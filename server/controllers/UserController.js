@@ -104,3 +104,26 @@ export const login = async (req, res) => {
         });
     }
 }
+
+const SettingsModel = require('./models/settings');
+
+export const updateSettings = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const settings = new SettingsModel({
+            avatar: req.body.avatar,
+            appLanguage: req.body.appLanguage,
+            username: req.body.username,
+            wordsPerDay: req.body.wordsPerDay,
+            level: req.body.level,
+            userId: userId,
+        });
+        await settings.save();
+        res.status(200).json(settings);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to create user preferences",
+        });
+    }
+};
