@@ -2,12 +2,10 @@ import mongoose from 'mongoose';
 
 const PersonalDataSchema = mongoose.Schema(
     {
-        email: {
-            type: String,
-            unique: true,
-        },
-        phone: {
-            type: String,
+        contacts: {
+            type: Map,
+            of: String,
+            required: true,
             unique: true,
         },
         passwordHash: {

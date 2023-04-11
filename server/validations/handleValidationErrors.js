@@ -5,6 +5,5 @@ export default (req, res, next) => {
     if (!errors.isEmpty()) {
         res.status(400).json(errors.array());
     }
-
-    next();
+    else next();
 };

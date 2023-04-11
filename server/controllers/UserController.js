@@ -11,36 +11,54 @@ import { check } from 'express-validator';
 
 export const register = async (req, res) => {
     try {
+
+        //      -------     PASSWORD ENCRYPTING     -------
+
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
-        
-        const userDoc = UserModel.findOne({personalData: {email: req.body.email}});
-        if (userDoc) {
+
+
+        //      -------     EMIAL EXISTENCE CHECK   -------
+
+        const userContactDoc = await PersonalDataModel.findOne({contacts: {email: check(req.body.contact).isEmail() ? req.body.contact : null, phoneNumber: check(req.body.contact).isMobilePhone() ? req.body.contact : null}});
+        if (userContactDoc) {
             return res.json({
                 message: "Such email is already registred",
             });
         }
 
+
+        //      -------     PERSONALDATA DOCUMENT   -------
+
         const personalDataDoc = new PersonalDataModel({
-            email: (check(req.body.contact).isEmail()) ? req.body.contact : null,
-            phoneNumber: (check(req.body.contact).isMobilePhone()) ? req.body.contact : null,
+            contacts: {
+                email: (check(req.body.contact).isEmail()) ? req.body.contact : null,
+                phoneNumber: (check(req.body.contact).isMobilePhone()) ? req.body.contact : null,
+            },
             passwordHash: hash,
         });
-        const personalData = personalDataDoc.save()
-
-        const settingsDoc = new SettingsModel();
-        const settings = settingsDoc.save();
+        const personalData = await personalDataDoc.save();
         
 
+        //      -------     SETTINGS DOCUMENT   -------
+
+        const settingsDoc = new SettingsModel({
+            username: personalData._id,
+        });
+        const settings = await settingsDoc.save();
         
-        const doc = new UserModel({
+
+
+        //      -------     USER DOCUMENT   -------
+
+        const UserDoc = new UserModel({
             personalData: personalData._id,
             settings: settings._id,
-            subscription: SubscriptionModel.findOne({name: "free"})._id,
+            subscription: (await SubscriptionModel.findOne({name: "Free"}, '_id'))._id,
         });
 
-        const user = await doc.save();
+        const user = await UserDoc.save();
 
         const token = jwt.sign(
             {
@@ -52,7 +70,7 @@ export const register = async (req, res) => {
             }
         );
 
-        const {passwordHash, ...userData} = userPersonalData._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json({
             ...userData,
