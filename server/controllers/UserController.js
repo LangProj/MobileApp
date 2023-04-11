@@ -7,7 +7,7 @@ import SettingsModel from '../models/Settings.js';
 import PersonalDataModel from '../models/PersonalData.js';
 import SubscriptionModel from '../models/Subscription.js';
 
-import { check } from 'express-validator';
+import validator from 'validator';
 
 export const register = async (req, res) => {
     try {
@@ -19,9 +19,14 @@ export const register = async (req, res) => {
         const hash = await bcrypt.hash(password, salt);
 
 
-        //      -------     EMIAL EXISTENCE CHECK   -------
+        //      -------     EMAIL EXISTENCE CHECK   -------
 
-        const userContactDoc = await PersonalDataModel.findOne({contacts: {email: check(req.body.contact).isEmail() ? req.body.contact : null, phoneNumber: check(req.body.contact).isMobilePhone() ? req.body.contact : null}});
+        const userContactDoc = await PersonalDataModel.findOne({
+            contacts: {
+                email: validator.isEmail((req.body.contact)) ? req.body.contact : null, 
+                phoneNumber: validator.isMobilePhone((req.body.contact)) ? req.body.contact : null
+            }
+        });
         if (userContactDoc) {
             return res.json({
                 message: "Such email is already registred",
@@ -30,11 +35,11 @@ export const register = async (req, res) => {
 
 
         //      -------     PERSONALDATA DOCUMENT   -------
-
+        
         const personalDataDoc = new PersonalDataModel({
             contacts: {
-                email: (check(req.body.contact).isEmail()) ? req.body.contact : null,
-                phoneNumber: (check(req.body.contact).isMobilePhone()) ? req.body.contact : null,
+                email: validator.isEmail((req.body.contact)) ? req.body.contact : null,
+                phoneNumber: validator.isMobilePhone((req.body.contact)) ? req.body.contact : null,
             },
             passwordHash: hash,
         });
@@ -87,17 +92,24 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const user = UserModel.findOne({personalData: {email: req.body.email}});
-        if (!user) {
+        const userPersonalData = await PersonalDataModel.findOne({
+            contacts: {
+                email: validator.isEmail((req.body.contact)) ? req.body.contact : null, 
+                phoneNumber: validator.isMobilePhone((req.body.contact)) ? req.body.contact : null
+            }
+        });
+        if (!userPersonalData) {
             return res.status(404).json({
                 message: "User was not found",
             });
         }
-        if (!await bcrypt.compare(req.body.password, user._doc.personalData.passwordHash)) {
+        if (!await bcrypt.compare(req.body.password, userPersonalData._doc.passwordHash)) {
             return res.status(404).json({
                 message: "Incorrect password",
             });
         }
+
+        const user = UserModel.findOne({personalData: userPersonalData._id});
 
         const token = jwt.sign(
             {
@@ -109,10 +121,11 @@ export const login = async (req, res) => {
             }
         );
 
-        const {personalData, ...userData} = user._doc;
+        const {passwordHash, contacts, ...userData} = userPersonalData._doc;
 
         res.json({
-            ...userData,
+            emial: contacts.get("email"),
+            phone: contacts.get("phoneNumber"),
             token,
         });
     } catch (err) {

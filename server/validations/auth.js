@@ -1,8 +1,9 @@
 import { body, check } from 'express-validator';
+import validator from 'validator';
 
 export const registerValidation = [
     body('contact', "Incorrect format").custom((value) => {
-        return (check(value).isEmail() || check(value).isMobilePhone());
+        return (validator.isEmail(value) || validator.isMobilePhone(value));
     }),
     body('password', "Password must be longer than 8 symbols").isLength({ min: 8 }),
     body('confirmPassword').custom((value, { req }) => {
@@ -13,5 +14,5 @@ export const registerValidation = [
 ];
 
 export const loginValidation = [
-    body('email', "Incorrect format").isEmail(),
+    body('contact', "Incorrect format").isEmail(),
 ];
