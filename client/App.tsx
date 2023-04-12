@@ -7,13 +7,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 
-import LoadingScreen from './pages/loading'; 
-import GuestScreen from './pages/guest'; 
-import SignUpScreen from './pages/registration'; 
-import LogInScreen from './pages/login'; 
-import CodeConfirmationScreen from './pages/codeConfimation'; 
-import PasswordChangeRequestScreen from './pages/passChangeRequest'; 
-import PasswordChangeScreen from './pages/passChange'; 
+import LoadingScreen from './views/loading'; 
+import GuestScreen from './views/guest'; 
+import SignUpScreen from './views/registration'; 
+import LogInScreen from './views/login'; 
+import CodeConfirmationScreen from './views/codeConfimation'; 
+import PasswordChangeRequestScreen from './views/passChangeRequest'; 
+import PasswordChangeScreen from './views/passChange'; 
 
 
 
