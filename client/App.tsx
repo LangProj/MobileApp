@@ -16,26 +16,30 @@ import PasswordChangeRequestScreen from './views/passChangeRequest';
 import PasswordChangeScreen from './views/passChange'; 
 
 
+import { Provider } from 'react-redux';
+import store from './store/store.js';
+
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>        
-      <Stack.Navigator>       
-        <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false}}/>
+    <Provider store={store}>
+      <NavigationContainer>        
+        <Stack.Navigator>       
+          <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false}}/>
 
-        <Stack.Screen  name="SignUp" component={SignUpScreen} options={{headerShown:false}}/>
-        <Stack.Screen  name="CodeConfirmation" component={CodeConfirmationScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="SignUp" component={SignUpScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="CodeConfirmation" component={CodeConfirmationScreen} options={{headerShown:false}}/>
 
-        <Stack.Screen  name="Login" component={LogInScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="Login" component={LogInScreen} options={{headerShown:false}}/>
 
-        <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false}}/>
-        <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false}}/>
-      </Stack.Navigator>        
-    </NavigationContainer>
- 
+          <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false}}/>
+        </Stack.Navigator>        
+      </NavigationContainer>
+    </Provider>
 
  
   );

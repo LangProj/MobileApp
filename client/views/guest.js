@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
@@ -6,8 +6,18 @@ import { Linking } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { useSelector } from 'react-redux';
+import { localizationController } from '../store/store.js';
+
 
 export default function GuestScreen({ navigation }) {
+  const localization = useSelector(state => state.localization);
+  console.log(localization.localization);
+
+  useEffect(() => {
+    localizationController.fetchLocale(localization);
+  }, [localization]);
+
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>
