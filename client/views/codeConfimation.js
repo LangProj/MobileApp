@@ -4,10 +4,13 @@ import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextI
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { useSelector } from 'react-redux';
 
 
 
 export default function CodeConfirmationScreen({ navigation }) {
+  const localization = useSelector(state => state.localization);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.wrapper}>
@@ -15,15 +18,15 @@ export default function CodeConfirmationScreen({ navigation }) {
           <View style={styles.container}>
             <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
-          <Text style={styles.description}>A confirmation code has been sent to your email. To verify your account, enter the code in the field below</Text>
-          <TextInput placeholder="Your confirmation code" style={styles.textInput} />
+          <Text style={styles.description}>{localization.data.confirmLabelText}</Text>
+          <TextInput placeholder={localization.data.confirmInputText} style={styles.textInput} />
                               
           
         </View>
         <TouchableOpacity style={styles.button}>          
-            <Text style={styles.buttonTitle}>Log in</Text>                              
+            <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
         </TouchableOpacity>
-        <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
+        <Text style={styles.footer}>{localization.data.haveQuestionsLabelText}<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> {localization.data.writeBtnText}</Text></Text>
       </View>
     </ScrollView>
     

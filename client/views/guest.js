@@ -26,12 +26,12 @@ export default function GuestScreen({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.buttonTitle} >{localization.data.signUpBtnText}</Text>
         </TouchableOpacity>
-        <Text style={styles.orTitle}>or</Text>
+        <Text style={styles.orTitle}>{localization.data.orLabelText}</Text>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>
+      <Text style={styles.footer}>{localization.data.haveQuestionsLabelText}<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> {localization.data.writeBtnText}</Text></Text>
     </View> 
   );
 }
