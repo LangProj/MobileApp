@@ -1,24 +1,20 @@
-import { setLocalization, fetchLocalization } from '../store/actions/localizationActions.js';
+import { setLocale, fetchLocale } from '../store/slices/localizationSlice.js';
 import LocalizationModel from '../models/LocalizationModel.js';
-
 
 class LocalizationController {
     constructor(store) {
         this.LocalizationModel = new LocalizationModel();
         this.store = store;
-        console.log("Controller creaated");
+        console.log("Controller created");
     }
     setLocale(locale) {
         console.log("Setting locale");
-        this.LocalizationModel.setLocale(locale);
-        this.store.dispatch(setLocalization(locale));
-        this.fetchLocale();
+        this.store.dispatch(setLocale(locale));
     }
-    fetchLocale() {
+    fetchCurrentLocale() {
         console.log("Fetching locale");
-        this.store.dispatch(fetchLocalization());
+        this.store.dispatch(fetchLocale(this.LocalizationModel.getLocale()));
     }
 }
-
 
 export default LocalizationController;

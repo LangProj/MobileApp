@@ -12,12 +12,11 @@ import { localizationController } from '../store/store.js';
 
 export default function GuestScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
-  console.log(localization.localization);
-
+  
   useEffect(() => {
-    localizationController.fetchLocale(localization);
-  }, [localization]);
-
+    localizationController.fetchCurrentLocale();
+  }, []);
+  console.log(localization);
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>
@@ -25,11 +24,11 @@ export default function GuestScreen({ navigation }) {
           <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>
         </View>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
-            <Text style={styles.buttonTitle} >Sign up</Text>
+            <Text style={styles.buttonTitle} >{localization.data.signUpBtnText}</Text>
         </TouchableOpacity>
         <Text style={styles.orTitle}>or</Text>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.buttonTitle}>Log in</Text>
+            <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.footer}>You have questions?<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> Write to us.</Text></Text>

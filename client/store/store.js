@@ -1,8 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
-
-import rootReducer from './reducers/rootReducer.js';
+import localizationReduser from './slices/localizationSlice.js';
 import LocalizationController from '../controllers/LocalizationController.js';
 
-const store = configureStore({reducer: rootReducer});
-export default store;
+
+export default store=configureStore({
+    reducer: {
+        localization: localizationReduser,
+    }
+});
+
 export const localizationController = new LocalizationController(store);

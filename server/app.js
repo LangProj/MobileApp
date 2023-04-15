@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 
 import { registerValidation, loginValidation } from './validations/auth.js';
 import * as UserController from './controllers/UserController.js';
+import * as SettingsController from './controllers/SettingsController.js';
 
-import handleValidationErrors from './validations/handleValidationErrors.js';
+import handleValidationErrors from './utils/handleValidationErrors.js';
 
 
 mongoose
@@ -18,6 +19,9 @@ app.use(express.json());
 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
+
+app.get('/localization/:locale', SettingsController.getLocalization);
+//app.patch('localization/:locale');
 
 app.listen(3000, ()=>{
     console.log('server is listening on port 3000');
