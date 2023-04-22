@@ -28,7 +28,7 @@ export const register = async (req, res) => {
             }
         });
         if (userContactDoc) {
-            return res.json({
+            return res.status(409).json({
                 message: "Such email is already registred",
             });
         }
@@ -77,7 +77,7 @@ export const register = async (req, res) => {
 
         const {passwordHash, ...userData} = user._doc;
 
-        res.json({
+        res.status(200).json({
             ...userData,
             token,
         });
