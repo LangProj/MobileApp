@@ -138,7 +138,9 @@ export const login = async (req, res) => {
 
 export const updateSettings = async (req, res) => {
     try {
-        const settingsId = req.user.settingsId;
+        const userId = req.user.userId;
+        const user = await UserModel.findById(userId);
+        const settingsId = user.settingsId;
         const updatedSettings = {
             avatar: req.body.avatar,
             appLanguage: req.body.appLanguage,
@@ -147,13 +149,14 @@ export const updateSettings = async (req, res) => {
             level: req.body.level,
         };
         const options = { new: true };
-        await SettingsModel.findByIdAndUpdate(
+        const settings = await SettingsModel.findByIdAndUpdate(
             settingsId,
             updatedSettings,
             options
         );
         res.status(200).json({
-            message: "Settings changed",
+            message: "Settings updated",
+            settings,
         });
     } catch (err) {
         console.log(err);
