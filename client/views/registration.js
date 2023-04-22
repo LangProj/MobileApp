@@ -26,7 +26,14 @@ export default function SignUpScreen({ navigation }) {
 
   const onSubmit = async (values) => {
     if (!errors.length) {
-      navigation.navigate('CodeConfirmation');
+      const data = await userController.createNewUser(values);
+      if (data.payload.status === 409)
+        setError('root.serverError', {
+          type: data.payload.status,
+          message: data.payload.userData
+        });
+      else 
+        navigation.navigate('CodeConfirmation');
     }
   }
 
@@ -57,6 +64,7 @@ export default function SignUpScreen({ navigation }) {
             )}
           />
           {errors.contact && <Text>This is required.</Text>}
+          {errors.root?.serverError.type === 409 && <Text>Such email is already in use</Text>}
           <Controller
             control={control}
             rules={{
