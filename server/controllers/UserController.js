@@ -138,21 +138,27 @@ export const login = async (req, res) => {
 
 export const updateSettings = async (req, res) => {
     try {
-        const userId = req.userId;
-        const settings = new SettingsModel({
+        const settingsId = req.user.settingsId;
+        const updatedSettings = {
             avatar: req.body.avatar,
             appLanguage: req.body.appLanguage,
             username: req.body.username,
             wordsPerDay: req.body.wordsPerDay,
             level: req.body.level,
-            userId: userId,
+        };
+        const options = { new: true };
+        await SettingsModel.findByIdAndUpdate(
+            settingsId,
+            updatedSettings,
+            options
+        );
+        res.status(200).json({
+            message: "Settings changed",
         });
-        await settings.save();
-        res.status(200).json(settings);
     } catch (err) {
         console.log(err);
         res.status(500).json({
-            message: "Failed to create user preferences",
+            message: "Failed to update user preferences",
         });
     }
 };
