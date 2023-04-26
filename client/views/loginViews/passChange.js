@@ -13,7 +13,7 @@ export default function PasswordChangeScreen({ navigation }) {
       <View style={styles.mainWrapper}>
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
+            <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
           <TextInput placeholder="Enter new password" style={styles.textInput} />
           <TextInput placeholder="Repeat your password" style={styles.textInput} />                      

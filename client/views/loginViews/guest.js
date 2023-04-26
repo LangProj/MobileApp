@@ -21,7 +21,7 @@ export default function GuestScreen({ navigation }) {
     <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>
+          <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>
         </View>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.buttonTitle} >{localization.data.signUpBtnText}</Text>

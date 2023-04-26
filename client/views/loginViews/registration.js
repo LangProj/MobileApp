@@ -43,7 +43,7 @@ export default function SignUpScreen({ navigation }) {
       <View style={styles.mainWrapper}>
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                   
+            <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                   
           </View>
           <Controller
             control={control}

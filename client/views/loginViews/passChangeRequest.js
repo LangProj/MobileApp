@@ -13,7 +13,7 @@ export default function PasswordChangeRequestScreen({ navigation }) {
       <View style={styles.wrapper}>
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
+            <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
           <Text style={styles.description}>Enter your Email or phone number and we will send a request to change your password</Text>
           <TextInput placeholder="Email/phone" style={styles.textInput} />

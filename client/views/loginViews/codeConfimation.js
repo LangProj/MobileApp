@@ -16,7 +16,7 @@ export default function CodeConfirmationScreen({ navigation }) {
       <View style={styles.wrapper}>
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>                    
+            <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
           <Text style={styles.description}>{localization.data.confirmLabelText}</Text>
           <TextInput placeholder={localization.data.confirmInputText} style={styles.textInput} />

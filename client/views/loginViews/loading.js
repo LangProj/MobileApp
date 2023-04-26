@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 export default function LoadingScreen() {
   return (
     <View style={styles.container}>        
-      <Image source={require('../assets/img/speech_logo.png')} style={styles.image}></Image>      
+      <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>      
     </View>
   );
 }
