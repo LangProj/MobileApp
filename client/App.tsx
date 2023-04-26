@@ -7,13 +7,27 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 
-import LoadingScreen from './views/loading'; 
-import GuestScreen from './views/guest'; 
-import SignUpScreen from './views/registration'; 
-import LogInScreen from './views/login'; 
-import CodeConfirmationScreen from './views/codeConfimation'; 
-import PasswordChangeRequestScreen from './views/passChangeRequest'; 
-import PasswordChangeScreen from './views/passChange'; 
+
+
+
+import LoadingScreen from './views/loginViews/loading'
+import GuestScreen from './views/loginViews/guest'; 
+import SignUpScreen from './views/loginViews/registration'; 
+import LogInScreen from './views/loginViews/login'; 
+import CodeConfirmationScreen from './views/loginViews/codeConfimation'; 
+import PasswordChangeRequestScreen from './views/loginViews/passChangeRequest'; 
+import PasswordChangeScreen from './views/loginViews/passChange'; 
+
+
+import PhotoScreen from './views/profileCreationViews/photo';
+import LoginConfirmationScreen from './views/profileCreationViews/loginConfirmation';
+import MotherTongueScreen from './views/profileCreationViews/motherTongue';
+import WordsPerDayScreen from './views/profileCreationViews/wordsPerDay';
+import LanguageLevelScreen from './views/profileCreationViews/languageLevel';
+import ProfileCreationScreen from './views/profileCreationViews/profileCreation';
+
+
+
 
 
 import { Provider } from 'react-redux';
@@ -26,7 +40,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>        
+      {/* <NavigationContainer>        
         <Stack.Navigator>       
           <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false}}/>
 
@@ -38,7 +52,19 @@ export default function App() {
           <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false}}/>
         </Stack.Navigator>        
+      </NavigationContainer> */}
+
+
+      <NavigationContainer>        
+        <Stack.Navigator>       
+          <Stack.Screen  name="MotherTongue" component={MotherTongueScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="Photo" component={PhotoScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="WordsPerDay" component={WordsPerDayScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>        
+        </Stack.Navigator>        
       </NavigationContainer>
+
     </Provider>
 
  
