@@ -104,7 +104,7 @@ export const login = async (req, res) => {
             });
         }
         if (!await bcrypt.compare(req.body.password, userPersonalData._doc.passwordHash)) {
-            return res.status(404).json({
+            return res.status(400).json({
                 message: "Incorrect password",
             });
         }
@@ -124,7 +124,7 @@ export const login = async (req, res) => {
         const {passwordHash, contacts, ...userData} = userPersonalData._doc;
 
         res.json({
-            emial: contacts.get("email"),
+            email: contacts.get("email"),
             phone: contacts.get("phoneNumber"),
             token,
         });
