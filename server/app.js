@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
-
+app.post('/updateSettings', UserController.updateSettings);
 app.get('/localization/:locale', SettingsController.getLocalization);
 //app.patch('localization/:locale');
 

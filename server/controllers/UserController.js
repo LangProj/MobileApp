@@ -138,9 +138,9 @@ export const login = async (req, res) => {
 
 export const updateSettings = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.body.userId;
         const user = await UserModel.findById(userId);
-        const settingsId = user.settingsId;
+        const settingsId = user.settings;
         const updatedSettings = {
             avatar: req.body.avatar,
             appLanguage: req.body.appLanguage,
