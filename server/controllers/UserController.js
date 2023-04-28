@@ -6,6 +6,7 @@ import UserModel from '../models/User.js';
 import SettingsModel from '../models/Settings.js';
 import PersonalDataModel from '../models/PersonalData.js';
 import SubscriptionModel from '../models/Subscription.js';
+import WordModel from '../models/Word.js';
 
 import validator from 'validator';
 
@@ -165,3 +166,21 @@ export const updateSettings = async (req, res) => {
         });
     }
 };
+
+
+export const getWordsPerDay = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const user = await UserModel.findById(userId);
+      const wordsId = user.words;
+      const words = await WordModel.find({ _id: { $in: wordsId } });
+      res.status(200).json({
+        words: words,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to retrieve user preferences",
+      });
+    }
+  };
