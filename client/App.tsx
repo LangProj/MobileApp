@@ -56,7 +56,7 @@ export default function App() {
         </Stack.Navigator>        
       </NavigationContainer> */}
 
-<<<<<<< HEAD
+
       
       {/* <NavigationContainer>        
         <Stack.Navigator>       
@@ -73,7 +73,7 @@ export default function App() {
               
           <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false}}/>   
->>>>>>> d4781614013bfb397dbbd5fbfaafc73920f53026
+
           <Stack.Screen  name="MotherTongue" component={MotherTongueScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="Photo" component={PhotoScreen} options={{headerShown:false}}/>
