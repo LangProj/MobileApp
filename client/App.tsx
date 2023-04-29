@@ -27,7 +27,7 @@ import LanguageLevelScreen from './views/profileCreationViews/languageLevel';
 import ProfileCreationScreen from './views/profileCreationViews/profileCreation';
 
 
-
+import CardScreen from './views/mainMenuViews/cardMenu';
 
 
 import { Provider } from 'react-redux';
@@ -40,6 +40,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <Provider store={store}>
+      <CardScreen/>
+
       {/* <NavigationContainer>        
         <Stack.Navigator>       
           <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false}}/>
@@ -54,8 +56,8 @@ export default function App() {
         </Stack.Navigator>        
       </NavigationContainer> */}
 
-
-      <NavigationContainer>        
+      
+      {/* <NavigationContainer>        
         <Stack.Navigator>       
           <Stack.Screen  name="MotherTongue" component={MotherTongueScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false}}/>
@@ -63,7 +65,7 @@ export default function App() {
           <Stack.Screen  name="WordsPerDay" component={WordsPerDayScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>        
         </Stack.Navigator>        
-      </NavigationContainer>
+      </NavigationContainer> */}
 
     </Provider>
 
