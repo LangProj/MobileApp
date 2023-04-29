@@ -56,9 +56,24 @@ export default function App() {
         </Stack.Navigator>        
       </NavigationContainer> */}
 
+<<<<<<< HEAD
       
       {/* <NavigationContainer>        
         <Stack.Navigator>       
+=======
+
+      <NavigationContainer>        
+        <Stack.Navigator>    
+          <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false}}/>
+      
+          <Stack.Screen  name="SignUp" component={SignUpScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="CodeConfirmation" component={CodeConfirmationScreen} options={{headerShown:false}}/>
+              
+          <Stack.Screen  name="Login" component={LogInScreen} options={{headerShown:false}}/>
+              
+          <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false}}/>   
+>>>>>>> d4781614013bfb397dbbd5fbfaafc73920f53026
           <Stack.Screen  name="MotherTongue" component={MotherTongueScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="Photo" component={PhotoScreen} options={{headerShown:false}}/>

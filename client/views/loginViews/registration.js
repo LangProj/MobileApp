@@ -6,14 +6,13 @@ import { Linking } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
-import {userController} from '../store/store.js';
+import {userController} from '../../store/store.js';
 
 import { useForm, Controller } from 'react-hook-form';
 
 
 export default function SignUpScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
-  const user = useSelector(state => state.user);
   
   const { control, watch, handleSubmit, setError, formState: {errors, isValid} } = useForm({
     defaultValues: {
@@ -49,7 +48,6 @@ export default function SignUpScreen({ navigation }) {
             control={control}
             rules={{
               required: true,
-              email: true,
             }}
             name='contact'
             render={({field: { onChange, onBlur, value} }) => (

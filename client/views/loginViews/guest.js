@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useSelector } from 'react-redux';
-import { localizationController } from '../store/store.js';
+import { localizationController } from '../../store/store.js';
 
 
 export default function GuestScreen({ navigation }) {

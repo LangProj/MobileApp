@@ -23,7 +23,7 @@ export default function CodeConfirmationScreen({ navigation }) {
                               
           
         </View>
-        <TouchableOpacity style={styles.button}>          
+        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('MotherTongue');}}>          
             <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>{localization.data.haveQuestionsLabelText}<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> {localization.data.writeBtnText}</Text></Text>

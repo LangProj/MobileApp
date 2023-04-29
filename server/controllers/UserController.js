@@ -6,6 +6,7 @@ import UserModel from '../models/User.js';
 import SettingsModel from '../models/Settings.js';
 import PersonalDataModel from '../models/PersonalData.js';
 import SubscriptionModel from '../models/Subscription.js';
+import WordModel from '../models/Word.js';
 
 import validator from 'validator';
 
@@ -104,7 +105,7 @@ export const login = async (req, res) => {
             });
         }
         if (!await bcrypt.compare(req.body.password, userPersonalData._doc.passwordHash)) {
-            return res.status(404).json({
+            return res.status(400).json({
                 message: "Incorrect password",
             });
         }
@@ -124,7 +125,7 @@ export const login = async (req, res) => {
         const {passwordHash, contacts, ...userData} = userPersonalData._doc;
 
         res.json({
-            emial: contacts.get("email"),
+            email: contacts.get("email"),
             phone: contacts.get("phoneNumber"),
             token,
         });
@@ -138,9 +139,9 @@ export const login = async (req, res) => {
 
 export const updateSettings = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.body.userId;
         const user = await UserModel.findById(userId);
-        const settingsId = user.settingsId;
+        const settingsId = user.settings;
         const updatedSettings = {
             avatar: req.body.avatar,
             appLanguage: req.body.appLanguage,
@@ -165,3 +166,21 @@ export const updateSettings = async (req, res) => {
         });
     }
 };
+
+
+export const getWordsPerDay = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const user = await UserModel.findById(userId);
+      const wordsId = user.words;
+      const words = await WordModel.find({ _id: { $in: wordsId } });
+      res.status(200).json({
+        words: words,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to retrieve user preferences",
+      });
+    }
+  };

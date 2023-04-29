@@ -4,12 +4,41 @@ import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextI
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import * as SecureStore from 'expo-secure-store';
+
 import { useSelector } from 'react-redux';
 
+import { userController } from '../../store/store.js';
+
+import { useForm, Controller } from 'react-hook-form';
 
 
 export default function SignUpScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
+
+  const { control, handleSubmit, setError, formState: {errors} } = useForm({
+    defaultValues: {
+      contact: '',
+      password: '',
+    },
+    mode: 'onSubmit'
+  });
+
+  const onSubmit = async (values) => {
+    if (!errors.length) {
+      const data = await userController.fetchUser(values);
+      console.log("From onSubmit", data.payload.userData);
+      if (data.payload.status === 404 || data.payload.status === 400)
+        setError('root.serverError', {
+          type: data.payload.status,
+          message: data.payload.userData
+        });
+      else {
+        await SecureStore.setItemAsync('token', data.payload.userData.token);
+        navigation.navigate('MotherTongue');
+      }
+    }
+  }
 
   return (
     <ScrollView  showsVerticalScrollIndicator={false}>
@@ -18,11 +47,45 @@ export default function SignUpScreen({ navigation }) {
           <View style={styles.container}>
             <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
-          <TextInput placeholder={localization.data.emailPhoneInputText} style={styles.textInput} />
-          <TextInput placeholder={localization.data.passwordInputText} style={styles.textInput} />                      
-          
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            name='contact'
+            render={({field: { onChange, onBlur, value} }) => (
+              <TextInput
+                keyboardType='email-address'
+                placeholder={localization.data.emailPhoneInputText} 
+                style={styles.textInput}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+          {errors.contact && <Text>One of contacts is required.</Text>}
+          {errors.root?.serverError.type === 404 && <Text>Perhaps you are not registered.</Text>}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            name='password'
+            render={({field: { onChange, onBlur, value} }) => (
+              <TextInput
+                placeholder={localization.data.passwordInputText} 
+                style={styles.textInput}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />                      
+            )}
+          />
+          {errors.password && <Text>Password is required.</Text>}
+          {errors.root?.serverError.type === 400 && <Text>Incorrect password</Text>}
         </View>
-        <TouchableOpacity style={styles.button} >          
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>          
           <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>{localization.data.haveQuestionsLabelText}<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> {localization.data.writeBtnText}</Text></Text>

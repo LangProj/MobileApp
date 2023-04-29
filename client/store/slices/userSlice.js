@@ -8,13 +8,21 @@ export const createUser = createAsyncThunk("user/createUser", async (params) => 
     } catch (error) {
         return {userData: error.response.data.message, status: error.response.status}
     }
-
 });
+
+export const fetchUser = createAsyncThunk("user/fetchUser", async (params) => {
+    try {
+        const { data, status } = await axios.post('auth/login', params);
+        return {userData: data, status: status};
+    } catch (error) {
+        return {userData: error.response.data.message, status: error.response.status}
+    }
+})
 
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        status: 'creating',
+        status: 'loading',
         userData: null,
     },
     extraReducers(builder) {
