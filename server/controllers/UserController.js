@@ -168,19 +168,34 @@ export const updateSettings = async (req, res) => {
 };
 
 
-export const getWordsPerDay = async (req, res) => {
+export const getWordsToLearn = async (req, res) => {
     try {
       const userId = req.body.userId;
       const user = await UserModel.findById(userId);
+  
       const wordsId = user.words;
-      const words = await WordModel.find({ _id: { $in: wordsId } });
-      res.status(200).json({
-        words: words,
-      });
+      let userWords = [];
+  
+      if (wordsId && wordsId.length > 0) {
+        userWords = await WordModel.find({ _id: { $in: wordsId } });
+      }
+  
+      const maxWords = parseInt(req.body.maxWords); 
+  
+ 
+      const words = await WordModel.aggregate([
+        { $match: { _id: { $nin: wordsId } } }, 
+        { $sample: { size: maxWords } }, 
+      ]);
+  
+      const wordsToLearn = words.concat(userWords); 
+      res.status(200).json({ 
+        words: wordsToLearn 
+    });
     } catch (err) {
       console.log(err);
       res.status(500).json({
-        message: "Failed to retrieve user preferences",
+        message: "Failed to retrieve words to learn",
       });
     }
   };
