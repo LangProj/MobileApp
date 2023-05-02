@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-
+import { userController } from '../../store/store.js';
 
 
 export default function LanguageLevelScreen({ navigation }) {
@@ -24,9 +24,19 @@ export default function LanguageLevelScreen({ navigation }) {
   };
 
 
-  const confirmValidation = () => {
+  const confirmValidation = async () => {
     if(Active != 'none'){
-      navigation.navigate('unknown')
+      const userState = userController.UserModel.store.getState().user.userData;
+      const result = await userController.updateSettings({
+        userId: userState.personalData.id,
+        avatar: userState.settings.avatar,
+        appLanguage: userState.settings.appLanguage,
+        username: userState.settings.username,
+        wordsPerDay: userState.settings.wordsPerDay,
+        level: userState.settings.level
+      });
+      if (result.payload.status == 200)
+        navigation.navigate('Card');
     }
     
   };

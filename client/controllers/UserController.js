@@ -1,10 +1,10 @@
 import UserModel from '../models/UserModel.js';
-import {createUser, fetchUser} from '../store/slices/userSlice.js';
+import {createUser, fetchUser, updateSettings } from '../store/slices/userSlice.js';
 
 class UserController {
     constructor(store) {
-        this.UserModel = new UserModel();
         this.store = store;
+        this.UserModel = new UserModel(this.store);
     }
 
     async createNewUser(data) {
@@ -15,6 +15,11 @@ class UserController {
     async fetchUser(data) {
         console.log("Fetching user...");
         return await this.store.dispatch(fetchUser(data));
+    }
+
+    async updateSettings(data) {
+        console.log("Updating settings...");
+        return await this.store.dispatch(updateSettings(data))
     }
 }
 

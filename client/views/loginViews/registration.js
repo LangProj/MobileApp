@@ -31,8 +31,11 @@ export default function SignUpScreen({ navigation }) {
           type: data.payload.status,
           message: data.payload.userData
         });
-      else 
+      else {
+        await userController.UserModel.setId(data.payload.userData._id);
+        await userController.UserModel.setToken(data.payload.userData.token);
         navigation.navigate('CodeConfirmation');
+      }
     }
   }
 

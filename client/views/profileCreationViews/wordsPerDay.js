@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-
+import { userController } from '../../store/store.js';
 
 
 export default function WordsPerDayScreen({ navigation }) {
@@ -24,9 +24,10 @@ export default function WordsPerDayScreen({ navigation }) {
   };
 
 
-  const confirmValidation = () => {
+  const confirmValidation = async () => {
     if(Active != 'none'){
-      navigation.navigate('LanguageLevel')
+      await userController.UserModel.setWordsPerDay(Active);
+      navigation.navigate('LanguageLevel');
     }
     
   };

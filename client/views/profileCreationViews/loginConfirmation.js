@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
+import { userController } from '../../store/store';
 
 
 
 
 export default function LoginConfirmationScreen({ navigation }) {
+  const [username, setUsername] = useState('');
+  
+  const handleNext = async () => {
+    await userController.UserModel.setUsername(username);
+    navigation.navigate('Photo');
+  }
   
   return (
     
@@ -24,9 +31,9 @@ export default function LoginConfirmationScreen({ navigation }) {
 
         
 
-        <TextInput placeholder="Login" style={styles.whiteButton} />
+        <TextInput placeholder="Login" style={styles.whiteButton} value={username} onChangeText={setUsername}/>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Photo')}>          
+        <TouchableOpacity style={styles.button} onPress={() => handleNext()}>          
           <Text style={styles.buttonTitle}>Next</Text>                            
         </TouchableOpacity>
         

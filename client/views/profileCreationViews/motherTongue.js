@@ -4,12 +4,16 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { useSelector } from 'react-redux';
+
+import { localizationController, userController } from '../../store/store.js';
 
 
 let CurActive = 'none';
 
 
 export default function MotherTongueScreen({ navigation }) {
+  const user = useSelector(state => state.user);
   
   const [Active, setActive] = useState('none');
   
@@ -21,14 +25,15 @@ export default function MotherTongueScreen({ navigation }) {
       setActive(item)
     }
     else if(Active == 'none'){
-      setActive(item)   
+      setActive(item)
     } 
   };
 
 
-  const confirmValidation = () => {
+  const confirmValidation = async () => {
     if(Active != 'none'){
-      navigation.navigate('LoginConfirmation')
+      await userController.UserModel.setAppLang(Active);
+      navigation.navigate('LoginConfirmation');
     }
     
   };
