@@ -4,8 +4,6 @@ import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextI
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import * as SecureStore from 'expo-secure-store';
-
 import { useSelector } from 'react-redux';
 
 import { userController } from '../../store/store.js';
@@ -33,7 +31,8 @@ export default function LoginScreen({ navigation }) {
           message: data.payload.userData
         });
       else {
-        await SecureStore.setItemAsync('token', data.payload.userData.token);
+        await userController.UserModel.setId(data.payload.userData._id);
+        await userController.UserModel.setToken(data.payload.userData.token);
         navigation.navigate('Card');
       }
     }
