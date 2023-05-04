@@ -1,0 +1,34 @@
+[
+  {
+    "signUpBtnText": "Регистрация"
+  },
+  {
+    "logInBtnText": "Вход"
+  },
+  {
+    "orLabelText": "или"
+  },
+  {
+    "haveQuestionsLabelText": "Есть вопросы?"
+  },
+  {
+    "writeBtnText": "Напишите нам."
+  },
+  {
+    "emailPhoneInputText": "Email/телефон"
+  },
+  {
+    "passwordInputText": "Пароль"
+  },
+  {
+    "repeatPasswordInputText": "Повторите пароль"
+  },
+  {
+    "confirmBtnText": "Подтвердить"
+  },
+  {
+    "confirmLabelText": "Код подтверждения был отправлен на вашу электронную почту. Чтобы подтвердить свою учетную запись, введите код в поле ниже"
+  },{
+    "confirmInputText": "Ваш код подтверждения"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "signUpBtnText": "Sign Up"
+  },
+  {
+    "logInBtnText": "Log in"
+  },
+  {
+    "orLabelText": "or"
+  },
+  {
+    "haveQuestionsLabelText": "You have questions?"
+  },
+  {
+    "writeBtnText": "Write to us."
+  },
+  {
+    "emailPhoneInputText": "Email/phone"
+  },
+  {
+    "passwordInputText": "Password"
+  },
+  {
+    "repeatPasswordInputText": "Repeat password"
+  },
+  {
+    "confirmBtnText": "Confirm"
+  },
+  {
+    "confirmLabelText": "A confirmation code has been sent to your email. To verify your account, enter the code in the field below"
+  },
+  {
+    "confirmInputText": "Your confirmation code"
+  }
+]

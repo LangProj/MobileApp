@@ -1,0 +1,35 @@
+[
+  {
+    "signUpBtnText": "Реєстрація"
+  },
+  {
+    "logInBtnText": "Вхід"
+  },
+  {
+    "orLabelText": "або"
+  },
+  {
+    "haveQuestionsLabelText": "Маєте питання?"
+  },
+  {
+    "writeBtnText": "Напишіть нам."
+  },
+  {
+    "emailPhoneInputText": "Email/телефон"
+  },
+  {
+    "passwordInputText": "Пароль"
+  },
+  {
+    "repeatPasswordInputText": "Повторіть пароль"
+  },
+  {
+    "confirmBtnText": "Підтвердити"
+  },
+  {
+    "confirmLabelText": "На вашу електронну пошту надіслано код підтвердження. Щоб підтвердити свій обліковий запис, введіть код у поле нижче"
+  },
+  {
+    "confirmInputText": "Ваш код підтвердження"
+  }
+]
