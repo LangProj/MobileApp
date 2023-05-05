@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { userController } from '../../store/store.js';
+
 
 
 export default function LanguageLevelScreen({ navigation }) {
@@ -24,19 +24,9 @@ export default function LanguageLevelScreen({ navigation }) {
   };
 
 
-  const confirmValidation = async () => {
+  const confirmValidation = () => {
     if(Active != 'none'){
-      const userState = userController.UserModel.store.getState().user.userData;
-      const result = await userController.updateSettings({
-        userId: userState.personalData.id,
-        avatar: userState.settings.avatar,
-        appLanguage: userState.settings.appLanguage,
-        username: userState.settings.username,
-        wordsPerDay: userState.settings.wordsPerDay,
-        level: userState.settings.level
-      });
-      if (result.payload.status == 200)
-        navigation.navigate('Card');
+      navigation.navigate('unknown')
     }
     
   };
@@ -73,7 +63,7 @@ export default function LanguageLevelScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={Active != 'C1' ? styles.bigWhiteButton : styles.bigWhiteButtonActive} onPress={() => handleClick('C1')}>          
+        <TouchableOpacity style={Active != 'C1' ? styles.smallWhiteButton : styles.smallWhiteButtonActive} onPress={() => handleClick('C1')}>          
           <Text style={Active != 'C1' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive}>C1</Text>                            
         </TouchableOpacity>
 

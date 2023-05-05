@@ -1,20 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
-import { userController } from '../../store/store';
 
 
 
 
 export default function LoginConfirmationScreen({ navigation }) {
-  const [username, setUsername] = useState('');
-  
-  const handleNext = async () => {
-    await userController.UserModel.setUsername(username);
-    navigation.navigate('Photo');
-  }
   
   return (
     
@@ -31,9 +24,9 @@ export default function LoginConfirmationScreen({ navigation }) {
 
         
 
-        <TextInput placeholder="Login" style={styles.whiteButton} value={username} onChangeText={setUsername}/>
+        <TextInput placeholder="Login" style={styles.whiteButton} />
 
-        <TouchableOpacity style={styles.button} onPress={() => handleNext()}>          
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Photo')}>          
           <Text style={styles.buttonTitle}>Next</Text>                            
         </TouchableOpacity>
         
@@ -79,13 +72,13 @@ const styles = StyleSheet.create({
   },
   whiteButton:{
     marginTop: 20,
-    minHeight: 85,
-    maxHeight: 85,
+    minHeight: 65,
+    maxHeight: 65,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: 350,
-    height: 85,
+    height: 65,
     backgroundColor: '#FFFFFF',
     borderColor:'#00A3FF',
     borderWidth:1,

@@ -28,7 +28,7 @@ import ProfileCreationScreen from './views/profileCreationViews/profileCreation'
 
 
 import CardScreen from './views/mainMenuViews/cardMenu';
-
+import MainStatsMenuScreen from './views/mainMenuViews/mainStatsMenu';
 
 import { Provider } from 'react-redux';
 import store from './store/store.js';
@@ -64,7 +64,7 @@ export default function App() {
 
     </Provider>
 
- 
+
   );
 }
 

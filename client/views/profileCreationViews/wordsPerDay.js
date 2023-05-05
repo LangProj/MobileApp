@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { userController } from '../../store/store.js';
+
 
 
 export default function WordsPerDayScreen({ navigation }) {
@@ -24,10 +24,9 @@ export default function WordsPerDayScreen({ navigation }) {
   };
 
 
-  const confirmValidation = async () => {
+  const confirmValidation = () => {
     if(Active != 'none'){
-      await userController.UserModel.setWordsPerDay(Active);
-      navigation.navigate('LanguageLevel');
+      navigation.navigate('LanguageLevel')
     }
     
   };
@@ -66,7 +65,7 @@ export default function WordsPerDayScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={Active != '50' ? styles.bigWhiteButton : styles.bigWhiteButtonActive} onPress={() => handleClick('50')}>          
+        <TouchableOpacity style={Active != '50' ? styles.smallWhiteButton : styles.smallWhiteButtonActive} onPress={() => handleClick('50')}>          
           <Text style={Active != '50' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive}>50</Text>                            
         </TouchableOpacity>
 
