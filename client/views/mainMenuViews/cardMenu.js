@@ -12,6 +12,23 @@ import {
   Image,
   ScrollView
 } from 'react-native';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
+
+function makeRandomString(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+
+
 
 export default class CardScreen extends Component {
   UNSAFE_componentWillMount() {
@@ -36,6 +53,56 @@ export default class CardScreen extends Component {
       inputRange: [89, 90],
       outputRange: [0, 1]
     })
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      myText: 'I\'m ready to get swiped!',
+      gestureName: 'none',
+      backgroundColor: '#fff',
+      word:'bird',
+      wordTranslated:'bird Translated',
+      sentence:'sentence in English',
+      sentenceTranslated:'sentence Translated',
+      wordProgress:'1/100',
+      floatProgress:0.02,
+    };
+  }
+
+  onSwipeLeft(gestureState) {
+    //this code is triggered on swipe left
+    this.setState({myText: 'You swiped left!'});
+    this.setState({word: makeRandomString(5)});
+    this.setState({wordTranslated: makeRandomString(4)});
+    this.setState({sentence: makeRandomString(24)});
+    this.setState({sentenceTranslated: makeRandomString(24)});
+    this.setState({floatProgress: this.state.floatProgress + 0.01});
+    this.setState({wordProgress: Math.round(this.state.floatProgress * 100) + '/100'});
+  }
+ 
+  onSwipeRight(gestureState) {
+    //this code is triggered on swipe right
+    this.setState({myText: 'You swiped right!'});
+    this.setState({word: makeRandomString(5)});
+    this.setState({wordTranslated: makeRandomString(4)});
+    this.setState({sentence: makeRandomString(24)});
+    this.setState({sentenceTranslated: makeRandomString(24)});
+    this.setState({floatProgress: this.state.floatProgress + 0.01});
+    this.setState({wordProgress: Math.round(this.state.floatProgress * 100) + '/100'});
+  }
+
+  onSwipe(gestureName, gestureState) {
+    const { SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    this.setState({gestureName: gestureName});
+    switch (gestureName) {      
+      case SWIPE_LEFT:
+        this.setState({backgroundColor: 'blue'});
+        break;
+      case SWIPE_RIGHT:
+        this.setState({backgroundColor: 'yellow'});
+        break;
+    }
   }
 
   flipCard() {
@@ -71,67 +138,75 @@ export default class CardScreen extends Component {
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
+        <GestureRecognizer onSwipe={(direction, state) => this.onSwipe(direction, state)}
+        
+        onSwipeLeft={(state) => this.onSwipeLeft(state)}
+        onSwipeRight={(state) => this.onSwipeRight(state)}>
         <View style={styles.mainWrapper}>
 
 
-          <View style={styles.header}>
-          <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
-          </View>
+        <View style={styles.header}>
+        <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
+        </View>
 
 
-          <View style={styles.topicWrapper}>          
-            <Text style={styles.topicWrapperTitle}>Natural phenomena</Text>                            
-          </View>
-
-
-
-          <View>
-            <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]} onPress={() => this.flipCard()}>
-              <LinearGradient
-                colors={['#4ad3b6', '#4f9ae1']}
-                style={[ styles.cardWrapper ]}
-                >
-                <Text style={styles.cardWord} >THUNDER</Text>
-                <Text style={styles.cardTransciption}>θʌndər</Text>
-                <View style={styles.cardFooter}>
-                  <Text style={styles.cardSentence}>I was lightning before the thunder.</Text>
-                  <Text style={styles.cardProgress}>1/100</Text>         
-                </View>     
-              </LinearGradient>
-            </Animated.View>
-            <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
-              <LinearGradient
-                colors={['#4ad3b6', '#4f9ae1']}
-                style={[ styles.cardWrapper ]}>
-                <Text style={styles.cardWord}>ГРОМ</Text>
-                <Text style={styles.cardTransciption}>θʌndər</Text>
-                <View style={styles.cardFooter}>
-                  <Text style={styles.cardSentence}>Я был молнией перед громом.</Text>
-                  <Text style={styles.cardProgress}>1/100</Text>         
-                </View>     
-              </LinearGradient>
-            </Animated.View>
-          </View>
-
-
-          <Text style={styles.progressBarTitle}>Progress</Text>
-          <Progress.Bar style={styles.progressBar} progress={0.3} width={310} color={'#00D22E'}  unfilledColor={'#E8E8E8'} borderWidth={0}/>
+        <View style={styles.topicWrapper}>          
+          <Text style={styles.topicWrapperTitle}>Natural phenomena</Text>                            
+        </View>
 
 
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonTitle}>Finish</Text>
-          </TouchableOpacity>
+        <View>
+          <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]} onPress={() => this.flipCard()}>
+            <LinearGradient
+              colors={['#4ad3b6', '#4f9ae1']}
+              style={[ styles.cardWrapper ]}
+              >
+              <Text style={styles.cardWord} >{this.state.word}</Text>
+              <Text style={styles.cardTransciption}>θʌndər</Text>
+              <View style={styles.cardFooter}>
+                <Text style={styles.cardSentence}>{this.state.wordTranslated}</Text>
+                         
+              </View>     
+              <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
+            </LinearGradient>
+          </Animated.View>
+          <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
+            <LinearGradient
+              colors={['#4ad3b6', '#4f9ae1']}
+              style={[ styles.cardWrapper ]}>
+              <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
+              <Text style={styles.cardTransciption}>θʌndər</Text>
+              <View style={styles.cardFooter}>
+                <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
+                      
+              </View>    
+              <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
+            </LinearGradient>
+          </Animated.View>
+        </View>
+
+
+        <Text style={styles.progressBarTitle}>Progress</Text>
+        <Progress.Bar style={styles.progressBar} progress={this.state.floatProgress} width={310} color={'#00D22E'}  unfilledColor={'#E8E8E8'} borderWidth={0}/>
+
+
+
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonTitle}>Finish</Text>
+        </TouchableOpacity>
 
 
 
 
-          <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}></Pressable>
+        <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}></Pressable>
 
 
 
 
         </View>
+        </GestureRecognizer>
+        
       </ScrollView>
     );
   }
@@ -198,6 +273,9 @@ const styles = StyleSheet.create({
     fontSize:18,  
     width:115,
     textAlign:'right',
+    position:'absolute',
+    left:210,
+    top:150,
   },
   cardFooter:{
     marginLeft:20,
