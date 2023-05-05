@@ -31,5 +31,41 @@
   },
   {
     "confirmInputText": "Your confirmation code"
+  },
+  {
+    "motherTongueLabelText": "What is your mother tongue?"
+  },
+  {
+    "russianBtnText": "Russian"
+  },
+  {
+    "ukrainianBtnText": "Ukrainian"
+  },
+  {
+    "nextBtnText": "Next"
+  },
+  {
+    "enterLoginLabelText": "Enter your login"
+  },
+  {
+    "loginInputText": "Login"
+  },
+  {
+    "chooseAvatarLabelText": "Choose your avatar"
+  },
+  {
+    "howManyWordsPerDayLabelText": "How many words per day do you want to learn?"
+  },
+  {
+    "chooseLevelLabelText": "Choose your language level"
+  },
+  {
+    "creatingProfileLabelText": "Creating profile"
+  },
+  {
+    "progressLabelText": "Progress"
+  },
+  {
+    "finishLabelText": "Finish"
   }
 ]

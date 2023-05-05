@@ -28,7 +28,44 @@
   },
   {
     "confirmLabelText": "Код подтверждения был отправлен на вашу электронную почту. Чтобы подтвердить свою учетную запись, введите код в поле ниже"
-  },{
+  },
+  {
     "confirmInputText": "Ваш код подтверждения"
+  },
+  {
+    "motherTongueLabelText": "Какой Ваш родной язык?"
+  },
+  {
+    "russianBtnText": "Русский"
+  },
+  {
+    "ukrainianBtnText": "Украинский"
+  },
+  {
+    "nextBtnText": "Дальше"
+  },
+  {
+    "enterLoginLabelText": "Введите логин"
+  },
+  {
+    "loginInputText": "Логин"
+  },
+  {
+    "chooseAvatarLabelText": "Выберите аватарку"
+  },
+  {
+    "howManyWordsPerDayLabelText": "Сколько слов в день Вы хотите изучать?"
+  },
+  {
+    "chooseLevelLabelText": "Выберите уровень владения языком"
+  },
+  {
+    "creatingProfileLabelText": "Создание профиля"
+  },
+  {
+    "progressLabelText": "Прогресс"
+  },
+  {
+    "finishLabelText": "Завершить"
   }
 ]

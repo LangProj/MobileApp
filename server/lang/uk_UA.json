@@ -31,5 +31,41 @@
   },
   {
     "confirmInputText": "Ваш код підтвердження"
+  },
+  {
+    "motherTongueLabelText": "Яка ваша рідна мова?"
+  },
+  {
+    "russianBtnText": "Російська"
+  },
+  {
+    "ukrainianBtnText": "Українська"
+  },
+  {
+    "nextBtnText": "Далі"
+  },
+  {
+    "enterLoginLabelText": "Введіть логін"
+  },
+  {
+    "loginInputText": "Логін"
+  },
+  {
+    "chooseAvatarLabelText": "Виберіть аватарку"
+  },
+  {
+    "howManyWordsPerDayLabelText": "Скільки слів на день ви бажаєте вивчати?"
+  },
+  {
+    "chooseLevelLabelText": "Виберіть рівень володіння мовою"
+  },
+  {
+    "creatingProfileLabelText": "Створення профілю"
+  },
+  {
+    "progressLabelText": "Прогрес"
+  },
+  {
+    "finishLabelText": "Завершити"
   }
 ]
