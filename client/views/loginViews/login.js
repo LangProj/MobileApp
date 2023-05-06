@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -22,6 +22,7 @@ export default function LoginScreen({ navigation }) {
     mode: 'onSubmit'
   });
 
+   
   const onSubmit = async (values) => {
     if (!errors.length) {
       const data = await userController.fetchUser(values);
@@ -33,7 +34,7 @@ export default function LoginScreen({ navigation }) {
       else {
         await userController.UserModel.setId(data.payload.userData._id);
         await userController.UserModel.setToken(data.payload.userData.token);
-        navigation.navigate('Card');
+        navigation.navigate('MainScreen');
       }
     }
   }

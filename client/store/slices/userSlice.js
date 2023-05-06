@@ -65,7 +65,7 @@ export const userSlice = createSlice({
         setLevel: (state, data) => {
             state.userData.settings.level = data.payload;
         },
-        setAppLang: (state, data) => {
+        setMotherTongue: (state, data) => {
             state.userData.settings.appLanguage = data.payload;
         }
     },
@@ -89,5 +89,5 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setId, setToken, setUsername, setAvatar, setWordsPerDay, setLevel, setAppLang } = userSlice.actions;
+export const { setId, setToken, setUsername, setAvatar, setWordsPerDay, setLevel, setMotherTongue } = userSlice.actions;
 export default userReducer = userSlice.reducer;

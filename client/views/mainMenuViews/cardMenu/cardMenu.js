@@ -13,6 +13,7 @@ import {
   ScrollView
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import cardMenuWrapper from './cardMenuWrapper';
 
 
 function makeRandomString(length) {
@@ -30,7 +31,7 @@ function makeRandomString(length) {
 
 
 
-export default class CardScreen extends Component {
+class CardScreen extends Component {
   UNSAFE_componentWillMount() {
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
@@ -125,6 +126,8 @@ export default class CardScreen extends Component {
   }
 
   render() {
+    const {localization} = this.props;
+    console.log("From card Menu", localization);
     const frontAnimatedStyle = {
       transform: [
         { rotateY: this.frontInterpolate }
@@ -146,7 +149,7 @@ export default class CardScreen extends Component {
 
 
         <View style={styles.header}>
-        <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
+        <Image source={require('../../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
 
 
@@ -187,13 +190,13 @@ export default class CardScreen extends Component {
         </View>
 
 
-        <Text style={styles.progressBarTitle}>Progress</Text>
+        <Text style={styles.progressBarTitle}>{localization.data.progressLabelText}</Text>
         <Progress.Bar style={styles.progressBar} progress={this.state.floatProgress} width={310} color={'#00D22E'}  unfilledColor={'#E8E8E8'} borderWidth={0}/>
 
 
 
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonTitle}>Finish</Text>
+          <Text style={styles.buttonTitle}>{localization.data.finishLabelText}</Text>
         </TouchableOpacity>
 
 
@@ -452,4 +455,6 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('CardScreen', () => CardScreen);
+export default cardMenuWrapper(CardScreen);
+
+//AppRegistry.registerComponent('CardScreen', () => CardScreen);

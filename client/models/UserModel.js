@@ -1,4 +1,4 @@
-import { setId, setToken, setUsername, setLangToLearn, setAvatar, setWordsPerDay, setLevel, setAppLang } from '../store/slices/userSlice.js';
+import { setId, setToken, setUsername, setAvatar, setWordsPerDay, setLevel, setMotherTongue } from '../store/slices/userSlice.js';
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -26,8 +26,8 @@ class UserModel {
     async setLevel(lvl) {
         await this.store.dispatch(setLevel(lvl));
     }
-    async setAppLang(lang) {
-        await this.store.dispatch(setAppLang(lang));
+    async setMotherTongue(lang) {
+        await this.store.dispatch(setMotherTongue(lang));
     }
 }
 

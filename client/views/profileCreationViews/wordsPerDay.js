@@ -4,10 +4,17 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { userController } from '../../store/store.js';
+
+import { useSelector } from 'react-redux';
+
 
 
 
 export default function WordsPerDayScreen({ navigation }) {
+
+  const localization = useSelector(state => state.localization);
+
   
   const [Active, setActive] = useState('none');
   
@@ -24,9 +31,10 @@ export default function WordsPerDayScreen({ navigation }) {
   };
 
 
-  const confirmValidation = () => {
+  const confirmValidation = async () => {
     if(Active != 'none'){
-      navigation.navigate('LanguageLevel')
+      await userController.UserModel.setWordsPerDay(Active);
+      navigation.navigate('LanguageLevel');
     }
     
   };
@@ -44,7 +52,7 @@ export default function WordsPerDayScreen({ navigation }) {
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
-        <Text  style={styles.title}>How many words per day do you want to learn?</Text>
+        <Text  style={styles.title}>{localization.data.howManyWordsPerDayLabelText}</Text>
 
 
         <View style={styles.row}>
@@ -72,7 +80,7 @@ export default function WordsPerDayScreen({ navigation }) {
 
 
         <TouchableOpacity style={styles.button} onPress={() => confirmValidation()}>          
-          <Text style={styles.buttonTitle}>Confirm</Text>                            
+          <Text style={styles.buttonTitle}>{localization.data.confirmBtnText}</Text>                            
         </TouchableOpacity>
         
         <View style={styles.progresWrapper}>

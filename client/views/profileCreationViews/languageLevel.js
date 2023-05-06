@@ -4,10 +4,16 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { userController } from '../../store/store.js';
+
+import { useSelector } from 'react-redux';
 
 
 
 export default function LanguageLevelScreen({ navigation }) {
+
+  const localization = useSelector(state => state.localization);
+
   
   const [Active, setActive] = useState('none');
   
@@ -24,9 +30,20 @@ export default function LanguageLevelScreen({ navigation }) {
   };
 
 
-  const confirmValidation = () => {
+  const confirmValidation = async () => {
     if(Active != 'none'){
-      navigation.navigate('unknown')
+      const userState = userController.UserModel.store.getState().user.userData;
+      const result = await userController.updateSettings({
+        userId: userState.personalData.id,
+        avatar: userState.settings.avatar,
+        appLanguage: userState.settings.appLanguage,
+        username: userState.settings.username,
+        wordsPerDay: userState.settings.wordsPerDay,
+        level: userState.settings.level
+      });
+      if (result.payload.status == 200)
+        navigation.navigate('MainScreen');
+      //navigation.navigate('unknown')
     }
     
   };
@@ -42,7 +59,7 @@ export default function LanguageLevelScreen({ navigation }) {
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
-        <Text  style={styles.title}>Choose your language level</Text>
+        <Text  style={styles.title}>{localization.data.chooseLevelLabelText}</Text>
 
 
         <View style={styles.row}>
@@ -70,7 +87,7 @@ export default function LanguageLevelScreen({ navigation }) {
 
 
         <TouchableOpacity style={styles.button} onPress={() => confirmValidation()}>          
-          <Text style={styles.buttonTitle}>Confirm</Text>                            
+          <Text style={styles.buttonTitle}>{localization.data.confirmBtnText}</Text>                            
         </TouchableOpacity>
         
         <View style={styles.progresWrapper}>

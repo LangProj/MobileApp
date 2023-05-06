@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { userController } from '../../store/store';
+
+import { useSelector } from 'react-redux';
 
 
 
 export default function LoginConfirmationScreen({ navigation }) {
+
+  const localization = useSelector(state => state.localization);
+
+
+  const [username, setUsername] = useState('');
+
+  const handleNext = async () => {
+    await userController.UserModel.setUsername(username);
+    navigation.navigate('Photo');
+  }
   
   return (
     
@@ -20,14 +33,14 @@ export default function LoginConfirmationScreen({ navigation }) {
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
-        <Text  style={styles.title}>Enter your login</Text>
+        <Text  style={styles.title}>{localization.data.enterLoginLabelText}</Text>
 
         
 
-        <TextInput placeholder="Login" style={styles.whiteButton} />
+        <TextInput placeholder={localization.data.loginInputText} style={styles.whiteButton} value={username} onChangeText={setUsername}/>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Photo')}>          
-          <Text style={styles.buttonTitle}>Next</Text>                            
+        <TouchableOpacity style={styles.button} onPress={() => handleNext()}>          
+          <Text style={styles.buttonTitle}>{localization.data.nextBtnText}</Text>                            
         </TouchableOpacity>
         
         

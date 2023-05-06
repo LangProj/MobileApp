@@ -104,7 +104,7 @@ export default function SignUpScreen({ navigation }) {
               />   
             )}
           />
-          {errors.confirmPassword && <Text>Password do not match</Text>}
+          {errors.confirmPassword && <Text>Password does not match</Text>}
 
           
         </View>

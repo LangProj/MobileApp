@@ -4,12 +4,17 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { userController } from '../../store/store.js';
+
+import { useSelector } from 'react-redux';
+
 
 
 let CurActive = 'none';
 
 
 export default function MotherTongueScreen({ navigation }) {
+  const localization = useSelector(state => state.localization);
   
   const [Active, setActive] = useState('none');
   
@@ -26,9 +31,10 @@ export default function MotherTongueScreen({ navigation }) {
   };
 
 
-  const confirmValidation = () => {
+  const confirmValidation = async () => {
     if(Active != 'none'){
-      navigation.navigate('LoginConfirmation')
+      await userController.UserModel.setMotherTongue(Active);
+      navigation.navigate('LoginConfirmation');
     }
     
   };
@@ -42,20 +48,20 @@ export default function MotherTongueScreen({ navigation }) {
         <View style={styles.header}>
         <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
-        <Text  style={styles.title}>What is your mother tongue?</Text>
+        <Text  style={styles.title}>{localization.data.motherTongueLabelText}</Text>
 
         <TouchableOpacity style={Active != 'ru' ? styles.whiteButton : styles.whiteButtonActive} onPress={() => handleClick('ru')}>          
-          <Text style={Active != 'ru' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>Russian</Text>                            
+          <Text style={Active != 'ru' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>{localization.data.russianBtnText}</Text>                            
         </TouchableOpacity>
 
         <TouchableOpacity style={Active != 'ua' ? styles.whiteButton : styles.whiteButtonActive} onPress={() => handleClick('ua')}>          
-          <Text style={Active != 'ua' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>Ukrainian</Text>                            
+          <Text style={Active != 'ua' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>{localization.data.ukrainianBtnText}</Text>                            
         </TouchableOpacity>
 
 
 
         <TouchableOpacity style={styles.button} onPress={() => confirmValidation()}>          
-          <Text style={styles.buttonTitle}>Next</Text>                            
+          <Text style={styles.buttonTitle}>{localization.data.nextBtnText}</Text>                            
         </TouchableOpacity>
         
         <View style={styles.progresWrapper}>

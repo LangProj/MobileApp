@@ -55,7 +55,7 @@ export default function MainStatsMenuScreen({ navigation }) {
         
 
 
-        <TouchableOpacity style={styles.whiteButton}>
+        <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('Card')}>
           <Text style={styles.whiteButtonTitle}>Learn new words</Text>
         </TouchableOpacity>
 

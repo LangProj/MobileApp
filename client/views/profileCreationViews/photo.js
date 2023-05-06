@@ -4,10 +4,15 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput}
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
+import { useSelector } from 'react-redux';
+
 
 
 
 export default function PhotoScreen({ navigation }) {
+
+  const localization = useSelector(state => state.localization);
+
   
   return (
     
@@ -20,7 +25,7 @@ export default function PhotoScreen({ navigation }) {
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
-        <Text  style={styles.title}>Choose your avatar</Text>
+        <Text  style={styles.title}>{localization.data.chooseAvatarLabelText}</Text>
 
         
         <View style={styles.avatar}>
@@ -29,7 +34,7 @@ export default function PhotoScreen({ navigation }) {
         
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('WordsPerDay')}>          
-          <Text style={styles.buttonTitle}>Next</Text>                            
+          <Text style={styles.buttonTitle}>{localization.data.nextBtnText}</Text>                            
         </TouchableOpacity>
         
         

@@ -27,7 +27,7 @@ import LanguageLevelScreen from './views/profileCreationViews/languageLevel';
 import ProfileCreationScreen from './views/profileCreationViews/profileCreation';
 
 
-import CardScreen from './views/mainMenuViews/cardMenu';
+import CardScreen from './views/mainMenuViews/cardMenu/cardMenu';
 import MainStatsMenuScreen from './views/mainMenuViews/mainStatsMenu';
 
 import { Provider } from 'react-redux';
@@ -57,8 +57,9 @@ export default function App() {
           <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="Photo" component={PhotoScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="WordsPerDay" component={WordsPerDayScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>        
-          <Stack.Screen  name="Card" component={CardScreen} options={{headerShown:false}}/>        
+          <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>       
+          <Stack.Screen  name="MainScreen" component={MainStatsMenuScreen} options={{headerShown:false}}/>       
+          <Stack.Screen  name="Card" component={CardScreen} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>
 
