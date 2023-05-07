@@ -111,6 +111,7 @@ export const login = async (req, res) => {
         }
 
         const user = await UserModel.findOne({personalData: userPersonalData._id});
+        const settings = await SettingsModel.findById(user._doc.settings);
 
         const token = jwt.sign(
             {
@@ -129,6 +130,7 @@ export const login = async (req, res) => {
             phone: contacts.get("phoneNumber"),
             _id: user._id,
             token,
+            settings,
         });
     } catch (err) {
         console.log(err);
