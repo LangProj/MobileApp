@@ -11,6 +11,11 @@ class UserController {
         const token = await this.UserModel.getToken()
         this.UserModel.setToken(token);
         this.UserModel.setId(await this.UserModel.getId());
+        this.UserModel.setAvatar(await this.UserModel.getAvatar());
+        this.UserModel.setUsername(await this.UserModel.getUsername());
+        this.UserModel.setLevel(await this.UserModel.getLevel());
+        this.UserModel.setMotherTongue(await this.UserModel.getMotherTongue());
+        this.UserModel.setWordsPerDay(await this.UserModel.getWordsPerDay());
         return token;
     }
 

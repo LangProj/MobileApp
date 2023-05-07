@@ -15,22 +15,27 @@ class UserModel {
         await SecureStore.setItemAsync('token', token);
     }
     async setUsername(username) {
+        console.log(username);
         await this.store.dispatch(setUsername(username));
         await SecureStore.setItemAsync('username', username);
     }
     async setAvatar(avatar) {
+        console.log(avatar);
         await this.store.dispatch(setAvatar(avatar));
         await SecureStore.setItemAsync('avatar', avatar);
     }
     async setWordsPerDay(wordsPerDay) {
+        console.log(wordsPerDay);
         await this.store.dispatch(setWordsPerDay(wordsPerDay));
-        await SecureStore.setItemAsync('wordsPerDay', wordsPerDay);
+        await SecureStore.setItemAsync('wordsPerDay', String(wordsPerDay));
     }
     async setLevel(lvl) {
+        console.log(lvl);
         await this.store.dispatch(setLevel(lvl));
         await SecureStore.setItemAsync('level', lvl);
     }
     async setMotherTongue(lang) {
+        console.log(lang);
         await this.store.dispatch(setMotherTongue(lang));
         await SecureStore.setItemAsync('motherTongue', lang);
     }

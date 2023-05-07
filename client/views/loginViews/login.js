@@ -26,6 +26,7 @@ export default function LoginScreen({ navigation }) {
   const onSubmit = async (values) => {
     if (!errors.length) {
       const data = await userController.fetchUser(values);
+      console.log(data);
       if (data.payload.status === 404 || data.payload.status === 400)
         setError('root.serverError', {
           type: data.payload.status,
@@ -34,6 +35,10 @@ export default function LoginScreen({ navigation }) {
       else {
         await userController.UserModel.setId(data.payload.userData._id);
         await userController.UserModel.setToken(data.payload.userData.token);
+        await userController.UserModel.setUsername(data.payload.userData.settings.username);
+        await userController.UserModel.setMotherTongue(data.payload.userData.settings.appLanguage);
+        await userController.UserModel.setWordsPerDay(data.payload.userData.settings.wordsPerDay);
+        await userController.UserModel.setLevel(data.payload.userData.settings.level);
         navigation.navigate('MainScreen');
       }
     }
