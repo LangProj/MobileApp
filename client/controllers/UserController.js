@@ -7,6 +7,13 @@ class UserController {
         this.UserModel = new UserModel(this.store);
     }
 
+    async loadLocalData() {
+        const token = await this.UserModel.getToken()
+        this.UserModel.setToken(token);
+        this.UserModel.setId(await this.UserModel.getId());
+        return token;
+    }
+
     async createNewUser(data) {
         console.log("Creating user...");
         return await this.store.dispatch(createUser(data));

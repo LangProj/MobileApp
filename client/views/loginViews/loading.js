@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import { userController } from '../../store/store';
 
-export default function LoadingScreen() {
+export default function LoadingScreen({navigation}) {
+  useEffect(() => {
+    async function fetchFromLocalStorage() {
+      const response = await userController.loadLocalData();
+      if (response) navigation.navigate("MainScreen");
+      else navigation.navigate("GuestScreen");
+    }
+    fetchFromLocalStorage();
+  }, []);
+  
   return (
     <View style={styles.container}>        
       <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>      
