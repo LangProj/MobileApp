@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import cardMenuWrapper from './cardMenuWrapper';
+import { userController } from '../../../store/store';
 
 
 function makeRandomString(length) {
@@ -56,41 +57,70 @@ class CardScreen extends Component {
     })
   }
 
+  async componentDidMount() {
+
+    const { user } = this.props;
+    
+    this.words = await userController.getNewWords({
+      userId: user.userData.personalData.id,
+      maxWords: user.userData.settings.wordsPerDay
+    })
+    .then(response => {
+      return response.payload.data.words;
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
+    console.log("Words", 1 / this.words.length);
+    this.currentWordInd = 0
+    this.setState({wordProgress: `1/${this.words.length}`});
+    this.setState({floatProgress: 1/this.words.length});
+    this.setState({word: this.words[this.currentWordInd].word});
+    this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
+    this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
       backgroundColor: '#fff',
-      word:'bird',
-      wordTranslated:'bird Translated',
+      word:'',
+      wordTranslated:'',
+      pronunciation: '',
       sentence:'sentence in English',
       sentenceTranslated:'sentence Translated',
-      wordProgress:'1/100',
-      floatProgress:0.02,
+      wordProgress:``,
+      floatProgress:0.01,
     };
   }
 
   onSwipeLeft(gestureState) {
     //this code is triggered on swipe left
+    this.currentWordInd++;
     this.setState({myText: 'You swiped left!'});
-    this.setState({word: makeRandomString(5)});
-    this.setState({wordTranslated: makeRandomString(4)});
+    this.setState({word: this.words[this.currentWordInd].word});
+    this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
     this.setState({sentence: makeRandomString(24)});
     this.setState({sentenceTranslated: makeRandomString(24)});
-    this.setState({floatProgress: this.state.floatProgress + 0.01});
-    this.setState({wordProgress: Math.round(this.state.floatProgress * 100) + '/100'});
+    this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+    this.setState({wordProgress: Math.round((this.state.floatProgress + 1/this.words.length) * this.words.length) + `/${this.words.length}`});
+    this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
   }
  
   onSwipeRight(gestureState) {
     //this code is triggered on swipe right
+    this.currentWordInd++;
     this.setState({myText: 'You swiped right!'});
-    this.setState({word: makeRandomString(5)});
-    this.setState({wordTranslated: makeRandomString(4)});
+    this.setState({word: this.words[this.currentWordInd].word});
+    this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
     this.setState({sentence: makeRandomString(24)});
     this.setState({sentenceTranslated: makeRandomString(24)});
-    this.setState({floatProgress: this.state.floatProgress + 0.01});
-    this.setState({wordProgress: Math.round(this.state.floatProgress * 100) + '/100'});
+    this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+    this.setState({wordProgress: Math.round((this.state.floatProgress + 1/this.words.length) * this.words.length) + `/${this.words.length}`});
+    this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
   }
 
   onSwipe(gestureName, gestureState) {
@@ -125,9 +155,12 @@ class CardScreen extends Component {
 
   }
 
+  handleFinish() {
+    this.props.navigation.goBack();
+  }
+
   render() {
     const {localization} = this.props;
-    console.log("From card Menu", localization);
     const frontAnimatedStyle = {
       transform: [
         { rotateY: this.frontInterpolate }
@@ -166,9 +199,9 @@ class CardScreen extends Component {
               style={[ styles.cardWrapper ]}
               >
               <Text style={styles.cardWord} >{this.state.word}</Text>
-              <Text style={styles.cardTransciption}>θʌndər</Text>
+              <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
               <View style={styles.cardFooter}>
-                <Text style={styles.cardSentence}>{this.state.wordTranslated}</Text>
+                <Text style={styles.cardSentence}>{this.state.sentence}</Text>
                          
               </View>     
               <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
@@ -179,7 +212,7 @@ class CardScreen extends Component {
               colors={['#4ad3b6', '#4f9ae1']}
               style={[ styles.cardWrapper ]}>
               <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
-              <Text style={styles.cardTransciption}>θʌndər</Text>
+              <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
               <View style={styles.cardFooter}>
                 <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
                       
@@ -195,7 +228,7 @@ class CardScreen extends Component {
 
 
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => this.handleFinish()}>
           <Text style={styles.buttonTitle}>{localization.data.finishLabelText}</Text>
         </TouchableOpacity>
 
