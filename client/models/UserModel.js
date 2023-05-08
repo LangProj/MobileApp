@@ -8,21 +8,21 @@ class UserModel {
     }
     async setId(id) {
         await this.store.dispatch(setId(id));
-        await SecureStore.setItemAsync('id', id);
+        await SecureStore.setItemAsync('id', String(id));
     }
     async setToken(token) {
         await this.store.dispatch(setToken(token));
-        await SecureStore.setItemAsync('token', token);
+        await SecureStore.setItemAsync('token', String(token));
     }
     async setUsername(username) {
         console.log(username);
         await this.store.dispatch(setUsername(username));
-        await SecureStore.setItemAsync('username', username);
+        await SecureStore.setItemAsync('username', String(username));
     }
     async setAvatar(avatar) {
         console.log(avatar);
         await this.store.dispatch(setAvatar(avatar));
-        await SecureStore.setItemAsync('avatar', avatar);
+        await SecureStore.setItemAsync('avatar', String(avatar));
     }
     async setWordsPerDay(wordsPerDay) {
         console.log(wordsPerDay);
@@ -32,12 +32,12 @@ class UserModel {
     async setLevel(lvl) {
         console.log(lvl);
         await this.store.dispatch(setLevel(lvl));
-        await SecureStore.setItemAsync('level', lvl);
+        await SecureStore.setItemAsync('level', String(lvl));
     }
     async setMotherTongue(lang) {
         console.log(lang);
         await this.store.dispatch(setMotherTongue(lang));
-        await SecureStore.setItemAsync('motherTongue', lang);
+        await SecureStore.setItemAsync('motherTongue', String(lang));
     }
     async getId() {
         return await SecureStore.getItemAsync('id');
