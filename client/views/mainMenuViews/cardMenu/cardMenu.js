@@ -59,11 +59,10 @@ class CardScreen extends Component {
 
   async componentDidMount() {
 
-    const { user } = this.props;
-    
+    const { user, settings } = this.props;
     this.words = await userController.getNewWords({
       userId: user.userData.personalData.id,
-      maxWords: user.userData.settings.wordsPerDay
+      maxWords: settings.settings.wordsPerDay
     })
     .then(response => {
       return response.payload.data.words;
@@ -79,6 +78,8 @@ class CardScreen extends Component {
     this.setState({word: this.words[this.currentWordInd].word});
     this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
     this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+    
+    this.learnedWords = [];
   }
 
   constructor(props) {
@@ -99,6 +100,7 @@ class CardScreen extends Component {
 
   onSwipeLeft(gestureState) {
     //this code is triggered on swipe left
+    this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
     this.currentWordInd++;
     this.setState({myText: 'You swiped left!'});
     this.setState({word: this.words[this.currentWordInd].word});
@@ -112,6 +114,7 @@ class CardScreen extends Component {
  
   onSwipeRight(gestureState) {
     //this code is triggered on swipe right
+    this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
     this.currentWordInd++;
     this.setState({myText: 'You swiped right!'});
     this.setState({word: this.words[this.currentWordInd].word});

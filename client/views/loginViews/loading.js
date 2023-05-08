@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { userController, localizationController } from '../../store/store';
+import { userController, localizationController, settingsController } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 export default function LoadingScreen({navigation}) {
   useEffect(() => {
     async function fetchFromLocalStorage() {
-      await localizationController.fetchCurrentLocale();
+      localizationController.fetchCurrentLocale();
+      console.log("Hello")
       const response = await userController.loadLocalData();
-      if (response) navigation.navigate("MainScreen");
+      console.log(response);
+      if (response) {
+        await settingsController.loadLocalData();
+        navigation.navigate("MainScreen");
+      }
       else navigation.navigate("GuestScreen");
     }
     fetchFromLocalStorage();
