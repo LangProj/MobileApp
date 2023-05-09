@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput}
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { userController } from '../../store/store';
+import { settingsController } from '../../store/store';
 
 import { useSelector } from 'react-redux';
 
@@ -18,7 +18,8 @@ export default function LoginConfirmationScreen({ navigation }) {
   const [username, setUsername] = useState('');
 
   const handleNext = async () => {
-    await userController.UserModel.setUsername(username);
+    settingsController.SettingsModel.username = username;
+    await settingsController.saveUsername();
     navigation.navigate('Photo');
   }
   

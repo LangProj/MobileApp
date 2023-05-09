@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { userController } from '../../store/store.js';
+import { settingsController } from '../../store/store.js';
 
 import { useSelector } from 'react-redux';
 
@@ -33,7 +33,8 @@ export default function WordsPerDayScreen({ navigation }) {
 
   const confirmValidation = async () => {
     if(Active != 'none'){
-      await userController.UserModel.setWordsPerDay(Active);
+      settingsController.SettingsModel.wordsPerDay = Active;
+      await settingsController.saveWordsPerDay();
       navigation.navigate('LanguageLevel');
     }
     

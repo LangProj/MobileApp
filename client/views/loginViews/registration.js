@@ -32,8 +32,14 @@ export default function SignUpScreen({ navigation }) {
           message: data.payload.userData
         });
       else {
-        await userController.UserModel.setId(data.payload.userData._id);
-        await userController.UserModel.setToken(data.payload.userData.token);
+        userController.UserModel.id = data.payload.userData._id;
+        userController.UserModel.token = data.payload.userData.token;
+        userController.UserModel.words = {};
+
+        await userController.saveId();
+        await userController.saveToken();
+        await userController.saveWords();
+        
         navigation.navigate('CodeConfirmation');
       }
     }

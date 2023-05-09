@@ -60,17 +60,20 @@ class CardScreen extends Component {
   async componentDidMount() {
 
     const { user, settings } = this.props;
+    console.log("UserData", user.userData);
     this.words = await userController.getNewWords({
       userId: user.userData.personalData.id,
       maxWords: settings.settings.wordsPerDay
     })
     .then(response => {
+      console.log(response.payload.data.words);
       return response.payload.data.words;
     })
     .catch(error => {
       console.log(error);
       return null;
     });
+    console.log(this.words);
     this.currentWordInd = 0
     this.setState({wordProgress: `1/${this.words.length}`});
     this.setState({floatProgress: 1/this.words.length});

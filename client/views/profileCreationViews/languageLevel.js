@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { userController } from '../../store/store.js';
+import { userController, settingsController } from '../../store/store.js';
 
 import { useSelector } from 'react-redux';
 
@@ -32,18 +32,18 @@ export default function LanguageLevelScreen({ navigation }) {
 
   const confirmValidation = async () => {
     if(Active != 'none'){
-      const userState = userController.UserModel.store.getState().user.userData;
-      const result = await userController.updateSettings({
-        userId: userState.personalData.id,
-        avatar: userState.settings.avatar,
-        appLanguage: userState.settings.appLanguage,
-        username: userState.settings.username,
-        wordsPerDay: userState.settings.wordsPerDay,
-        level: userState.settings.level
+      settingsController.SettingsModel.level = Active;
+      settingsController.saveLevel();
+      const result = await settingsController.updateSettings({
+        userId: userController.UserModel.id,
+        avatar: settingsController.SettingsModel.avatar,
+        appLanguage: settingsController.SettingsModel.motherTongue,
+        username: settingsController.SettingsModel.username,
+        wordsPerDay: settingsController.SettingsModel.wordsPerDay,
+        level: settingsController.SettingsModel.level
       });
       if (result.payload.status == 200)
         navigation.navigate('MainScreen');
-      //navigation.navigate('unknown')
     }
     
   };
