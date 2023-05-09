@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
+import { useSelector } from 'react-redux';
 
 
 
@@ -10,10 +11,16 @@ import { Linking } from 'react-native';
 
 
 export default function MainStatsMenuScreen({ navigation }) {
+  const statistics = useSelector(state => state.statistics);
+  useEffect(() => {
+    setLearnedWordsToday(statistics.wordsADay);
+    setUnlearnedWords(statistics.wordsInLevel);
+    setLearnedWordsAllTime(statistics.wordsAllTime);
+  }, [statistics.wordsADay, statistics.wordsInLevel, statistics.wordsAllTime]);
   
-  const [LearnedWordsToday, setLearnedWordsToday] = useState('0000');
-  const [LearnedWordsAllTime, setLearnedWordsAllTime] = useState('0000');
-  const [UnlearnedWords, setUnlearnedWords] = useState('0000');
+  const [LearnedWordsToday, setLearnedWordsToday] = useState(String(statistics.wordsADay));
+  const [LearnedWordsAllTime, setLearnedWordsAllTime] = useState(String(statistics.wordsInLevel));
+  const [UnlearnedWords, setUnlearnedWords] = useState(String(statistics.wordsAllTime));
 
   return (
     

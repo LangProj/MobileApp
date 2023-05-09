@@ -26,12 +26,11 @@ export const addWords = createAsyncThunk("user/addWords", async (params) => {
     } catch (error) {
         return {data: error.response.data.message, status: error.response.status};
     }
-})
+});
 
 export const getNewWords = createAsyncThunk("getNewWords", async (params) => {
     try {
         const {data, status} = await axios.post('/getWordsToLearn', params);
-        console.log("Data from slice", data);
         return {data: data, status: status};
     }
     catch (error) {
@@ -48,7 +47,7 @@ export const getAllWords = createAsyncThunk("getAllWords", async (params) => {
         console.log(error);
         return {data: error.response.data.message, status: error.response.status};
     }
-})
+});
 
 export const userSlice = createSlice({
     name: 'user',
@@ -59,7 +58,7 @@ export const userSlice = createSlice({
                 id: '',
                 token: '',
             },
-            words: {}
+            words: []
         }
     },
     reducers: {
@@ -68,6 +67,9 @@ export const userSlice = createSlice({
         },
         setToken: (state, data) => {
             state.userData.personalData.token = data.payload;
+        },
+        setWords: (state, data) => {
+            state.userData.words = data.payload;
         }
     },
     extraReducers(builder) {
@@ -86,11 +88,10 @@ export const userSlice = createSlice({
             })
             .addCase(getNewWords.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log(action.payload.data);
                 state.userData.words = action.payload.data;
             })
     },
 });
 
-export const { setId, setToken } = userSlice.actions;
+export const { setId, setToken, setWords } = userSlice.actions;
 export default userReducer = userSlice.reducer;

@@ -41,8 +41,6 @@ class UserController {
         this.SettingsModel.level = await SecureStore.getItemAsync('level');
         this.SettingsModel.wordsPerDay = await SecureStore.getItemAsync('wordsPerDay');
         
-        console.log(this.SettingsModel.motherTongue);
-        console.log(this.SettingsModel.wordsPerDay);
         await this.saveMotherTongue();
         await this.saveUsername();
         await this.saveAvatar();

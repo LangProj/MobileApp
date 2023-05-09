@@ -30,7 +30,6 @@ export const settingsSlice = createSlice({
             state.settings.avatar = data.payload;
         },
         setWordsPerDay: (state, data) => {
-            console.log("Words per date from set in slice", data.payload);
             state.settings.wordsPerDay = data.payload;
         },
         setLevel: (state, data) => {

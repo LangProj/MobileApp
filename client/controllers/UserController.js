@@ -1,5 +1,5 @@
 import UserModel from '../models/UserModel.js';
-import {setId, setToken, createUser, fetchUser, getNewWords, getAllWords } from '../store/slices/userSlice.js';
+import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addWords } from '../store/slices/userSlice.js';
 import * as SecureStore from 'expo-secure-store';
 
 class UserController {
@@ -18,13 +18,22 @@ class UserController {
         await SecureStore.setItemAsync('token', String(this.UserModel.token));
     }
 
+    async saveWords() {
+        await this.store.dispatch(setWords(this.UserModel.words));
+    }
+
     async loadLocalData() {
         const token = await SecureStore.getItemAsync('token');
         this.UserModel.token = token;
+
         const id = await SecureStore.getItemAsync('id');
         this.UserModel.id = id;
+
+
         await this.saveId();
         await this.saveToken();
+        await this.saveWords();
+
         return token;
     }
 
@@ -44,12 +53,19 @@ class UserController {
     }
 
     async addWords(data) {
-        console.log("Adding words");
-        return await this.store.dispatch(addWords(data));
+        console.log("Adding words...");
+        if (this.UserModel.words) {
+            this.UserModel.words = this.UserModel.words.concat(data);
+        }
+        else {
+            this.UserModel.words = data;
+        }
+        this.saveWords();
+        //return await this.store.dispatch(addWords(data));
     }
 
     async getAllWords(data) {
-        console.log("Fetching all words");
+        console.log("Fetching all words...");
         return await this.store.dispatch(getAllWords(data));
     }
 }

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import cardMenuWrapper from './cardMenuWrapper';
-import { userController } from '../../../store/store';
+import { statisticsController, userController } from '../../../store/store.js';
 
 
 function makeRandomString(length) {
@@ -71,7 +71,6 @@ class CardScreen extends Component {
       console.log(error);
       return null;
     });
-    console.log("Words", 1 / this.words.length);
     this.currentWordInd = 0
     this.setState({wordProgress: `1/${this.words.length}`});
     this.setState({floatProgress: 1/this.words.length});
@@ -80,6 +79,7 @@ class CardScreen extends Component {
     this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
     
     this.learnedWords = [];
+    this.notLearnedWords = [];
   }
 
   constructor(props) {
@@ -114,7 +114,7 @@ class CardScreen extends Component {
  
   onSwipeRight(gestureState) {
     //this code is triggered on swipe right
-    this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
+    this.notLearnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
     this.currentWordInd++;
     this.setState({myText: 'You swiped right!'});
     this.setState({word: this.words[this.currentWordInd].word});
@@ -158,7 +158,9 @@ class CardScreen extends Component {
 
   }
 
-  handleFinish() {
+  async handleFinish() {
+    await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
+    await statisticsController.addWords(this.learnedWords.length);
     this.props.navigation.goBack();
   }
 

@@ -16,7 +16,6 @@ export default function GuestScreen({ navigation }) {
   useEffect(() => {
     localizationController.fetchCurrentLocale();
   }, []);
-  console.log(localization);
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>
