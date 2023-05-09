@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from '../../axios.js';
+import * as FileSystem from 'expo-file-system';
 
 export const createUser = createAsyncThunk("user/createUser", async (params) => {
     try {
@@ -19,13 +20,40 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (params) => {
     }
 });
 
-export const addWords = createAsyncThunk("user/addWords", async (params) => {
+export const addWords = createAsyncThunk("user/addWords", async (data) => {
     try {
-        const {res, status } = await axios.post('/addWords', params);
-        return {data: res, status: status};
+        if (data != null) {
+            const path = `${FileSystem.documentDirectory}/lang/words.json`;
+            await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/words/`, { intermediates: true });
+
+            const dataStr = JSON.stringify(data);
+            await FileSystem.writeAsStringAsync(path, dataStr, {
+                encoding: FileSystem.EncodingType.UTF8
+            })
+                .then(() => console.log("Created file with all words"))
+                .catch((err) => console.log("Failed to create file with all words:", err));
+        }
+        //const {res, status } = await axios.post('/addWords', params);
     } catch (error) {
-        return {data: error.response.data.message, status: error.response.status};
+        //return {data: error.response.data.message, status: error.response.status};
     }
+});
+
+export const fetchAllWords = createAsyncThunk("user/fetchAllWords", async() => {
+    const path = `${FileSystem.documentDirectory}/lang/words.json`;
+    await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/words/`, { intermediates: true });
+
+    let res = await FileSystem.readAsStringAsync(path, {
+        encoding: FileSystem.EncodingType.UTF8
+    })
+    .then(async (data) => {
+        return await JSON.parse(data);
+    })
+    .catch(async (err) => {
+        console.log(err);
+        return {};
+    });
+    return res;
 });
 
 export const getNewWords = createAsyncThunk("getNewWords", async (params) => {
@@ -86,9 +114,34 @@ export const userSlice = createSlice({
                 state.status = 'failed';
                 state.userData.personalData = null;
             })
+            .addCase(getNewWords.pending, (state, action) => {
+                state.status = 'loading';
+            })
             .addCase(getNewWords.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.userData.words = action.payload.data;
+            })
+            .addCase(getNewWords.rejected, (state, action) => {
+                state.status = 'failed';
+            })
+            .addCase(addWords.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(addWords.fulfilled, (state, action) => {
+                state.status = 'success';
+            })
+            .addCase(addWords.rejected, (state, action) => {
+                state.status = 'failed';
+            })
+            .addCase(fetchAllWords.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchAllWords.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.userData.words = action.payload;
+            })
+            .addCase(fetchAllWords.rejected, (state, action) => {
+                state.status = 'failed';
             })
     },
 });
