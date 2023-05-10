@@ -191,6 +191,8 @@ export const getWordsToLearn = async (req, res) => {
         { $sample: { size: maxWords } }, 
       ]);
   
+      console.log(words);
+      console.log(userWords);
       const wordsToLearn = words.concat(userWords); 
       res.status(200).json({ 
         words: wordsToLearn 
@@ -202,3 +204,39 @@ export const getWordsToLearn = async (req, res) => {
       });
     }
   };
+
+export const addNewWords = async (req, res) => {
+    try {
+        console.log(req.body.userId);
+        console.log(req.body.newWords);
+
+        const user = await UserModel.findOneAndUpdate(
+            {
+                _id: req.body.userId,
+            },
+            {
+                $push: {words: req.body.newWords}
+            }
+        );
+
+        // user.updateOne({
+        //     _id: req.body.userId,
+        //     $push: {words: req.body.newWords}
+        // });
+        // if (user.words.length != 0)
+            
+        //     //console.log(user.words.concat(req.body.newWords));
+        // else
+        //     user.words = req.body.newWords;
+            //console.log("No items");
+        console.log("111111", user.words[0]);
+        await user.save();
+
+        res.status(200).json(user.words);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Failed to send new words to db"
+        });
+    }
+};
