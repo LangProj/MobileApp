@@ -21,6 +21,7 @@ app.post('/auth/register', registerValidation, handleValidationErrors, UserContr
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
 app.post('/updateSettings', UserController.updateSettings);
 app.post('/getWordsToLearn', UserController.getWordsToLearn);
+app.post('/getWordCountByLevel', UserController.getWordCountByLevel);
 app.get('/localization/:locale', SettingsController.getLocalization);
 app.patch('/addNewWords',UserController.addNewWords);
 //app.patch('localization/:locale');
