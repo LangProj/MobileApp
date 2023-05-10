@@ -31,6 +31,19 @@ class StatisticsController {
         }
     }
 
+    async createLocaleData() {
+        const date = new Date();
+        await SecureStore.setItemAsync('currentDate', String(date.getDate()));
+
+        this.StatisticsModel.wordsADay = 0;
+        this.StatisticsModel.wordsInLevel = 1000;
+        this.StatisticsModel.wordsAllTime = 0;
+
+        await this.saveWordsADay();
+        await this.saveWordsInLevel();
+        await this.saveWordsAllTime();
+    }
+
     async loadLocalData() {
         const date = new Date();
         const savedDate = await SecureStore.getItemAsync('currentDate');
@@ -38,6 +51,7 @@ class StatisticsController {
 
         const wordsADay = await SecureStore.getItemAsync('wordsADay');
         !isNaN(Number(wordsADay)) ? this.StatisticsModel.wordsADay = +wordsADay : this.StatisticsModel.wordsADay = 0;
+        
         const wordsInLevel = await SecureStore.getItemAsync('wordsInLevel');
         !isNaN(Number(wordsInLevel)) ? this.StatisticsModel.wordsInLevel = +wordsInLevel : this.StatisticsModel.wordsInLevel = 1000;
 
