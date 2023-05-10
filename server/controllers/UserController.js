@@ -219,17 +219,6 @@ export const addNewWords = async (req, res) => {
             }
         );
 
-        // user.updateOne({
-        //     _id: req.body.userId,
-        //     $push: {words: req.body.newWords}
-        // });
-        // if (user.words.length != 0)
-            
-        //     //console.log(user.words.concat(req.body.newWords));
-        // else
-        //     user.words = req.body.newWords;
-            //console.log("No items");
-        console.log("111111", user.words[0]);
         await user.save();
 
         res.status(200).json(user.words);

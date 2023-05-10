@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const WordSchema = mongoose.Schema(
+export const WordSchema = mongoose.Schema(
     {
         word: String,
         level: String,
