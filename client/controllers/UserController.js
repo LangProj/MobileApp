@@ -1,5 +1,5 @@
 import UserModel from '../models/UserModel.js';
-import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addWords, fetchAllWords } from '../store/slices/userSlice.js';
+import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addNewWordsToDB, addWordsLocaly, fetchAllWords } from '../store/slices/userSlice.js';
 import * as SecureStore from 'expo-secure-store';
 
 class UserController {
@@ -20,7 +20,7 @@ class UserController {
 
     async saveWords() {
         await this.store.dispatch(setWords(this.UserModel.words));
-        await this.store.dispatch(addWords(this.UserModel.words));
+        await this.store.dispatch(addWordsLocaly(this.UserModel.words));
     }
 
     async getAllWords() {
@@ -62,6 +62,13 @@ class UserController {
         return await this.store.dispatch(getNewWords(data));
     }
 
+    async addNewWordsToDB(words) {
+        await this.store.dispatch(addNewWordsToDB({
+            userId: this.UserModel.id,
+            newWords: words,
+        }));
+    }
+
     async addWords(data) {
         console.log("Adding words...");
         if (Object.keys(this.UserModel.words).length != 0) {
@@ -71,6 +78,7 @@ class UserController {
             this.UserModel.words = data;
         }
         await this.saveWords();
+        await this.addNewWordsToDB(data);
     }
 }
 

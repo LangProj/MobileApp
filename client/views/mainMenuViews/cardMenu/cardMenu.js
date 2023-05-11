@@ -94,7 +94,7 @@ class CardScreen extends Component {
       word:'',
       wordTranslated:'',
       pronunciation: '',
-      sentence:'sentence in English',
+      sentence:'The boy is playing with his toy car',
       sentenceTranslated:'sentence Translated',
       wordProgress:``,
       floatProgress:0.01,

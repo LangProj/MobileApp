@@ -6,7 +6,7 @@ import { Linking } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
-import { userController } from '../../store/store.js';
+import { settingsController, statisticsController, userController } from '../../store/store.js';
 
 import { useForm, Controller } from 'react-hook-form';
 
@@ -33,12 +33,28 @@ export default function LoginScreen({ navigation }) {
           message: data.payload.userData
         });
       else {
-        await userController.UserModel.setId(data.payload.userData._id);
-        await userController.UserModel.setToken(data.payload.userData.token);
-        await userController.UserModel.setUsername(data.payload.userData.settings.username);
-        await userController.UserModel.setMotherTongue(data.payload.userData.settings.appLanguage);
-        await userController.UserModel.setWordsPerDay(data.payload.userData.settings.wordsPerDay);
-        await userController.UserModel.setLevel(data.payload.userData.settings.level);
+        console.log(data.payload.userData);
+
+        userController.UserModel.id = data.payload.userData._id;
+        userController.UserModel.token = data.payload.userData.token;
+        userController.UserModel.words = data.payload.userData.words;
+        await userController.saveId();
+        await userController.saveToken();
+        await userController.saveWords();
+
+        await statisticsController.loadLocalData();
+        
+        settingsController.SettingsModel.username = data.payload.userData.settings.username;
+        settingsController.SettingsModel.avatar = data.payload.userData.settings.avatar;
+        settingsController.SettingsModel.motherTongue = data.payload.userData.settings.appLanguage;
+        settingsController.SettingsModel.wordsPerDay = data.payload.userData.settings.wordsPerDay;
+        settingsController.SettingsModel.level = data.payload.userData.settings.level;
+        await settingsController.saveUsername();
+        await settingsController.saveAvatar();
+        await settingsController.saveMotherTongue();
+        await settingsController.saveWordsPerDay();
+        await settingsController.saveLevel();
+
         navigation.navigate('MainScreen');
       }
     }
