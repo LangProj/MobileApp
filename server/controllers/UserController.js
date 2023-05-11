@@ -129,6 +129,7 @@ export const login = async (req, res) => {
             email: contacts.get("email"),
             phone: contacts.get("phoneNumber"),
             _id: user._id,
+            words: user._doc.words,
             token,
             settings,
         });
