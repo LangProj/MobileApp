@@ -13,7 +13,13 @@ const UserSchema = mongoose.Schema(
             ref: 'Settings',
             required: true,
         },
-        words: [WordSchema],
+        words: {
+            type: Array,
+            of: {
+                type: Map,
+                of: WordSchema
+            }
+        },
         subscription: {
             type: Schema.Types.ObjectId,
             ref: 'Subscription',
