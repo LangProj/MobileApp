@@ -7,15 +7,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useSelector } from 'react-redux';
-import { localizationController } from '../../store/store.js';
 
 
 export default function GuestScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
   
-  useEffect(() => {
-    localizationController.fetchCurrentLocale();
-  }, []);
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>

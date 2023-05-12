@@ -35,7 +35,6 @@ class UserController {
         this.UserModel.id = id;
 
         const words = await this.getAllWords();
-        console.log("Payload", words.payload);
         this.UserModel.words = words.payload;
         console.log("Got words from file", this.UserModel.words);
 

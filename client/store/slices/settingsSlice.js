@@ -30,7 +30,6 @@ export const settingsSlice = createSlice({
             state.settings.avatar = data.payload;
         },
         setWordsPerDay: (state, data) => {
-            console.log("In set in slice", data.payload);
             state.settings.wordsPerDay = data.payload;
         },
         setLevel: (state, data) => {
@@ -47,7 +46,6 @@ export const settingsSlice = createSlice({
         })
         .addCase(updateSettings.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            console.log("From addCase", action.payload);
             state.settings = {
                 username: action.payload.data.settings.username,
                 avatar: action.payload.data.settings.avatar,

@@ -60,13 +60,11 @@ class CardScreen extends Component {
   async componentDidMount() {
 
     const { user, settings } = this.props;
-    console.log("UserData", user.userData);
     this.words = await userController.getNewWords({
       userId: user.userData.personalData.id,
       maxWords: settings.settings.wordsPerDay
     })
     .then(response => {
-      console.log(response.payload.data.words);
       return response.payload.data.words;
     })
     .catch(error => {

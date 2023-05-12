@@ -26,15 +26,12 @@ export default function LoginScreen({ navigation }) {
   const onSubmit = async (values) => {
     if (!errors.length) {
       const data = await userController.fetchUser(values);
-      console.log(data);
       if (data.payload.status === 404 || data.payload.status === 400)
         setError('root.serverError', {
           type: data.payload.status,
           message: data.payload.userData
         });
       else {
-        console.log(data.payload.userData);
-
         userController.UserModel.id = data.payload.userData._id;
         userController.UserModel.token = data.payload.userData.token;
         userController.UserModel.words = data.payload.userData.words;
