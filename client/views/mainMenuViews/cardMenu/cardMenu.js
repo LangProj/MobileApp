@@ -163,7 +163,7 @@ class CardScreen extends Component {
 
   async handleFinish() {
     await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
-    await statisticsController.addWords(this.learnedWords.length);
+    await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
     this.props.navigation.goBack();
   }
 
