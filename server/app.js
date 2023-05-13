@@ -22,6 +22,7 @@ app.post('/auth/login', loginValidation, handleValidationErrors, UserController.
 app.post('/updateSettings', UserController.updateSettings);
 app.post('/getWordsToLearn', UserController.getWordsToLearn);
 app.post('/getWordCountByLevel', UserController.getWordCountByLevel);
+app.post('/getUserWords', UserController.getUserWords);
 app.get('/localization/:locale', SettingsController.getLocalization);
 app.patch('/addNewWords',UserController.addNewWords);
 //app.patch('localization/:locale');

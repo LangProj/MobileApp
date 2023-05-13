@@ -245,12 +245,6 @@ export const getWordCountByLevel = async (req, res) => {
   try {
     const level = req.body.level;
     
-    const validLevels = ["A1", "A2", "B1", "B2", "C1"];
-    if (!validLevels.includes(level)) {
-      return res.status(400).json({
-        message: "Invalid level. Please provide a valid level.",
-      });
-    }
 
     const wordCount = await WordModel.countDocuments({ level: level });
 
@@ -264,3 +258,27 @@ export const getWordCountByLevel = async (req, res) => {
     });
   }
 };
+export const getUserWords = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const user = await UserModel.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+  
+      const wordsId = user.words;
+      const words = await WordModel.find({ _id: { $in: wordsId } });
+  
+      res.status(200).json({
+        words: words,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to retrieve user words",
+      });
+    }
+  };
