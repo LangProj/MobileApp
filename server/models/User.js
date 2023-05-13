@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import { WordSchema } from './Word.js';
 
 const UserSchema = mongoose.Schema(
     {
@@ -12,7 +13,13 @@ const UserSchema = mongoose.Schema(
             ref: 'Settings',
             required: true,
         },
-        words: [Schema.Types.ObjectId],
+        words: {
+            type: Array,
+            of: {
+                type: Map,
+                of: WordSchema
+            }
+        },
         subscription: {
             type: Schema.Types.ObjectId,
             ref: 'Subscription',

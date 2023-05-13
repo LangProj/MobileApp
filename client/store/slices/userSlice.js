@@ -20,7 +20,7 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (params) => {
     }
 });
 
-export const addWords = createAsyncThunk("user/addWords", async (data) => {
+export const addWordsLocaly = createAsyncThunk("user/addWords", async (data) => {
     try {
         if (data != null) {
             const path = `${FileSystem.documentDirectory}/lang/words.json`;
@@ -36,6 +36,15 @@ export const addWords = createAsyncThunk("user/addWords", async (data) => {
         //const {res, status } = await axios.post('/addWords', params);
     } catch (error) {
         //return {data: error.response.data.message, status: error.response.status};
+    }
+});
+
+export const addNewWordsToDB = createAsyncThunk("user/addNewWordsToDB", async (data) => {
+    try {
+        const {res, status} = await axios.patch('/addNewWords', data);
+        return {data: res, status: status};
+    } catch (error) {
+        return {data: error.response.data.message, status: error.response.status};
     }
 });
 
@@ -124,13 +133,23 @@ export const userSlice = createSlice({
             .addCase(getNewWords.rejected, (state, action) => {
                 state.status = 'failed';
             })
-            .addCase(addWords.pending, (state, action) => {
+            .addCase(addWordsLocaly.pending, (state, action) => {
                 state.status = 'loading';
             })
-            .addCase(addWords.fulfilled, (state, action) => {
+            .addCase(addWordsLocaly.fulfilled, (state, action) => {
                 state.status = 'success';
             })
-            .addCase(addWords.rejected, (state, action) => {
+            .addCase(addWordsLocaly.rejected, (state, action) => {
+                state.status = 'failed';
+            })
+            .addCase(addNewWordsToDB.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(addNewWordsToDB.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.words = action.payload.data;
+            })
+            .addCase(addNewWordsToDB.rejected, (state, action) => {
                 state.status = 'failed';
             })
             .addCase(fetchAllWords.pending, (state, action) => {

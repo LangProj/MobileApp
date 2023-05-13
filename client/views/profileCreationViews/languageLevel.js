@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
-import { userController, settingsController } from '../../store/store.js';
+import { userController, settingsController, statisticsController } from '../../store/store.js';
 
 import { useSelector } from 'react-redux';
 
@@ -33,7 +33,8 @@ export default function LanguageLevelScreen({ navigation }) {
   const confirmValidation = async () => {
     if(Active != 'none'){
       settingsController.SettingsModel.level = Active;
-      settingsController.saveLevel();
+      await settingsController.saveLevel();
+      await statisticsController.createLocaleData();
       const result = await settingsController.updateSettings({
         userId: userController.UserModel.id,
         avatar: settingsController.SettingsModel.avatar,

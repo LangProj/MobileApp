@@ -60,13 +60,11 @@ class CardScreen extends Component {
   async componentDidMount() {
 
     const { user, settings } = this.props;
-    console.log("UserData", user.userData);
     this.words = await userController.getNewWords({
       userId: user.userData.personalData.id,
       maxWords: settings.settings.wordsPerDay
     })
     .then(response => {
-      console.log(response.payload.data.words);
       return response.payload.data.words;
     })
     .catch(error => {
@@ -94,7 +92,7 @@ class CardScreen extends Component {
       word:'',
       wordTranslated:'',
       pronunciation: '',
-      sentence:'sentence in English',
+      sentence:'The boy is playing with his toy car',
       sentenceTranslated:'sentence Translated',
       wordProgress:``,
       floatProgress:0.01,
@@ -163,7 +161,7 @@ class CardScreen extends Component {
 
   async handleFinish() {
     await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
-    await statisticsController.addWords(this.learnedWords.length);
+    await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
     this.props.navigation.goBack();
   }
 

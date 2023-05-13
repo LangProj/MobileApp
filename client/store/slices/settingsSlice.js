@@ -3,8 +3,8 @@ import axios from '../../axios.js';
 
 export const updateSettings = createAsyncThunk("user/updateSettings", async (params) => {
     try {
-        const { settings, status } = await axios.post('/updateSettings', params);
-        return {data: settings, status: status};
+        const { data, status } = await axios.post('/updateSettings', params);
+        return {data: data, status: status};
     } catch (error) {
         return {data: error.response.data.message, status: error.response.status};
     }
@@ -46,7 +46,13 @@ export const settingsSlice = createSlice({
         })
         .addCase(updateSettings.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            state.settings = action.payload;
+            state.settings = {
+                username: action.payload.data.settings.username,
+                avatar: action.payload.data.settings.avatar,
+                wordsPerDay: action.payload.data.settings.wordsPerDay,
+                level: action.payload.data.settings.level,
+                appLanguage:  action.payload.data.settings.appLanguage
+            };
         })
         .addCase(updateSettings.rejected, (state, action) => {
             state.status = 'failed';

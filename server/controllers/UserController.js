@@ -129,6 +129,7 @@ export const login = async (req, res) => {
             email: contacts.get("email"),
             phone: contacts.get("phoneNumber"),
             _id: user._id,
+            words: user._doc.words,
             token,
             settings,
         });
@@ -219,17 +220,6 @@ export const addNewWords = async (req, res) => {
             }
         );
 
-        // user.updateOne({
-        //     _id: req.body.userId,
-        //     $push: {words: req.body.newWords}
-        // });
-        // if (user.words.length != 0)
-            
-        //     //console.log(user.words.concat(req.body.newWords));
-        // else
-        //     user.words = req.body.newWords;
-            //console.log("No items");
-        console.log("111111", user.words[0]);
         await user.save();
 
         res.status(200).json(user.words);
