@@ -259,9 +259,8 @@ export const getUserWords = async (req, res) => {
         });
       }
   
-      const wordsId = user.words;
-      const words = await WordModel.find({ _id: { $in: wordsId } });
-  
+      const words = user.words;
+
       res.status(200).json({
         words: words,
       });
