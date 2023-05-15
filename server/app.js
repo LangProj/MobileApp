@@ -6,6 +6,7 @@ import * as UserController from './controllers/UserController.js';
 import * as SettingsController from './controllers/SettingsController.js';
 
 import handleValidationErrors from './utils/handleValidationErrors.js';
+import checkAuth from './utils/checkAuth.js'
 
 
 mongoose
@@ -19,15 +20,15 @@ app.use(express.json());
 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
-app.post('/getWordsToLearn', UserController.getWordsToLearn);
-app.post('/getWordCountByLevel', UserController.getWordCountByLevel);
+app.post('/getWordsToLearn', checkAuth, UserController.getWordsToLearn);
+app.post('/getWordCountByLevel', checkAuth, UserController.getWordCountByLevel);
 app.post('/getUserWords', UserController.getUserWords);
 app.get('/localization/:locale', SettingsController.getLocalization);
-app.patch('/addNewWords',UserController.addNewWords);
+app.patch('/addNewWords', checkAuth, UserController.addNewWords);
 //app.patch('localization/:locale');
 
 //settings
-app.post('/settings/updateSettings', SettingsController.updateSettings);
+app.post('/settings/updateSettings', checkAuth, SettingsController.updateSettings);
 app.post('/settings/setUsername', SettingsController.setUsername);
 app.post('/settings/setAvatar', SettingsController.setAvatar);
 app.post('/settings/setAppLanguage', SettingsController.setAppLanguage);
