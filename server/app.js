@@ -19,7 +19,6 @@ app.use(express.json());
 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
-app.post('/updateSettings', SettingsController.updateSettings);
 app.post('/getWordsToLearn', UserController.getWordsToLearn);
 app.post('/getWordCountByLevel', UserController.getWordCountByLevel);
 app.post('/getUserWords', UserController.getUserWords);
