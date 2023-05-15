@@ -19,13 +19,21 @@ app.use(express.json());
 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
-app.post('/updateSettings', UserController.updateSettings);
+app.post('/updateSettings', SettingsController.updateSettings);
 app.post('/getWordsToLearn', UserController.getWordsToLearn);
 app.post('/getWordCountByLevel', UserController.getWordCountByLevel);
 app.post('/getUserWords', UserController.getUserWords);
 app.get('/localization/:locale', SettingsController.getLocalization);
 app.patch('/addNewWords',UserController.addNewWords);
 //app.patch('localization/:locale');
+
+//settings
+app.post('/settings/updateSettings', SettingsController.updateSettings);
+app.post('/settings/setUsername', SettingsController.setUsername);
+app.post('/settings/setAvatar', SettingsController.setAvatar);
+app.post('/settings/setAppLanguage', SettingsController.setAppLanguage);
+app.post('/settings/setWordsPerDay', SettingsController.setWordsPerDay);
+app.post('/settings/setLevel', SettingsController.setLevel);
 
 app.listen(3000, ()=>{
     console.log('server is listening on port 3000');

@@ -1,4 +1,6 @@
 import LocalizationModel from '../models/Localization.js';
+import SettingsModel from '../models/Settings.js';
+import UserModel from '../models/User.js';
 import fs from 'fs';
 
 export const getLocalization = async (req, res) => {
@@ -45,3 +47,137 @@ export const getLocalization = async (req, res) => {
         });
     }
 }
+export const updateSettings = async (req, res) => {
+    try {
+        const userId = req.body.userId;
+        const user = await UserModel.findById(userId);
+        const settingsId = user.settings;
+        const updatedSettings = {
+            avatar: req.body.avatar,
+            appLanguage: req.body.appLanguage,
+            username: req.body.username,
+            wordsPerDay: req.body.wordsPerDay,
+            level: req.body.level,
+        };
+        const options = { new: true };
+        const settings = await SettingsModel.findByIdAndUpdate(
+            settingsId,
+            updatedSettings,
+            options
+        );
+        res.status(200).json({
+            message: "Settings updated",
+            settings,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to update user preferences",
+        });
+    }
+};
+
+export const setUsername = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const newUsername = req.body.username;
+
+      const user = await UserModel.findById(userId);
+      user.username = newUsername;
+      await user.save();
+  
+      res.status(200).json({
+        message: "Username updated",
+        username: newUsername,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to update username",
+      });
+    }
+};
+  
+  export const setAvatar = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const newAvatar = req.body.avatar;
+  
+      const user = await UserModel.findById(userId);
+      user.avatar = newAvatar;
+      await user.save();
+  
+      res.status(200).json({
+        message: "Avatar updated",
+        avatar: newAvatar,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to update avatar",
+      });
+    }
+};
+
+  export const setAppLanguage = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const newLanguage = req.body.language;
+  
+      const user = await UserModel.findById(userId);
+      user.appLanguage = newLanguage;
+      await user.save();
+  
+      res.status(200).json({
+        message: "App language updated",
+        language: newLanguage,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to update app language",
+      });
+    }
+};
+  
+  export const setWordsPerDay = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const newWordsPerDay = req.body.wordsPerDay;
+  
+      const user = await UserModel.findById(userId);
+      user.wordsPerDay = newWordsPerDay;
+      await user.save();
+  
+      res.status(200).json({
+        message: "Words per day updated",
+        wordsPerDay: newWordsPerDay,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to update words per day",
+      });
+    }
+};
+  
+  export const setLevel = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      const newLevel = req.body.level;
+  
+      const user = await UserModel.findById(userId);
+      user.level = newLevel;
+      await user.save();
+  
+      res.status(200).json({
+        message: "User level updated",
+        level: newLevel,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: "Failed to update user level",
+      });
+    }
+};

@@ -141,35 +141,6 @@ export const login = async (req, res) => {
     }
 }
 
-export const updateSettings = async (req, res) => {
-    try {
-        const userId = req.body.userId;
-        const user = await UserModel.findById(userId);
-        const settingsId = user.settings;
-        const updatedSettings = {
-            avatar: req.body.avatar,
-            appLanguage: req.body.appLanguage,
-            username: req.body.username,
-            wordsPerDay: req.body.wordsPerDay,
-            level: req.body.level,
-        };
-        const options = { new: true };
-        const settings = await SettingsModel.findByIdAndUpdate(
-            settingsId,
-            updatedSettings,
-            options
-        );
-        res.status(200).json({
-            message: "Settings updated",
-            settings,
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Failed to update user preferences",
-        });
-    }
-};
 
 
 export const getWordsToLearn = async (req, res) => {
@@ -204,7 +175,7 @@ export const getWordsToLearn = async (req, res) => {
         message: "Failed to retrieve words to learn",
       });
     }
-  };
+};
 
 export const addNewWords = async (req, res) => {
     try {
@@ -248,6 +219,7 @@ export const getWordCountByLevel = async (req, res) => {
     });
   }
 };
+
 export const getUserWords = async (req, res) => {
     try {
       const userId = req.body.userId;
@@ -270,4 +242,4 @@ export const getUserWords = async (req, res) => {
         message: "Failed to retrieve user words",
       });
     }
-  };
+};
