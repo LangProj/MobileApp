@@ -28,7 +28,7 @@ app.patch('/addNewWords', checkAuth, UserController.addNewWords);
 //app.patch('localization/:locale');
 
 //settings
-app.post('/settings/updateSettings', checkAuth, SettingsController.updateSettings);
+app.post('/settings/updateSettings', SettingsController.updateSettings);
 app.post('/settings/setUsername', SettingsController.setUsername);
 app.post('/settings/setAvatar', SettingsController.setAvatar);
 app.post('/settings/setAppLanguage', SettingsController.setAppLanguage);
