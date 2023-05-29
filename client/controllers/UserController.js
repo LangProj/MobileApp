@@ -58,7 +58,9 @@ class UserController {
 
     async getNewWords(data) {
         console.log("Getting new words...");
-        return await this.store.dispatch(getNewWords(data));
+        const token = this.UserModel.token;
+
+        return await this.store.dispatch(getNewWords({params: data, token}));
     }
 
     async addNewWordsToDB(words) {

@@ -3,7 +3,7 @@ import axios from '../../axios.js';
 
 export const updateSettings = createAsyncThunk("user/updateSettings", async (params) => {
     try {
-        const { data, status } = await axios.post('/updateSettings', params);
+        const { data, status } = await axios.post('/settings/updateSettings', params);
         return {data: data, status: status};
     } catch (error) {
         return {data: error.response.data.message, status: error.response.status};

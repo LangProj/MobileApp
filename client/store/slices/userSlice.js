@@ -65,9 +65,13 @@ export const fetchAllWords = createAsyncThunk("user/fetchAllWords", async() => {
     return res;
 });
 
-export const getNewWords = createAsyncThunk("getNewWords", async (params) => {
+export const getNewWords = createAsyncThunk("getNewWords", async ({params, token}) => {
     try {
-        const {data, status} = await axios.post('/getWordsToLearn', params);
+        const {data, status} = await axios.post('/getWordsToLearn', params, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
         return {data: data, status: status};
     }
     catch (error) {
