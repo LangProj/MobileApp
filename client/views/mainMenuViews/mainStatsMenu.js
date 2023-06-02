@@ -24,69 +24,98 @@ export default function MainStatsMenuScreen({ navigation }) {
 
   return (
     
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.mainWrapper}>   
-        <View style={styles.header}>
-        <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
-        </View>
-        
-
-
-        <View elevation={24} style={styles.statCard} >
-          <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
-          <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
-          <Text style={[styles.whiteButtonTitle, {position:'relative',top:-30,left:260,fontWeight:700,}]}>Amount</Text>
-          <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-33}}>
-            <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
+    <View style={{flex: 1}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.mainWrapper}>   
+          <View style={styles.header}>
+            <View style={styles.image}></View>
+            <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
           </View>
-        </View>
-
-        <View elevation={24} style={styles.statCard} >
-          <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
-          <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
           
-          <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
-            <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
+
+
+          <View elevation={24} style={styles.statCard} >
+            <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
+            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
+            <Text style={[styles.whiteButtonTitle, {position:'relative',top:-30,left:260,fontWeight:700,}]}>Amount</Text>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-33}}>
+              <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
+            </View>
           </View>
-        </View>
+
+          <View elevation={24} style={styles.statCard} >
+            <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
+            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
+            
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+              <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
+            </View>
+          </View>
 
 
-        <View elevation={24} style={[styles.statCard,{marginBottom:30}]} >
-          <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
-          <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
+          <View elevation={24} style={[styles.statCard,{marginBottom:30}]} >
+            <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
+            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
+            
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+              <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
+            </View>
+          </View>
           
-          <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
-            <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
+
+
+          <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('Card')}>
+            <Text style={styles.whiteButtonTitle}>Learn new words</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.whiteButton}>
+            <Text style={styles.whiteButtonTitle}>Start learning words</Text>
+          </TouchableOpacity>
+
+
+
+          
+          <View elevation={24} style={styles.extendedStatCard} >
+            <Text style={[styles.statCardTitle,{color:'#8E761F',flexWrap:'wrap',width:130,textAlign:'center'}]}>RECORD OF THE WEEK</Text>
+            <View style={{width:80,height:80,backgroundColor:'gray',borderRadius:50}}></View>
           </View>
+
+
+
         </View>
-        
+      </ScrollView>
+      <View style={styles.navBar}>
+        <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
 
-        <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('Card')}>
-          <Text style={styles.whiteButtonTitle}>Learn new words</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.whiteButton}>
-          <Text style={styles.whiteButtonTitle}>Start learning words</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('VocabularyScreen')}>
+                        
+          </TouchableOpacity>
 
-
-
-        
-        <View elevation={24} style={styles.extendedStatCard} >
-          <Text style={[styles.statCardTitle,{color:'#8E761F',flexWrap:'wrap',width:130,textAlign:'center'}]}>RECORD OF THE WEEK</Text>
-          <View style={{width:80,height:80,backgroundColor:'gray',borderRadius:50}}></View>
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('ListScreen')}>
+                        
+          </TouchableOpacity>
         </View>
-
-
-
       </View>
-    </ScrollView>
+
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  
+  navBar:{
+    
+    backgroundColor:'white',
+    borderTopColor:'#65A3FF',
+    borderTopWidth:3,
+    height:75,
+  },
+
+
+
   statCardTitle:{
     fontSize:25,
     fontWeight:700,    
@@ -206,6 +235,8 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     marginTop:20,
+    backgroundColor:'gray',
+    borderRadius:50,
   },
   
   
