@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import {Alert, Modal,Pressable,SafeAreaView,FlatList,} from 'react-native';
+import { settingsController, userController } from '../../store/store.js';
 
 
 const Item = ({word,word_translated}) => (
@@ -49,7 +50,17 @@ const ALL_WORDS = [
 export default function WordListScreen({ navigation }) {
 
   let [filterUI, setFilterUI] = useState('disabled');
-  let [List, setList] = useState(ALL_WORDS);
+  let [words, setWords] = useState(userController.UserModel.words.map((word) => {
+    const res = word.word;
+    if (word.learned >= 0.8)
+      return {...res, status: "Learned"};
+    else if (word.learned <= 0.1)
+      return {...res, status: "Not learned"};
+    else
+      return {...res, status: "On study"};
+
+  }));
+  let [List, setList] = useState(words);
 
   let [filter_config, setFilter_config] = useState({
     parts_of_speech:[],
@@ -58,12 +69,6 @@ export default function WordListScreen({ navigation }) {
     level:[]
   });
 
-
-  
-
-
-  
-  
 
   const handleFilterItemClick = (item,topic) => {
     
@@ -80,6 +85,7 @@ export default function WordListScreen({ navigation }) {
   
   useEffect(() => {
     sortList();
+    console.log("Words in useEffect", words);
   }, [filter_config]);
   
   
@@ -92,14 +98,14 @@ export default function WordListScreen({ navigation }) {
       filter_config.category.length == 0 &&
       filter_config.level.length == 0 &&
       filter_config.word_status.length == 0){
-      result = ALL_WORDS
+      result = words
     }else{
-      for(i = 0;i < ALL_WORDS.length;i++){
-        if(filter_config.parts_of_speech.includes(ALL_WORDS[i].part_of_speech) || 
-        filter_config.category.includes(ALL_WORDS[i].category) || 
-        filter_config.word_status.includes(ALL_WORDS[i].status) || 
-        filter_config.level.includes(ALL_WORDS[i].level)){
-          result.push(ALL_WORDS[i])
+      for(i = 0;i < words.length;i++){
+        if(filter_config.parts_of_speech.includes(words[i].partOfSpeech) || 
+        filter_config.category.includes(words[i].category) || 
+        filter_config.word_status.includes(words[i].status) || 
+        filter_config.level.includes(words[i].level)){
+          result.push(words[i])
         }
       }
     }  
@@ -131,8 +137,8 @@ export default function WordListScreen({ navigation }) {
         contentContainerStyle={[{justifyContent:'center',alignContent:'center',alignItems:'center',marginTop:5}]}
         style={[{height:500,width:350,backgroundColor:'white',}]}
         data={List}
-        renderItem={({item}) => <Item word={item.word} word_translated={item.word_translated}/>}
-        keyExtractor={item => item.id}/>
+        renderItem={({item}) => <Item word={item.word} word_translated={item.translation["uk"]}/>}
+        keyExtractor={item => item._id}/>
 
       
         
@@ -200,21 +206,21 @@ export default function WordListScreen({ navigation }) {
             </View>
             
             <TouchableOpacity 
-            style={filter_config.parts_of_speech.includes('Verb') ? styles.filterItemActive: styles.filterItemDisabled} 
-            onPress={() => handleFilterItemClick('Verb','parts_of_speech')}>
-              <Text style={filter_config.parts_of_speech.includes('Verb') ? styles.filterItemTitleActive: styles.filterItemTitleDisabled}>Verb</Text>
+            style={filter_config.parts_of_speech.includes('verb') ? styles.filterItemActive: styles.filterItemDisabled} 
+            onPress={() => handleFilterItemClick('verb','parts_of_speech')}>
+              <Text style={filter_config.parts_of_speech.includes('verb') ? styles.filterItemTitleActive: styles.filterItemTitleDisabled}>Verb</Text>
             </TouchableOpacity>
              
             <TouchableOpacity 
-            style={filter_config.parts_of_speech.includes('Adjective') ? styles.filterItemActive: styles.filterItemDisabled} 
-            onPress={() => handleFilterItemClick('Adjective','parts_of_speech')}>
-              <Text style={filter_config.parts_of_speech.includes('Adjective') ? styles.filterItemTitleActive: styles.filterItemTitleDisabled}>Adjective</Text>
+            style={filter_config.parts_of_speech.includes('adjective') ? styles.filterItemActive: styles.filterItemDisabled} 
+            onPress={() => handleFilterItemClick('adjective','parts_of_speech')}>
+              <Text style={filter_config.parts_of_speech.includes('adjective') ? styles.filterItemTitleActive: styles.filterItemTitleDisabled}>Adjective</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
-            style={filter_config.parts_of_speech.includes('Noun') ? styles.filterItemActive: styles.filterItemDisabled} 
-            onPress={() => handleFilterItemClick('Noun','parts_of_speech')}>
-              <Text style={filter_config.parts_of_speech.includes('Noun') ? styles.filterItemTitleActive: styles.filterItemTitleDisabled}>Noun</Text>
+            style={filter_config.parts_of_speech.includes('noun') ? styles.filterItemActive: styles.filterItemDisabled} 
+            onPress={() => handleFilterItemClick('noun','parts_of_speech')}>
+              <Text style={filter_config.parts_of_speech.includes('noun') ? styles.filterItemTitleActive: styles.filterItemTitleDisabled}>Noun</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => setFilterUI('disabled')}>

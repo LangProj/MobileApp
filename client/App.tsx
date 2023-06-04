@@ -32,6 +32,7 @@ import MainStatsMenuScreen from './views/mainMenuViews/mainStatsMenu';
 
 import { Provider } from 'react-redux';
 import store from './store/store.js';
+import WordListScreen from './views/mainMenuViews/wordList';
 
 
 
@@ -61,6 +62,8 @@ export default function App() {
           <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>       
           <Stack.Screen  name="MainScreen" component={MainStatsMenuScreen} options={{headerShown:false}}/>       
           <Stack.Screen  name="Card" component={CardScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="VocabularyScreen" component={WordListScreen} options={{headerShown:false}}/>
+
         </Stack.Navigator>
       </NavigationContainer>
 
