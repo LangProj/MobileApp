@@ -64,9 +64,14 @@ class UserController {
     }
 
     async addNewWordsToDB(words) {
+        const token = this.UserModel.token;
+
         await this.store.dispatch(addNewWordsToDB({
-            userId: this.UserModel.id,
-            newWords: words,
+            data: {
+                userId: this.UserModel.id,
+                newWords: words,
+            },
+            token
         }));
     }
 

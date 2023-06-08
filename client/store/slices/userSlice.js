@@ -23,7 +23,7 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (params) => {
 export const addWordsLocaly = createAsyncThunk("user/addWords", async (data) => {
     try {
         if (data != null) {
-            const path = `${FileSystem.documentDirectory}/lang/words.json`;
+            const path = `${FileSystem.documentDirectory}/words/words.json`;
             await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/words/`, { intermediates: true });
 
             const dataStr = JSON.stringify(data);
@@ -39,17 +39,25 @@ export const addWordsLocaly = createAsyncThunk("user/addWords", async (data) => 
     }
 });
 
-export const addNewWordsToDB = createAsyncThunk("user/addNewWordsToDB", async (data) => {
+export const addNewWordsToDB = createAsyncThunk("user/addNewWordsToDB", async ({data, token}) => {
     try {
-        const {res, status} = await axios.patch('/addNewWords', data);
+        console.log("in add new words to db", data);
+        const {res, status} = await axios.patch('/addNewWords', data, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            }
+        });
+        console.log(res);
         return {data: res, status: status};
     } catch (error) {
+        console.log("Error", error);
         return {data: error.response.data.message, status: error.response.status};
     }
 });
 
+// Returns words from file on user`s device
 export const fetchAllWords = createAsyncThunk("user/fetchAllWords", async() => {
-    const path = `${FileSystem.documentDirectory}/lang/words.json`;
+    const path = `${FileSystem.documentDirectory}/words/words.json`;
     await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/words/`, { intermediates: true });
 
     let res = await FileSystem.readAsStringAsync(path, {
@@ -79,7 +87,7 @@ export const getNewWords = createAsyncThunk("getNewWords", async ({params, token
         return {data: error.response.data.message, status: error.response.status};
     }
 });
-
+// currently is not used
 export const getAllWords = createAsyncThunk("getAllWords", async (params) => {
     try {
         const {data, status} = await axios.get("getAllWords", params);
