@@ -7,7 +7,7 @@ import SettingsModel from '../models/Settings.js';
 import PersonalDataModel from '../models/PersonalData.js';
 import SubscriptionModel from '../models/Subscription.js';
 import WordModel from '../models/Word.js';
-
+import * as openai from 'openai';
 import validator from 'validator';
 
 export const register = async (req, res) => {
@@ -243,3 +243,32 @@ export const getUserWords = async (req, res) => {
       });
     }
 };
+export const generateSentence = async (req, res) => {
+        try {
+            const { language, level, grammaticalTheme } = req.body;
+        
+            const prompt1 = `Составь предложение на ${language} уровня ${level} на грамматическую тему "${grammaticalTheme}"`;
+            const prompt2 = `Напиши английский перевод этого предложения`;
+            // мой ключик (Стас)
+            const openaiApi = new openai.OpenAIApi("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");
+            const response = await openaiApi.createChatCompletion({
+              model: 'text-davinci-003',
+              messages: [{ role: 'system', content: prompt1 }, { role: 'system', content: prompt2 }],
+              max_tokens: 50,
+              temperature: 0.7,
+              n: 2,
+            });
+        
+            const generatedSentences = response.choices.map(choice => choice.text.trim());
+        
+            res.status(200).json({
+              russianSentence: generatedSentences[0],
+              englishSentence: generatedSentences[1],
+            });
+          } catch (error) {
+            console.error(error);
+            res.status(500).json({
+              message: 'Failed to generate sentences',
+            });
+          }
+    }
