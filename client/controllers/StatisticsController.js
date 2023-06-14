@@ -1,6 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import StatisticsModel from '../models/StatisticsModel.js';
-import { setWordsADay, setWordsInLevel, setWordsAllTime } from '../store/slices/statisticsSlice.js';
+import { setWordsADay, setWordsInLevel, setWordsAllTime, getWordsCountByLevel} from '../store/slices/statisticsSlice.js';
+import { settingsController } from '../store/store.js';
 
 class StatisticsController {
     constructor(store) {
@@ -36,7 +37,7 @@ class StatisticsController {
         await SecureStore.setItemAsync('currentDate', String(date.getDate()));
 
         this.StatisticsModel.wordsADay = 0;
-        this.StatisticsModel.wordsInLevel = 1000;
+        this.StatisticsModel.wordsInLevel = await this.getWordsCount();
         this.StatisticsModel.wordsAllTime = 0;
 
         await this.saveWordsADay();
@@ -62,6 +63,12 @@ class StatisticsController {
         await this.saveWordsADay();
         await this.saveWordsInLevel();
         await this.saveWordsAllTime();
+    }
+
+    async getWordsCount() {
+        const res = await this.store.dispatch(getWordsCountByLevel({level: settingsController.SettingsModel.level}));
+        console.log("Result words count", res);
+        return res.payload.data.wordCount;
     }
 
     async addWords(words) {

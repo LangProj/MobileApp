@@ -1,5 +1,14 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import axios from '../../axios.js';
 
+export const getWordsCountByLevel = createAsyncThunk("/statistics/getWordsCountByLevel", async(params) => {
+    try {
+        const {data, status} = await axios.post('/getWordCountByLevel', params);
+        return {data: data, status: status};
+    } catch (error) {
+        
+    }
+});
 
 export const statisticsSlice = createSlice({
     name: 'statistics',

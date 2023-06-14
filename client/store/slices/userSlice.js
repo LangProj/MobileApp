@@ -41,7 +41,6 @@ export const addWordsLocaly = createAsyncThunk("user/addWords", async (data) => 
 
 export const addNewWordsToDB = createAsyncThunk("user/addNewWordsToDB", async ({data, token}) => {
     try {
-        console.log("in add new words to db", data);
         const {res, status} = await axios.patch('/addNewWords', data, {
             headers: {
                 authorization: `Bearer ${token}`,

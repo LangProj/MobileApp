@@ -29,7 +29,7 @@ export default function MainStatsMenuScreen({ navigation }) {
         <View style={styles.mainWrapper}>   
           <View style={styles.header}>
             <View style={styles.image}></View>
-            <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
+            {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
           </View>
           
 
