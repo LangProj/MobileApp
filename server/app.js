@@ -21,7 +21,7 @@ app.use(express.json());
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
 app.post('/getWordsToLearn', checkAuth, UserController.getWordsToLearn);
-app.post('/getWordCountByLevel', checkAuth, UserController.getWordCountByLevel);
+app.post('/getWordCountByLevel', UserController.getWordCountByLevel);
 app.post('/getUserWords', checkAuth, UserController.getUserWords);
 app.get('/localization/:locale', SettingsController.getLocalization);
 app.patch('/addNewWords', checkAuth, UserController.addNewWords);
