@@ -1,6 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from '../../axios.js';
 import * as FileSystem from 'expo-file-system';
+import defaultLang from "../../assets/lang/defaultLang.json";
+
 
 export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (loc) => {
     // 1 - проверить есть ли файл с нужной локалью
@@ -38,18 +40,19 @@ export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (l
                 })
                 .catch(async (error) => {
                     console.log("Fetching default locale...");
-                    const defaultPath = `${FileSystem.documentDirectory}/lang/default.json`;
-                    const data = await FileSystem.readAsStringAsync(defaultPath, {
-                        encoding: FileSystem.EncodingType.UTF8
-                    })
-                        .then(res => {
-                            console.log("Successfully loaded default file", res);
-                            return res;
-                        })
-                        .catch(err => {
-                            console.log("Error while loading default file", err);
-                        })
-                    return {data: JSON.parse(data)};
+                    console.log(defaultLang);
+                    // const defaultPath = `${FileSystem.documentDirectory}/lang/default.json`;
+                    // const data = await FileSystem.readAsStringAsync(defaultPath, {
+                    //     encoding: FileSystem.EncodingType.UTF8
+                    // })
+                    //     .then(res => {
+                    //         console.log("Successfully loaded default file", res);
+                    //         return res;
+                    //     })
+                    //     .catch(err => {
+                    //         console.log("Error while loading default file", err);
+                    //     })
+                    return {data: defaultLang};
                 });
             return data;
         });
