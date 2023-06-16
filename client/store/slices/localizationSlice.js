@@ -11,7 +11,7 @@ export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (l
 
     const path = `${FileSystem.documentDirectory}/lang/${loc}.json`;
     await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/lang/`, { intermediates: true });
-
+    
     try {
         console.log("Fetching from client files...");
         let res = await FileSystem.readAsStringAsync(path, {
@@ -27,7 +27,7 @@ export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (l
                 validateStatus: function (status) {
                     return status >= 200 && status < 300;
                 },
-                timeout: 3000
+                timeout: 500
             })
                 .then(async (response) => {
                     const dataStr = JSON.stringify(response.data);
@@ -40,19 +40,11 @@ export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (l
                 })
                 .catch(async (error) => {
                     console.log("Fetching default locale...");
-                    console.log(defaultLang);
-                    // const defaultPath = `${FileSystem.documentDirectory}/lang/default.json`;
-                    // const data = await FileSystem.readAsStringAsync(defaultPath, {
-                    //     encoding: FileSystem.EncodingType.UTF8
-                    // })
-                    //     .then(res => {
-                    //         console.log("Successfully loaded default file", res);
-                    //         return res;
-                    //     })
-                    //     .catch(err => {
-                    //         console.log("Error while loading default file", err);
-                    //     })
-                    return {data: defaultLang};
+                    const result = {}
+                    defaultLang.forEach(element => {
+                        result[Object.keys(element)[0]] = element[Object.keys(element)[0]];
+                    });
+                    return {data: result};
                 });
             return data;
         });
