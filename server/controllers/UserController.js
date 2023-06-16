@@ -9,6 +9,8 @@ import SubscriptionModel from '../models/Subscription.js';
 import WordModel from '../models/Word.js';
 import * as openai from 'openai';
 import validator from 'validator';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const register = async (req, res) => {
     try {
@@ -243,15 +245,20 @@ export const getUserWords = async (req, res) => {
       });
     }
 };
+
+
+
 export const generateSentence = async (req, res) => {
     try {
         const { language, level, grammaticalTheme } = req.body;
 
         const prompt1 = `Составь предложение на ${language} уровня ${level} на грамматическую тему "${grammaticalTheme}"`;
-    
+        
         // мой ключик (Соня)
+        const openaiApiKey = process.env.API_KEY;
+        console.log(openaiApiKey);
         const config = new openai.Configuration({
-            apiKey: "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",
+            apiKey: openaiApiKey,
         });
         const openaiApi = new openai.OpenAIApi(config);
         // генерация предложения на родном языке
