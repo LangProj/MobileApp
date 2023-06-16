@@ -57,6 +57,7 @@ export default function SignUpScreen({ navigation }) {
             control={control}
             rules={{
               required: true,
+              pattern: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
             }}
             name='contact'
             render={({field: { onChange, onBlur, value} }) => (
@@ -70,7 +71,7 @@ export default function SignUpScreen({ navigation }) {
               />
             )}
           />
-          {errors.contact && <Text>This is required.</Text>}
+          {errors.contact && <Text style={styles.errorMsg}>* Invalid email format.</Text>}
           {errors.root?.serverError.type === 409 && <Text>Such email is already in use</Text>}
           <Controller
             control={control}
@@ -89,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
               />
             )}
           />
-          {errors.password && <Text>Min 8 symbols</Text>}
+          {errors.password && <Text style={styles.errorMsg}>* Minimum 8 symbols</Text>}
           <Controller
             control={control}
             rules={{
@@ -110,7 +111,7 @@ export default function SignUpScreen({ navigation }) {
               />   
             )}
           />
-          {errors.confirmPassword && <Text>Password does not match</Text>}
+          {errors.confirmPassword && <Text style={styles.errorMsg}>* Passwords do not match</Text>}
 
           
         </View>
@@ -226,4 +227,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     color:'#12bddb',
   },
+  errorMsg: {
+    color: 'red',
+  }
 });

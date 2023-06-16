@@ -6,7 +6,7 @@ export const getWordsCountByLevel = createAsyncThunk("/statistics/getWordsCountB
         const {data, status} = await axios.post('/getWordCountByLevel', params);
         return {data: data, status: status};
     } catch (error) {
-        
+        console.log(error);
     }
 });
 
