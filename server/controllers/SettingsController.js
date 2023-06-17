@@ -77,6 +77,26 @@ export const updateSettings = async (req, res) => {
     }
 };
 
+export const checkUsername = async (req, res) => {
+  try {
+    const usernameToCheck = req.body.username;
+    const username = await SettingsModel.findOne({username: usernameToCheck});
+    if (username) {
+      return res.status(409).json({
+        message: "Such username is already in use"
+      });
+    } 
+    return res.status(200).json({
+      message: "Username is not taken yet"
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Failed to check username",
+    });
+  }
+}
+
 export const setUsername = async (req, res) => {
     try {
       const userId = req.body.userId;
