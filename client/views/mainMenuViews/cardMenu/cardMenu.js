@@ -74,7 +74,7 @@ class CardScreen extends Component {
     console.log(this.words);
     this.currentWordInd = 0
     this.setState({wordProgress: `1/${this.words.length}`});
-    this.setState({floatProgress: 1/this.words.length});
+    this.setState({floatProgress: 1/this.words.length/2});
     this.setState({word: this.words[this.currentWordInd].word});
     this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
     this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
@@ -101,30 +101,52 @@ class CardScreen extends Component {
 
   onSwipeLeft(gestureState) {
     //this code is triggered on swipe left
-    this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
-    this.currentWordInd++;
-    this.setState({myText: 'You swiped left!'});
-    this.setState({word: this.words[this.currentWordInd].word});
-    this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
-    this.setState({sentence: makeRandomString(24)});
-    this.setState({sentenceTranslated: makeRandomString(24)});
-    this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
-    this.setState({wordProgress: Math.round((this.state.floatProgress + 1/this.words.length) * this.words.length) + `/${this.words.length}`});
-    this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+    if (this.currentWordInd == this.words.length - 1) {
+      this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
+      this.currentWordInd++;
+      this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+    }
+    else if (this.currentWordInd < this.words.length - 1) {
+      this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
+      this.currentWordInd++;
+      this.setState({myText: 'You swiped left!'});
+      console.log(this.currentWordInd);
+      this.setState({word: this.words[this.currentWordInd].word});
+      this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
+      this.setState({sentence: makeRandomString(24)});
+      this.setState({sentenceTranslated: makeRandomString(24)});
+      if (this.currentWordInd == 1)
+        this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
+      else
+        this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+
+      this.setState({wordProgress: this.currentWordInd+1 + `/${this.words.length}`});
+      this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+    }
   }
  
   onSwipeRight(gestureState) {
     //this code is triggered on swipe right
-    this.notLearnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
-    this.currentWordInd++;
-    this.setState({myText: 'You swiped right!'});
-    this.setState({word: this.words[this.currentWordInd].word});
-    this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
-    this.setState({sentence: makeRandomString(24)});
-    this.setState({sentenceTranslated: makeRandomString(24)});
-    this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
-    this.setState({wordProgress: Math.round((this.state.floatProgress + 1/this.words.length) * this.words.length) + `/${this.words.length}`});
-    this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+    if (this.currentWordInd == this.words.length - 1) {
+      this.notLearnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
+      this.currentWordInd++;
+      this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+    }
+    else if (this.currentWordInd < this.words.length - 1) {
+      this.notLearnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
+      this.currentWordInd++;
+      this.setState({myText: 'You swiped right!'});
+      this.setState({word: this.words[this.currentWordInd].word});
+      this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
+      this.setState({sentence: makeRandomString(24)});
+      this.setState({sentenceTranslated: makeRandomString(24)});
+      if (this.currentWordInd == 1)
+        this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
+      else
+        this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+      this.setState({wordProgress: this.currentWordInd+1 + `/${this.words.length}`});
+      this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+    }
   }
 
   onSwipe(gestureName, gestureState) {
