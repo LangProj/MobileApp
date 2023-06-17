@@ -229,5 +229,7 @@ const styles = StyleSheet.create({
   },
   errorMsg: {
     color: 'red',
+    marginTop:-10,
+    marginBottom:10
   }
 });

@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize:21,
     color:'#000000',
-    paddingLeft:153,
+    textAlign:'center'
   },
   whiteButtonTitle:{
     fontSize:21,
