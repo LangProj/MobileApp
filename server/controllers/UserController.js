@@ -12,6 +12,8 @@ import validator from 'validator';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { Types } from 'mongoose';
+
 export const register = async (req, res) => {
     try {
 
@@ -147,43 +149,33 @@ export const login = async (req, res) => {
 
 export const getWordsToLearn = async (req, res) => {
     try {
-      const userId = req.body.userId;
-      const user = await UserModel.findById(userId);
-  
-      const wordsId = user.words;
-      let userWords = [];
-  
-      if (wordsId && wordsId.length > 0) {
-        userWords = await WordModel.find({ _id: { $in: wordsId } });
-      }
-  
-      const maxWords = parseInt(req.body.maxWords); 
-  
- 
-      const words = await WordModel.aggregate([
-        { $match: { _id: { $nin: wordsId } } }, 
-        { $sample: { size: maxWords } }, 
-      ]);
-  
-      console.log(words);
-      console.log(userWords);
-      const wordsToLearn = words.concat(userWords); 
-      res.status(200).json({ 
-        words: wordsToLearn 
-    });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({
-        message: "Failed to retrieve words to learn",
-      });
+        const userId = req.body.userId;
+
+        const user = await UserModel.findById(userId);
+        const wordsId = user._doc.words.map(word => new Types.ObjectId(word.get('word')._id));
+
+
+        const maxWords = parseInt(req.body.maxWords); 
+    
+    
+        const words = await WordModel.aggregate([
+            { $match: { _id: { $nin: wordsId } } }, 
+            { $sample: { size: maxWords } }, 
+        ]);
+        
+        res.status(200).json({ 
+            words: words 
+        });
+        } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to retrieve words to learn",
+        });
     }
 };
 
 export const addNewWords = async (req, res) => {
     try {
-        console.log(req.body.userId);
-        console.log(req.body.newWords);
-
         const user = await UserModel.findOneAndUpdate(
             {
                 _id: req.body.userId,
