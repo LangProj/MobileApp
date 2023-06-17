@@ -30,7 +30,7 @@ app.post('/generateSentence', checkAuth, UserController.generateSentence);
 
 //settings
 app.post('/settings/updateSettings', SettingsController.updateSettings);
-app.get('/checkUsername', SettingsController.checkUsername);
+app.post('/checkUsername', SettingsController.checkUsername);
 app.post('/settings/setUsername', SettingsController.setUsername);
 app.post('/settings/setAvatar', SettingsController.setAvatar);
 app.post('/settings/setAppLanguage', SettingsController.setAppLanguage);
