@@ -10,6 +10,16 @@ export const updateSettings = createAsyncThunk("user/updateSettings", async (par
     }
 });
 
+export const checkUsername = createAsyncThunk("user/checkUsername", async(params) => {
+    try {
+        const { data, status } = await axios.post("/checkUsername", params);
+        return {data: data, status: status};
+    } catch (error) {
+        console.log("Err", error);
+        return {data: error.response.data.message, status: error.response.status}
+    }
+})
+
 export const settingsSlice = createSlice({
     name: 'settings',
     initialState: {

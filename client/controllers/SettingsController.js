@@ -1,5 +1,5 @@
 import SettingsModel from '../models/SettingsModel.js';
-import { setMotherTongue, setUsername, setAvatar, setLevel, setWordsPerDay, updateSettings } from '../store/slices/settingsSlice.js';
+import { setMotherTongue, setUsername, setAvatar, setLevel, setWordsPerDay, updateSettings, checkUsername } from '../store/slices/settingsSlice.js';
 import * as SecureStore from 'expo-secure-store';
 
 class UserController {
@@ -46,6 +46,11 @@ class UserController {
         await this.saveAvatar();
         await this.saveLevel();
         await this.saveWordsPerDay();
+    }
+
+    async checkUsernameExist(data) {
+        console.log("Checking username...");
+        return await this.store.dispatch(checkUsername(data));
     }
 
     async updateSettings(data) {

@@ -8,6 +8,8 @@ import { settingsController } from '../../store/store';
 
 import { useSelector } from 'react-redux';
 
+import { useForm, Controller } from 'react-hook-form'
+
 
 
 export default function LoginConfirmationScreen({ navigation }) {
@@ -17,10 +19,26 @@ export default function LoginConfirmationScreen({ navigation }) {
 
   const [username, setUsername] = useState('');
 
-  const handleNext = async () => {
-    settingsController.SettingsModel.username = username;
-    await settingsController.saveUsername();
-    navigation.navigate('Photo');
+  const { control, handleSubmit, setError, formState: {errors, isValid} } = useForm({
+    defaultValues: {
+      username: ''
+    },
+    mode: 'onSubmit'
+  });
+
+  const handleNext = async (values) => {
+    settingsController.SettingsModel.username = values;
+    const check = await settingsController.checkUsernameExist(values);
+    if (check.payload.status == 409) {
+      setError('root.serverError', {
+        type: check.payload.status,
+        message: check.payload.data
+      });
+    }
+    else {
+      await settingsController.saveUsername();
+      navigation.navigate('Photo');
+    }
   }
   
   return (
@@ -37,10 +55,27 @@ export default function LoginConfirmationScreen({ navigation }) {
         <Text  style={styles.title}>{localization.data.enterLoginLabelText}</Text>
 
         
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          name='username'
+          render={({field: {onChange, onBlur, value} }) => (
+            <TextInput 
+              placeholder={localization.data.loginInputText} 
+              style={styles.whiteButton}
+              onBlur={onBlur}
+              onChangeText={ value => onChange(value) }
+              value={value} 
+            />
+          )}
+        />
+        {errors.username && <Text>* Username is required</Text>}
+        {errors.root?.serverError.type === 409 && <Text>* Such username is already in use</Text>}
+        
 
-        <TextInput placeholder={localization.data.loginInputText} style={styles.whiteButton} value={username} onChangeText={setUsername}/>
-
-        <TouchableOpacity style={styles.button} onPress={() => handleNext()}>          
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(handleNext)}>          
           <Text style={styles.buttonTitle}>{localization.data.nextBtnText}</Text>                            
         </TouchableOpacity>
         
