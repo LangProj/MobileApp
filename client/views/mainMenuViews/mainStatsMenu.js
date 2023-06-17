@@ -68,7 +68,7 @@ export default function MainStatsMenuScreen({ navigation }) {
             <Text style={styles.whiteButtonTitle}>Learn new words</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.whiteButton}>
+          <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('WordTranslationScreen')}>
             <Text style={styles.whiteButtonTitle}>Start learning words</Text>
           </TouchableOpacity>
 

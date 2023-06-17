@@ -14,39 +14,6 @@ const Item = ({word,word_translated}) => (
 );
 
 
-
-const ALL_WORDS = [
-  {
-    id: 1,
-    word: 'nobleman',
-    word_translated: 'вельможа',
-    level: 'C1',
-    category: 'Travel',
-    part_of_speech: 'Noun',
-    status: 'On study'
-  },
-  {
-    id: 2,
-    word: 'honeycomb',
-    word_translated: 'стільник',
-    level: 'B1',
-    category: 'Eat',
-    part_of_speech: 'Noun',
-    status: 'Not learned'
-  },
-  {
-    id: 3,
-    word: 'tumbleweeds',
-    word_translated: 'перекотиполе',
-    level: 'B2',
-    category: 'Travel',
-    part_of_speech: 'Noun',
-    status: 'Not learned'
-  },
-  
-]
-
-
 export default function WordListScreen({ navigation }) {
 
   let [filterUI, setFilterUI] = useState('disabled');
@@ -137,7 +104,7 @@ export default function WordListScreen({ navigation }) {
         contentContainerStyle={[{justifyContent:'center',alignContent:'center',alignItems:'center',marginTop:5}]}
         style={[{height:500,width:350,backgroundColor:'white',}]}
         data={List}
-        renderItem={({item}) => <Item word={item.word} word_translated={item.translation["uk"]}/>}
+        renderItem={({item}) => <Item word={item.word} word_translated={item.translation[settingsController.SettingsModel.motherTongue]}/>}
         keyExtractor={item => item._id}/>
 
       

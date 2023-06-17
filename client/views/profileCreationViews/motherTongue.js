@@ -55,8 +55,8 @@ export default function MotherTongueScreen({ navigation }) {
           <Text style={Active != 'ru' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>{localization.data.russianBtnText}</Text>                            
         </TouchableOpacity>
 
-        <TouchableOpacity style={Active != 'ua' ? styles.whiteButton : styles.whiteButtonActive} onPress={() => handleClick('ua')}>          
-          <Text style={Active != 'ua' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>{localization.data.ukrainianBtnText}</Text>                            
+        <TouchableOpacity style={Active != 'uk' ? styles.whiteButton : styles.whiteButtonActive} onPress={() => handleClick('uk')}>          
+          <Text style={Active != 'uk' ? styles.whiteButtonTitle : styles.whiteButtonTitleActive }>{localization.data.ukrainianBtnText}</Text>                            
         </TouchableOpacity>
 
 

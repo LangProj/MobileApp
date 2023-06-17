@@ -27,9 +27,9 @@ export default function LoginConfirmationScreen({ navigation }) {
   });
 
   const handleNext = async (values) => {
-    settingsController.SettingsModel.username = values;
+    settingsController.SettingsModel.username = values.username;
     const check = await settingsController.checkUsernameExist(values);
-    if (check.payload.status == 409) {
+    if (check.payload.status === 409) {
       setError('root.serverError', {
         type: check.payload.status,
         message: check.payload.data

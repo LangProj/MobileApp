@@ -4,49 +4,18 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput}
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-const ALL_WORDS = [
-  {
-    id: 1,
-    word: 'nobleman',
-    word_translated: 'вельможа',
-    level: 'C1',
-    category: 'Travel',
-    part_of_speech: 'Noun',
-    status: 'On study',
-    sentence: 'sentence with the nobleman word'
-  },
-  {
-    id: 2,
-    word: 'honeycomb',
-    word_translated: 'стільник',
-    level: 'B1',
-    category: 'Eat',
-    part_of_speech: 'Noun',
-    status: 'Not learned',
-    sentence: 'sentence with the honeycomb word'
-  },
-  {
-    id: 3,
-    word: 'tumbleweeds',
-    word_translated: 'перекотиполе',
-    level: 'B2',
-    category: 'Travel',
-    part_of_speech: 'Noun',
-    status: 'Not learned',
-    sentence: 'sentence with the tumbleweeds word'
-  },
-  
-]
+import { settingsController, userController } from '../../store/store';
 
 
 
 export default function WordTranslationScreen({ navigation }) {
   let [currentWordIndex, setCurrentWordIndex] = useState(0);
-  let [List, setList] = useState(ALL_WORDS);
-
+  let [words, setWords] = useState(userController.UserModel.words.filter(item => {
+    return item.learned < 0.8;
+  }));
+  let [List, setList] = useState(words);
   let [isCardFlipped, setIsCardFlipped] = useState(false);
-  let [cardTitle, setCardTitle] = useState(List[currentWordIndex].word_translated);
+  let [cardTitle, setCardTitle] = useState(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue]);
   let [cardDesc, setCardDesc] = useState('word desc');
 
   let [inputValue, setInputValue] = useState('');
@@ -72,24 +41,36 @@ export default function WordTranslationScreen({ navigation }) {
       
     }else{
       setIsCardFlipped(true)
-      setCardTitle(List[currentWordIndex].word)
-      setCardDesc(List[currentWordIndex].sentence)
+      setCardTitle(List[currentWordIndex].word.word)
+      setCardDesc(List[currentWordIndex].word.word) // sentence
       setButtonState(false)
     }
   };
 
   const checkWord = () => {
-    if(compareValues(inputValue,List[currentWordIndex].word)){
-      setTranslationResult('Correct translation')
-      flipCard()
+    if(compareValues(inputValue, List[currentWordIndex].word.word)){
+      for (let i = 0; i < userController.UserModel.words.length; i++) {
+        if (userController.UserModel.words[i].word._id === words[currentWordIndex].word._id) {
+          userController.UserModel.words[i].learned += 0.2;
+        }
+      }
+      setTranslationResult('Correct translation');
+      flipCard();
     }else{
       setTranslationResult('Wrong translation')
     }
   };
 
   const nextWord = () => {
-    setCurrentWordIndex(currentWordIndex + 1)
-    setCardTitle(List[currentWordIndex].word_translated)
+    if (currentWordIndex == words.length - 1) {
+      setCurrentWordIndex(0);
+      setWords(userController.UserModel.words.filter(item => {
+        return item.learned < 0.8;
+      }));
+      setList(words);
+    }
+    else setCurrentWordIndex(currentWordIndex + 1);
+    setCardTitle(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue])
     setIsCardFlipped(false)
     setButtonState(true)
     setTranslationResult('disabled')
@@ -128,7 +109,7 @@ export default function WordTranslationScreen({ navigation }) {
 
 
   useEffect(() => {
-    setCardTitle(List[currentWordIndex].word_translated);
+    setCardTitle(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue]);
   }, [currentWordIndex, List]);
  
   return (
@@ -182,7 +163,7 @@ export default function WordTranslationScreen({ navigation }) {
           <Next></Next> */}
 
         </View>
-        <View style={styles.navBar}>
+        {/* <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
           <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
@@ -197,7 +178,7 @@ export default function WordTranslationScreen({ navigation }) {
                         
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
       </ScrollView>
       
     </View>
