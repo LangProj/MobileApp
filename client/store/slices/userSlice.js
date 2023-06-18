@@ -35,6 +35,7 @@ export const addWordsLocaly = createAsyncThunk("user/addWords", async (data) => 
         }
         //const {res, status } = await axios.post('/addWords', params);
     } catch (error) {
+        console.log(error);
         //return {data: error.response.data.message, status: error.response.status};
     }
 });
@@ -54,7 +55,20 @@ export const updateWordsLocaly = createAsyncThunk("user/updateWordsLocaly", asyn
                 .catch((err) => console.log("Failed to create file with all words:", err));
         }
     } catch (error) {
-        
+        console.log(error);
+    }
+});
+
+export const updateWordsInDB = createAsyncThunk("user/updateWordsInDB", async (params) => {
+    try {
+        if (params != null) {
+            const {data, status} = await axios.patch('/updateWords', params);
+
+            return {data: data, status: status};
+        }
+    } catch (error) {
+        console.log("Error", error);
+        return {data: error.response.data.message, status: error.response.status};
     }
 });
 

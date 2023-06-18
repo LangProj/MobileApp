@@ -1,5 +1,5 @@
 import UserModel from '../models/UserModel.js';
-import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addNewWordsToDB, addWordsLocaly, fetchAllWords, updateWordsLocaly } from '../store/slices/userSlice.js';
+import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addNewWordsToDB, addWordsLocaly, fetchAllWords, updateWordsLocaly, updateWordsInDB } from '../store/slices/userSlice.js';
 import * as SecureStore from 'expo-secure-store';
 
 class UserController {
@@ -92,7 +92,11 @@ class UserController {
     }
 
     async updateWordsInDB() {
-        
+        const newWords = this.UserModel.words;
+        const res = await this.store.dispatch(updateWordsInDB({
+            userId: this.UserModel.id,
+            words: newWords,
+        }));
     }
 }
 
