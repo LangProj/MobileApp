@@ -39,6 +39,25 @@ export const addWordsLocaly = createAsyncThunk("user/addWords", async (data) => 
     }
 });
 
+export const updateWordsLocaly = createAsyncThunk("user/updateWordsLocaly", async(data) => {
+    try {
+        if (data != null) {
+            const path = `${FileSystem.documentDirectory}/words/words.json`;
+            await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/words/`, { intermediates: true });
+            await FileSystem.deleteAsync(path);
+
+            const dataStr = JSON.stringify(data);
+            await FileSystem.writeAsStringAsync(path, dataStr, {
+                encoding: FileSystem.EncodingType.UTF8
+            })
+                .then(() => console.log("Created file with all words"))
+                .catch((err) => console.log("Failed to create file with all words:", err));
+        }
+    } catch (error) {
+        
+    }
+});
+
 export const addNewWordsToDB = createAsyncThunk("user/addNewWordsToDB", async ({data, token}) => {
     try {
         const {res, status} = await axios.patch('/addNewWords', data, {

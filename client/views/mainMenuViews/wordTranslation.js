@@ -40,12 +40,18 @@ export default function WordTranslationScreen({ navigation }) {
     if(isCardFlipped){
       
     }else{
-      setIsCardFlipped(true)
-      setCardTitle(List[currentWordIndex].word.word)
-      setCardDesc(List[currentWordIndex].word.word) // sentence
-      setButtonState(false)
+      setIsCardFlipped(true);
+      setCardTitle(List[currentWordIndex].word.word);
+      setCardDesc(List[currentWordIndex].word.sentence.en);
+      setButtonState(false);
     }
   };
+
+  const handleBack = () => {
+    userController.updateWordsLocaly();
+    userController.updateWordsInDB();
+    navigation.goBack();
+  }
 
   const checkWord = () => {
     if(compareValues(inputValue, List[currentWordIndex].word.word)){
@@ -108,6 +114,7 @@ export default function WordTranslationScreen({ navigation }) {
   };
 
 
+
   useEffect(() => {
     setCardTitle(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue]);
   }, [currentWordIndex, List]);
@@ -118,7 +125,7 @@ export default function WordTranslationScreen({ navigation }) {
     <View style={{flex: 1}}>
       <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
         <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around'}]}>
-          <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => flipCard()} ></TouchableOpacity>
+          <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => handleBack()} ></TouchableOpacity>
           <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center',marginTop:20}]}>Translate</Text>
           <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
           {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}

@@ -14,21 +14,7 @@ import {
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import cardMenuWrapper from './cardMenuWrapper';
-import { statisticsController, userController } from '../../../store/store.js';
-
-
-function makeRandomString(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
-
+import { settingsController, statisticsController, userController } from '../../../store/store.js';
 
 
 
@@ -72,12 +58,14 @@ class CardScreen extends Component {
       return null;
     });
     console.log(this.words);
-    this.currentWordInd = 0
+    this.currentWordInd = 0;
     this.setState({wordProgress: `1/${this.words.length}`});
     this.setState({floatProgress: 1/this.words.length/2});
     this.setState({word: this.words[this.currentWordInd].word});
-    this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
+    this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
     this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+    this.setState({sentence: this.words[this.currentWordInd].sentence.en});
+    this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
     
     this.learnedWords = [];
     this.notLearnedWords = [];
@@ -92,7 +80,7 @@ class CardScreen extends Component {
       word:'',
       wordTranslated:'',
       pronunciation: '',
-      sentence:'The boy is playing with his toy car',
+      sentence:'',
       sentenceTranslated:'sentence Translated',
       wordProgress:``,
       floatProgress:0.01,
@@ -112,9 +100,9 @@ class CardScreen extends Component {
       this.setState({myText: 'You swiped left!'});
       console.log(this.currentWordInd);
       this.setState({word: this.words[this.currentWordInd].word});
-      this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
-      this.setState({sentence: makeRandomString(24)});
-      this.setState({sentenceTranslated: makeRandomString(24)});
+      this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
+      this.setState({sentence: this.words[this.currentWordInd].sentence.en});
+      this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
       if (this.currentWordInd == 1)
         this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
       else
@@ -137,9 +125,9 @@ class CardScreen extends Component {
       this.currentWordInd++;
       this.setState({myText: 'You swiped right!'});
       this.setState({word: this.words[this.currentWordInd].word});
-      this.setState({wordTranslated: this.words[this.currentWordInd].translation.uk});
-      this.setState({sentence: makeRandomString(24)});
-      this.setState({sentenceTranslated: makeRandomString(24)});
+      this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
+      this.setState({sentence: this.words[this.currentWordInd].sentence.en});
+      this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
       if (this.currentWordInd == 1)
         this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
       else
