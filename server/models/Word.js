@@ -9,9 +9,16 @@ export const WordSchema = mongoose.Schema(
             of: String,
         },
         partOfSpeech: String,
-        typeof: Array,
+        category: {
+            type: Map,
+            of: String,
+        },
         pronunciation: String,
-        frequency: Number
+        frequency: Number,
+        sentence: {
+            type: Map,
+            of: String,
+        },
     },
     {
         timestamp: true,
