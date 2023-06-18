@@ -12,6 +12,8 @@ import validator from 'validator';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import nodemailer from 'nodemailer';
+
 import { Types } from 'mongoose';
 
 export const register = async (req, res) => {
@@ -286,3 +288,46 @@ export const generateSentence = async (req, res) => {
         });
     }
 }
+
+export const sendConfirmationEmail = async (req, res) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+              user: process.env.EMAIL_USERNAME,
+              pass: process.env.EMAIL_PASSWORD,
+            },
+        });
+        function generateConfirmationCode() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+        const { userId } = req.body;
+
+        const userEmail = req.body.email;
+
+        const user = await UserModel.findById(userId);
+    
+        if (!user) {
+          return res.status(404).json({ message: 'Пользователь не найден' });
+        }
+
+        const confirmationCode = generateConfirmationCode();
+    
+        user.VerificationCode = confirmationCode;
+        await user.save();
+    
+        const mailOptions = {
+          from: 'speechsonia@gmail.com',
+          to: userEmail, 
+          subject: 'Confirmation code',
+          text: `Your verification code: ${confirmationCode}`,
+        };
+    
+        await transporter.sendMail(mailOptions);
+    
+        res.status(200).json({ message: 'Confirmation email sent' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to send confirmation email' });
+      }
+    }

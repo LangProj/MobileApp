@@ -25,6 +25,10 @@ const UserSchema = mongoose.Schema(
             ref: 'Subscription',
             required: true,
         },
+        VerificationCode: {
+            type: String,
+            default: null,
+        },
     },
     {
         timestamp: true,

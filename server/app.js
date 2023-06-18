@@ -26,6 +26,7 @@ app.post('/getUserWords', checkAuth, UserController.getUserWords);
 app.get('/localization/:locale', SettingsController.getLocalization);
 app.patch('/addNewWords', checkAuth, UserController.addNewWords);
 app.post('/generateSentence', checkAuth, UserController.generateSentence);
+app.post('/sendConfirmationEmail', UserController.sendConfirmationEmail);
 //app.patch('localization/:locale');
 
 //settings
