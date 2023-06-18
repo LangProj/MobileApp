@@ -28,6 +28,7 @@ app.patch('/addNewWords', checkAuth, UserController.addNewWords);
 app.post('/generateSentence', checkAuth, UserController.generateSentence);
 app.post('/sendConfirmationEmail', UserController.sendConfirmationEmail);
 app.post('/confirmCode', UserController.confirmCode);
+app.patch('/updateWords', UserController.updateWords);
 
 //app.patch('localization/:locale');
 

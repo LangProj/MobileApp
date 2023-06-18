@@ -198,6 +198,27 @@ export const addNewWords = async (req, res) => {
     }
 };
 
+export const updateWords = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.body.userId);
+
+        const wordsArray = req.body.words.map(elem => new Map(Object.entries(elem)));
+
+        user.words = wordsArray;
+
+        await user.save();
+
+        res.status(200).json({
+            message: "Updated"
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Failed to update words"
+        });
+    }
+}
+
 export const getWordCountByLevel = async (req, res) => {
   try {
     const level = req.body.level;
