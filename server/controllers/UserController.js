@@ -342,14 +342,14 @@ export const sendConfirmationEmail = async (req, res) => {
         function generateConfirmationCode() {
             return Math.floor(100000 + Math.random() * 900000).toString();
         }
-        const { userId } = req.body;
+        const userId = req.body.id;
 
         const userEmail = req.body.email;
 
         const user = await UserModel.findById(userId);
-    
+        
         if (!user) {
-          return res.status(404).json({ message: 'Пользователь не найден' });
+            return res.status(404).json({ message: 'Пользователь не найден' });
         }
 
         const confirmationCode = generateConfirmationCode();
@@ -384,7 +384,11 @@ export const sendConfirmationEmail = async (req, res) => {
           }
           console.log(user.verificationCode);
           if (user.verificationCode === code) {
-            user.isVerified = true;
+            const personalData = await PersonalDataModel.findById(user._doc.personalData);
+            
+            personalData.isVerified = true;
+
+            await personalData.save();
             await user.save();
       
             return res.status(200).json({ message: 'Code confirmed successfully' });
