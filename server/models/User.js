@@ -20,6 +20,11 @@ const UserSchema = mongoose.Schema(
                 of: WordSchema
             }
         },
+        statistics: {
+            type: Schema.Types.ObjectId,
+            ref: 'Statistics',
+            required: true,
+        },
         subscription: {
             type: Schema.Types.ObjectId,
             ref: 'Subscription',

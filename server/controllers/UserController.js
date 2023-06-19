@@ -7,6 +7,7 @@ import SettingsModel from '../models/Settings.js';
 import PersonalDataModel from '../models/PersonalData.js';
 import SubscriptionModel from '../models/Subscription.js';
 import WordModel from '../models/Word.js';
+import StatisticsModel from '../models/Statistics.js';
 import * as openai from 'openai';
 import validator from 'validator';
 import dotenv from 'dotenv';
@@ -81,12 +82,18 @@ export const register = async (req, res) => {
         const settings = await settingsDoc.save();
         
 
+        //      -------     STATISTICS DOCUMENT   -------
+
+        const statisticsDoc = new StatisticsModel();
+        const statistics = await statisticsDoc.save();
+
 
         //      -------     USER DOCUMENT   -------
 
         const UserDoc = new UserModel({
             personalData: personalData._id,
             settings: settings._id,
+            statistics: statistics._id,
             subscription: (await SubscriptionModel.findOne({name: "Free"}, '_id'))._id,
         });
 
@@ -138,6 +145,8 @@ export const login = async (req, res) => {
 
         const user = await UserModel.findOne({personalData: userPersonalData._id});
         const settings = await SettingsModel.findById(user._doc.settings);
+        const statistics = await StatisticsModel.findById(user._doc.statistics);
+        console.log(statistics);
 
         const token = jwt.sign(
             {
@@ -158,6 +167,7 @@ export const login = async (req, res) => {
             words: user._doc.words,
             token,
             settings,
+            statistics,
         });
     } catch (err) {
         console.log(err);
@@ -255,6 +265,30 @@ export const getWordCountByLevel = async (req, res) => {
       message: "Failed to retrieve word count by level",
     });
   }
+};
+
+export const updateStatistics = async(req, res) => {
+    try {
+        const userId = req.body.id;
+        const user = await UserModel.findById(userId);
+        
+        const statistics = await StatisticsModel.findById(user._doc.statistics);
+
+        statistics.wordsADay = req.body.wordsADay;
+        statistics.wordsAllTime = req.body.wordsAllTime;
+        statistics.wordsInLevel = req.body.wordsInLevel;
+
+        statistics.save();
+
+        res.status(200).json({
+            message: "Updated",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+        message: "Failed to retrieve word count by level",
+    });
+    }
 };
 
 export const getUserWords = async (req, res) => {
