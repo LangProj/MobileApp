@@ -10,6 +10,14 @@ export const getWordsCountByLevel = createAsyncThunk("/statistics/getWordsCountB
     }
 });
 
+export const undateStatistics = createAsyncThunk("/statistics/undateStatistics", async (params) => {
+    try {
+        const {data, status} = await axios.patch('/updateStatistics', params);
+        return {data, status};
+    } catch (error) {
+        console.log(error);
+    }
+});
 export const statisticsSlice = createSlice({
     name: 'statistics',
     initialState: {

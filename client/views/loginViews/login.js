@@ -35,11 +35,16 @@ export default function LoginScreen({ navigation }) {
         userController.UserModel.id = data.payload.userData._id;
         userController.UserModel.token = data.payload.userData.token;
         userController.UserModel.words = data.payload.userData.words;
+        console.log("Stats from server", data.payload.userData.statistics);
         await userController.saveId();
         await userController.saveToken();
         await userController.saveWords();
 
-        await statisticsController.loadLocalData();
+        statisticsController.StatisticsModel.wordsADay = data.payload.userData.statistics.wordsADay;
+        statisticsController.StatisticsModel.wordsAllTime = data.payload.userData.statistics.wordsAllTime;
+        statisticsController.StatisticsModel.wordsInLevel = data.payload.userData.statistics.wordsInLevel;
+
+        await statisticsController.saveStatistics();
         
         settingsController.SettingsModel.username = data.payload.userData.settings.username;
         settingsController.SettingsModel.avatar = data.payload.userData.settings.avatar;

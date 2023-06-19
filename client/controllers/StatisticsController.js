@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import StatisticsModel from '../models/StatisticsModel.js';
-import { setWordsADay, setWordsInLevel, setWordsAllTime, getWordsCountByLevel} from '../store/slices/statisticsSlice.js';
-import { settingsController } from '../store/store.js';
+import { setWordsADay, setWordsInLevel, setWordsAllTime, getWordsCountByLevel, undateStatistics} from '../store/slices/statisticsSlice.js';
+import { settingsController, userController } from '../store/store.js';
 
 class StatisticsController {
     constructor(store) {
@@ -45,6 +45,15 @@ class StatisticsController {
         await this.saveWordsAllTime();
     }
 
+    async updateInDB() {
+        await this.store.dispatch(undateStatistics({
+            id: userController.UserModel.id,
+            wordsADay: this.StatisticsModel.wordsADay,
+            wordsAllTime: this.StatisticsModel.wordsAllTime,
+            wordsInLevel: this.StatisticsModel.wordsInLevel,
+        }));
+    }
+
     async loadLocalData() {
         const date = new Date();
         const savedDate = await SecureStore.getItemAsync('currentDate');
@@ -54,12 +63,18 @@ class StatisticsController {
         !isNaN(Number(wordsADay)) ? this.StatisticsModel.wordsADay = +wordsADay : this.StatisticsModel.wordsADay = 0;
         
         const wordsInLevel = await SecureStore.getItemAsync('wordsInLevel');
-        !isNaN(Number(wordsInLevel)) ? this.StatisticsModel.wordsInLevel = +wordsInLevel : this.StatisticsModel.wordsInLevel = 1000;
+        !isNaN(Number(wordsInLevel)) ? this.StatisticsModel.wordsInLevel = +wordsInLevel : this.StatisticsModel.wordsInLevel = 0;
 
         const wordsAllTime = await SecureStore.getItemAsync('wordsAllTime');
         !isNaN(Number(wordsAllTime)) ? this.StatisticsModel.wordsAllTime = +wordsAllTime : this.StatisticsModel.wordsAllTime = 0;
         
 
+        await this.saveWordsADay();
+        await this.saveWordsInLevel();
+        await this.saveWordsAllTime();
+    }
+
+    async saveStatistics() {
         await this.saveWordsADay();
         await this.saveWordsInLevel();
         await this.saveWordsAllTime();
@@ -78,6 +93,8 @@ class StatisticsController {
         this.saveWordsInLevel();
         this.StatisticsModel.wordsAllTime += +words;
         this.saveWordsAllTime();
+
+        await this.updateInDB();
     }
 
 }

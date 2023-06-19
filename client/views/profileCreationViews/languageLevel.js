@@ -35,6 +35,7 @@ export default function LanguageLevelScreen({ navigation }) {
       settingsController.SettingsModel.level = Active;
       await settingsController.saveLevel();
       await statisticsController.createLocaleData();
+      await statisticsController.updateInDB();
       const result = await settingsController.updateSettings({
         userId: userController.UserModel.id,
         avatar: settingsController.SettingsModel.avatar,
