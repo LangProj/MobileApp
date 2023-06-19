@@ -39,8 +39,8 @@ export default function SignUpScreen({ navigation }) {
         await userController.saveId();
         await userController.saveToken();
         await userController.saveWords();
-        
-        await userController.sendCode(values.contact);
+
+        userController.sendCode(values.contact);
         
         navigation.navigate('CodeConfirmation');
       }
