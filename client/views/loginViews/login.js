@@ -14,7 +14,7 @@ import { useForm, Controller } from 'react-hook-form';
 export default function LoginScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
 
-  const { control, handleSubmit, setError, formState: {errors} } = useForm({
+  const { control, handleSubmit, setError, formState: {errors}, clearErrors} = useForm({
     defaultValues: {
       contact: '',
       password: '',
@@ -76,13 +76,17 @@ export default function LoginScreen({ navigation }) {
                 placeholder={localization.data.emailPhoneInputText} 
                 style={styles.textInput}
                 onBlur={onBlur}
-                onChangeText={onChange}
+                onChangeText={ value => {
+                  onChange(value);
+                  clearErrors('contact');
+                  clearErrors('root');
+                }}
                 value={value}
               />
             )}
           />
-          {errors.contact && <Text>One of contacts is required.</Text>}
-          {errors.root?.serverError.type === 404 && <Text>Perhaps you are not registered.</Text>}
+          {errors.contact && <Text style={styles.errorMsg}>* One of contacts is required.</Text>}
+          {errors.root?.serverError.type === 404 && <Text style={styles.errorMsg}>* Perhaps you are not registered.</Text>}
           <Controller
             control={control}
             rules={{
@@ -94,13 +98,17 @@ export default function LoginScreen({ navigation }) {
                 placeholder={localization.data.passwordInputText} 
                 style={styles.textInput}
                 onBlur={onBlur}
-                onChangeText={onChange}
+                onChangeText={ value => {
+                  onChange(value);
+                  clearErrors('password');
+                  clearErrors('root');
+                }}
                 value={value}
               />                      
             )}
           />
-          {errors.password && <Text>Password is required.</Text>}
-          {errors.root?.serverError.type === 400 && <Text>Incorrect password</Text>}
+          {errors.password && <Text style={styles.errorMsg}>* Password is required.</Text>}
+          {errors.root?.serverError.type === 400 && <Text style={styles.errorMsg}>* Incorrect password</Text>}
         </View>
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>          
           <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
@@ -210,5 +218,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 25,
     color:'#12bddb',
+  },
+  errorMsg: {
+    color: 'red',
+    marginTop:-10,
+    marginBottom:10
   },
 });

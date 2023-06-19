@@ -14,13 +14,13 @@ import { useForm, Controller } from 'react-hook-form';
 export default function SignUpScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
   
-  const { control, watch, handleSubmit, setError, formState: {errors, isValid} } = useForm({
+  const { control, watch, handleSubmit, setError, clearErrors, formState: {errors, isValid} } = useForm({
     defaultValues: {
       contact: '',
       password: '',
       confirmPassword: ''
     },
-    mode: 'onSubmit'
+    mode: 'onChange'
   });
 
   const onSubmit = async (values) => {
@@ -68,13 +68,17 @@ export default function SignUpScreen({ navigation }) {
                 placeholder={localization.data.emailPhoneInputText}
                 style={styles.textInput}
                 onBlur={onBlur}
-                onChangeText={ value => onChange(value)}
+                onChangeText={ value => {
+                  onChange(value);
+                  clearErrors('contact');
+                  clearErrors('root');
+                }}
                 value={value}
               />
             )}
           />
           {errors.contact && <Text style={styles.errorMsg}>* Invalid email format.</Text>}
-          {errors.root?.serverError.type === 409 && <Text>Such email is already in use</Text>}
+          {errors.root?.serverError.type === 409 && <Text style={styles.errorMsg}>* Such email is already in use</Text>}
           <Controller
             control={control}
             rules={{
@@ -87,7 +91,10 @@ export default function SignUpScreen({ navigation }) {
                 placeholder={localization.data.passwordInputText} 
                 style={styles.textInput}
                 onBlur={onBlur}
-                onChangeText={value => onChange(value)}
+                onChangeText={ value => {
+                  onChange(value);
+                  clearErrors('password');
+                }}
                 value={value}
               />
             )}
@@ -108,7 +115,10 @@ export default function SignUpScreen({ navigation }) {
                 placeholder={localization.data.repeatPasswordInputText} 
                 style={styles.textInput}
                 onBlur={onBlur}
-                onChangeText={value => onChange(value)}
+                onChangeText={ value => {
+                  onChange(value);
+                  clearErrors('confirmPassword');
+                }}
                 value={value}
               />   
             )}
