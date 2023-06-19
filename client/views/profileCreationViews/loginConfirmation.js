@@ -19,7 +19,7 @@ export default function LoginConfirmationScreen({ navigation }) {
 
   const [username, setUsername] = useState('');
 
-  const { control, handleSubmit, setError, formState: {errors, isValid} } = useForm({
+  const { control, handleSubmit, setError, formState: {errors, isValid}, clearErrors } = useForm({
     defaultValues: {
       username: ''
     },
@@ -66,13 +66,17 @@ export default function LoginConfirmationScreen({ navigation }) {
               placeholder={localization.data.loginInputText} 
               style={styles.whiteButton}
               onBlur={onBlur}
-              onChangeText={ value => onChange(value) }
+              onChangeText={ value => {
+                onChange(value);
+                clearErrors('username');
+                clearErrors('root');
+              }}
               value={value} 
             />
           )}
         />
-        {errors.username && <Text>* Username is required</Text>}
-        {errors.root?.serverError.type === 409 && <Text>* Such username is already in use</Text>}
+        {errors.username && <Text style={styles.errorMsg}>* Username is required</Text>}
+        {errors.root?.serverError.type === 409 && <Text style={styles.errorMsg}>* Such username is already in use</Text>}
         
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(handleNext)}>          
@@ -188,8 +192,9 @@ const styles = StyleSheet.create({
     fontSize:25,
     color:'white',
   },
-  
-  
- 
-  
+  errorMsg: {
+    color: 'red',
+    marginTop:0,
+    marginBottom:10
+  }
 });
