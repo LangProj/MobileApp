@@ -40,6 +40,8 @@ export default function SignUpScreen({ navigation }) {
         await userController.saveToken();
         await userController.saveWords();
         
+        await userController.sendCode(values.contact);
+        
         navigation.navigate('CodeConfirmation');
       }
     }
