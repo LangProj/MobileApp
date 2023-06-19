@@ -11,7 +11,11 @@ const PersonalDataSchema = mongoose.Schema(
         passwordHash: {
             type: String,
             required: true,
-        }
+        },
+        isVerified: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamp: true,

@@ -34,10 +34,30 @@ export const register = async (req, res) => {
                 phoneNumber: validator.isMobilePhone((req.body.contact)) ? req.body.contact : null
             }
         });
-        if (userContactDoc) {
+        if (userContactDoc && userContactDoc._doc.isVerified) {
             return res.status(409).json({
                 message: "Such email is already registred",
             });
+        }
+        
+        if (userContactDoc && !userContactDoc._doc.isVerified) {
+            const user = await UserModel.findOne({personalData: userContactDoc._id});
+            const {passwordHash, ...userData} = user._doc;
+            const token = jwt.sign(
+                {
+                    _id: user._id,
+                },
+                "Phrase123",
+                {
+                    expiresIn: '1d',
+                }
+            );
+
+            return res.status(200).json({
+                ...userData,
+                token,
+            });
+            
         }
 
 
@@ -105,7 +125,7 @@ export const login = async (req, res) => {
                 phoneNumber: validator.isMobilePhone((req.body.contact)) ? req.body.contact : null
             }
         });
-        if (!userPersonalData) {
+        if (!userPersonalData || !userPersonalData._doc.isVerified) {
             return res.status(404).json({
                 message: "User was not found",
             });
