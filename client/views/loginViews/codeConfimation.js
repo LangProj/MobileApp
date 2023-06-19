@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
 import { useSelector } from 'react-redux';
+import { userController } from '../../store/store';
 
 
 
 export default function CodeConfirmationScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
+
+  const [code, setCode] = useState('');
+
+  const handleSubmit = async () => {
+    const res = await userController.checkCode(code);
+    if (res.payload.status === 200)
+      navigation.navigate('MotherTongue');
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -19,11 +28,11 @@ export default function CodeConfirmationScreen({ navigation }) {
             <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
           <Text style={styles.description}>{localization.data.confirmLabelText}</Text>
-          <TextInput placeholder={localization.data.confirmInputText} style={styles.textInput} />
+          <TextInput placeholder={localization.data.confirmInputText} value={code} onChangeText={newValue => setCode(newValue)} style={styles.textInput} />
                               
           
         </View>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('MotherTongue');}}>          
+        <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>          
             <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>{localization.data.haveQuestionsLabelText}<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> {localization.data.writeBtnText}</Text></Text>

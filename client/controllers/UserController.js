@@ -1,5 +1,5 @@
 import UserModel from '../models/UserModel.js';
-import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addNewWordsToDB, addWordsLocaly, fetchAllWords, updateWordsLocaly, updateWordsInDB } from '../store/slices/userSlice.js';
+import {setId, setToken, setWords, createUser, fetchUser, getNewWords, getAllWords, addNewWordsToDB, addWordsLocaly, fetchAllWords, updateWordsLocaly, updateWordsInDB, sendConfirmCode, checkUserCode } from '../store/slices/userSlice.js';
 import * as SecureStore from 'expo-secure-store';
 
 class UserController {
@@ -49,6 +49,20 @@ class UserController {
     async createNewUser(data) {
         console.log("Creating user...");
         return await this.store.dispatch(createUser(data));
+    }
+
+    async sendCode(email) {
+        return await this.store.dispatch(sendConfirmCode({
+            id: this.UserModel.id,
+            email: email,
+        }));
+    }
+
+    async checkCode(code) {
+        return await this.store.dispatch(checkUserCode({
+            userId: this.UserModel.id,
+            code: code
+        }));
     }
 
     async fetchUser(data) {

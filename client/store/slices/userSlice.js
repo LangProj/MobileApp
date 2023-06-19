@@ -11,6 +11,26 @@ export const createUser = createAsyncThunk("user/createUser", async (params) => 
     }
 });
 
+export const sendConfirmCode = createAsyncThunk("user/sendConfirmCode", async (params) => {
+    try {
+        const {data, status} = await axios.post('/sendConfirmationEmail', params);
+        return {data: data, status: status};
+    } catch (error) {
+        console.log(error);
+        return {userData: error.response.data.message, status: error.response.status}
+    }
+});
+
+export const checkUserCode = createAsyncThunk("user/checkUserCode", async (params) => {
+    try {
+        const {data, status} = await axios.post('/confirmCode', params);
+        return {data: data, status: status};
+    } catch (error) {
+        console.log(error);
+        return {userData: error.response.data.message, status: error.response.status};
+    }
+});
+
 export const fetchUser = createAsyncThunk("user/fetchUser", async (params) => {
     try {
         const { data, status } = await axios.post('/auth/login', params);
