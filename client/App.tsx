@@ -35,6 +35,7 @@ import store from './store/store.js';
 import WordListScreen from './views/mainMenuViews/wordList';
 import WordTranslationScreen from './views/mainMenuViews/wordTranslation';
 import PreSentenceTranslationScreen from './views/mainMenuViews/preSentenceTranslation';
+import SentenceTranslationScreen from './views/mainMenuViews/sentenceTranslation';
 
 
 
@@ -67,6 +68,7 @@ export default function App() {
           <Stack.Screen  name="VocabularyScreen" component={WordListScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="WordTranslationScreen" component={WordTranslationScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="PreSentenceScreen" component={PreSentenceTranslationScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="SentenceScreen" component={SentenceTranslationScreen} options={{headerShown:false}}/>
 
         </Stack.Navigator>
       </NavigationContainer>

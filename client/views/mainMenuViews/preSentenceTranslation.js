@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, Touchable, TouchableWithoutFeedback, Modal} from 'react-native';
+import Checkbox from 'expo-checkbox';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -96,7 +97,7 @@ const ALL_TOPICS = {
   ]
 };
 
-const USER_LEVEL = ['A1','A2','B1']
+const USER_LEVEL = ['A1']
 
 
 export default function PreSentenceTranslationScreen({ navigation }) {
@@ -155,8 +156,9 @@ export default function PreSentenceTranslationScreen({ navigation }) {
     if (counter == 0){
       setModalVisible(true)
     }else{
-      
-      //this code executes when generate() is proper :)
+      navigation.navigate("SentenceScreen", {data: checkedItems});
+      // - this code executes when generate() is proper :)
+      // - No way. You must be kidding
     }
   };
 
@@ -204,20 +206,22 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 5,
+                        marginVertical: 10,
                         margin: 5,
                       }}
                     >
-                      <View
+                      <Checkbox
                         style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 10,
-                          backgroundColor: checkedItems.A1.includes(item) ? 'green' : 'red',
-                          marginRight: 10,
-                          margin: 5,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginVertical: 5,
+                          margin: 15,
                         }}
+                        value={checkedItems.A1.includes(item)}
+                        onValueChange={() => handleCheckboxToggle('A1',item)}
+                        color={"#65A3FF"}
                       />
+
                       <Text style={{ fontSize: 20, fontWeight: '500' , width:270}}>{item}</Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -241,19 +245,20 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 5,
+                        marginVertical: 10,
                         margin: 5,
                       }}
                     >
-                      <View
+                      <Checkbox
                         style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 10,
-                          backgroundColor: checkedItems.A2.includes(item) ? 'green' : 'red',
-                          marginRight: 10,
-                          margin: 5,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginVertical: 5,
+                          margin: 15,
                         }}
+                        value={checkedItems.A2.includes(item)}
+                        onValueChange={() => handleCheckboxToggle('A2',item)}
+                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -279,19 +284,20 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 5,
+                        marginVertical: 10,
                         margin: 5,
                       }}
                     >
-                      <View
+                      <Checkbox
                         style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 10,
-                          backgroundColor: checkedItems.B1.includes(item) ? 'green' : 'red',
-                          marginRight: 10,
-                          margin: 5,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginVertical: 5,
+                          margin: 15,
                         }}
+                        value={checkedItems.B1.includes(item)}
+                        onValueChange={() => handleCheckboxToggle('B1',item)}
+                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -316,19 +322,20 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 5,
+                        marginVertical: 10,
                         margin: 5,
                       }}
                     >
-                      <View
+                      <Checkbox
                         style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 10,
-                          backgroundColor: checkedItems.B2.includes(item) ? 'green' : 'red',
-                          marginRight: 10,
-                          margin: 5,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginVertical: 5,
+                          margin: 15,
                         }}
+                        value={checkedItems.B2.includes(item)}
+                        onValueChange={() => handleCheckboxToggle('B2',item)}
+                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -353,19 +360,20 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 5,
+                        marginVertical: 10,
                         margin: 5,
                       }}
                     >
-                      <View
+                      <Checkbox
                         style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 10,
-                          backgroundColor: checkedItems.C1.includes(item) ? 'green' : 'red',
-                          marginRight: 10,
-                          margin: 5,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginVertical: 5,
+                          margin: 15,
                         }}
+                        value={checkedItems.C1.includes(item)}
+                        onValueChange={() => handleCheckboxToggle('C1',item)}
+                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -413,7 +421,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
           <TouchableOpacity
             style={{ height: 50, backgroundColor: 'gray', width: 50 }}
-            onPress={() => navigation.navigate('MainStatsMenuScreen')}
+            onPress={() => navigation.navigate('MainScreen')}
           />
           <TouchableOpacity
             style={{ height: 50, backgroundColor: 'gray', width: 50 }}
