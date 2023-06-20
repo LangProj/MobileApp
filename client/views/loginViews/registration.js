@@ -88,7 +88,8 @@ export default function SignUpScreen({ navigation }) {
             name='password'
             render={({field: { onChange, onBlur, value} }) => (
               <TextInput 
-                placeholder={localization.data.passwordInputText} 
+                placeholder={localization.data.passwordInputText}
+                secureTextEntry={true}
                 style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={ value => {
@@ -112,7 +113,8 @@ export default function SignUpScreen({ navigation }) {
             name='confirmPassword'
             render={({field: { onChange, onBlur, value} }) => (
               <TextInput 
-                placeholder={localization.data.repeatPasswordInputText} 
+                placeholder={localization.data.repeatPasswordInputText}
+                secureTextEntry={true}
                 style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={ value => {

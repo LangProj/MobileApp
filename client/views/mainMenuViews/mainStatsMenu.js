@@ -95,7 +95,7 @@ export default function MainStatsMenuScreen({ navigation }) {
                         
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('ListScreen')}>
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('PreSentenceScreen')}>
                         
           </TouchableOpacity>
         </View>

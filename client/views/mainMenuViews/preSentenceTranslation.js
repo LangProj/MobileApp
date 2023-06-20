@@ -403,7 +403,9 @@ export default function PreSentenceTranslationScreen({ navigation }) {
         </View>
       </ScrollView>
       <View>
-        <TouchableOpacity onPress={() => generate()} style={[styles.shadow,{position:'relative',left:120,top:-10,borderRadius:10, width:'42%',height:50,backgroundColor:'#70D457',alignItems:'center',justifyContent:'center'}]}><Text style={[{color:'white',fontSize:18,fontWeight:500}]}>Generate</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => generate()} style={[styles.shadow,{position:'absolute',left:'29%',bottom:10,borderRadius:10, width:'42%',height:50,backgroundColor:'#70D457',alignItems:'center',justifyContent:'center'}]}>
+          <Text style={[{color:'white',fontSize:18,fontWeight:500}]}>Generate</Text>
+        </TouchableOpacity>
       </View>
       <View style={{position:'absolute',zIndex: modalVisible ? 999 : -4,backgroundColor:'black',height:'100%',width:'100%',opacity: modalVisible ? 0.5 : 0}}>
       </View>

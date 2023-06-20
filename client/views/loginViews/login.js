@@ -100,7 +100,8 @@ export default function LoginScreen({ navigation }) {
             name='password'
             render={({field: { onChange, onBlur, value} }) => (
               <TextInput
-                placeholder={localization.data.passwordInputText} 
+                placeholder={localization.data.passwordInputText}
+                secureTextEntry={true}
                 style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={ value => {
