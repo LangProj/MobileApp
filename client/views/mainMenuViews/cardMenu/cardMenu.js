@@ -10,7 +10,8 @@ import {
   Animated,
   Pressable,
   Image,
-  ScrollView
+  ScrollView,
+  BackHandler
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import cardMenuWrapper from './cardMenuWrapper';
@@ -70,6 +71,17 @@ class CardScreen extends Component {
     
     this.learnedWords = [];
     this.notLearnedWords = [];
+
+    const onBackPress = async () => {
+      if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
+        await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
+        await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+      }
+      this.props.navigation.goBack();
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
   }
 
   constructor(props) {
@@ -174,8 +186,10 @@ class CardScreen extends Component {
   }
 
   async handleFinish() {
-    await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
-    await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+    if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
+      await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
+      await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+    }
     this.props.navigation.goBack();
   }
 

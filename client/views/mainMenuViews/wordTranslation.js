@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,6 +9,7 @@ import { settingsController, userController } from '../../store/store';
 
 
 export default function WordTranslationScreen({ navigation }) {
+  const [hasChanged, setHasChanged] = useState(false);
   let [currentWordIndex, setCurrentWordIndex] = useState(0);
   let [words, setWords] = useState(userController.UserModel.words.filter(item => {
     return item.learned < 0.8;
@@ -23,7 +24,18 @@ export default function WordTranslationScreen({ navigation }) {
   
   let [buttonState, setButtonState] = useState(true);
   
-
+  useEffect(() => {
+    const onBackPress = () => {
+      if (hasChanged) {
+        userController.updateWordsLocaly();
+        userController.updateWordsInDB();
+      }
+      navigation.goBack();
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
 
   const getPopupStyle = () => {
     if(translationResult == 'Wrong translation'){
@@ -48,8 +60,10 @@ export default function WordTranslationScreen({ navigation }) {
   };
 
   const handleBack = () => {
-    userController.updateWordsLocaly();
-    userController.updateWordsInDB();
+    if (hasChanged) {
+      userController.updateWordsLocaly();
+      userController.updateWordsInDB();
+    }
     navigation.goBack();
   }
 
@@ -58,6 +72,7 @@ export default function WordTranslationScreen({ navigation }) {
       for (let i = 0; i < userController.UserModel.words.length; i++) {
         if (userController.UserModel.words[i].word._id === words[currentWordIndex].word._id) {
           userController.UserModel.words[i].learned += 0.2;
+          setHasChanged(true);
         }
       }
       setTranslationResult('Correct translation');

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {useState} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,14 @@ export default function MainStatsMenuScreen({ navigation }) {
     setUnlearnedWords(statistics.wordsInLevel);
     setLearnedWordsAllTime(statistics.wordsAllTime);
   }, [statistics.wordsADay, statistics.wordsInLevel, statistics.wordsAllTime]);
-  
+
+  useEffect(() => {
+    const onBackPress = () => {
+      console.log("System back gesture or click");
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
   const [LearnedWordsToday, setLearnedWordsToday] = useState(String(statistics.wordsADay));
   const [LearnedWordsAllTime, setLearnedWordsAllTime] = useState(String(statistics.wordsInLevel));
   const [UnlearnedWords, setUnlearnedWords] = useState(String(statistics.wordsAllTime));
