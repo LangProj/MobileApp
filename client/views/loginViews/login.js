@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
@@ -13,6 +14,8 @@ import { useForm, Controller } from 'react-hook-form';
 
 export default function LoginScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
+
+  const [showPswChecked, setChecked] = useState(false);
 
   const { control, handleSubmit, setError, formState: {errors}, clearErrors} = useForm({
     defaultValues: {
@@ -101,7 +104,7 @@ export default function LoginScreen({ navigation }) {
             render={({field: { onChange, onBlur, value} }) => (
               <TextInput
                 placeholder={localization.data.passwordInputText}
-                secureTextEntry={true}
+                secureTextEntry={!showPswChecked}
                 style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={ value => {
@@ -115,6 +118,27 @@ export default function LoginScreen({ navigation }) {
           />
           {errors.password && <Text style={styles.errorMsg}>* Password is required.</Text>}
           {errors.root?.serverError.type === 400 && <Text style={styles.errorMsg}>* Incorrect password</Text>}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 5,
+            margin: 5,
+          }}
+        >
+          <Checkbox
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 5,
+              margin: 15,
+            }}
+            value={showPswChecked}
+            onValueChange={setChecked}
+            color={"#65A3FF"}
+          />
+          <Text style={{ fontSize: 18, fontWeight: '400', width:270 }}>Show password</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>          
           <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
@@ -171,7 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    marginTop: 130,
+    marginTop: 110,
     maxHeight: 75,
     flex: 1,
     alignItems: 'center',

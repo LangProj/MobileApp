@@ -107,8 +107,8 @@ export default function WordTranslationScreen({ navigation }) {
       return str;
     };
 
-    const cleanedValue1 = removeCommonWords(value1.toLowerCase());
-    const cleanedValue2 = removeCommonWords(value2.toLowerCase());
+    const cleanedValue1 = removeCommonWords(value1.trim().toLowerCase());
+    const cleanedValue2 = removeCommonWords(value2.trim().toLowerCase());
 
     return cleanedValue1 === cleanedValue2;
   };

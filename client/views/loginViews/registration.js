@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import Checkbox from 'expo-checkbox';
+
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
@@ -13,6 +15,9 @@ import { useForm, Controller } from 'react-hook-form';
 
 export default function SignUpScreen({ navigation }) {
   const localization = useSelector(state => state.localization);
+
+  const [showPswChecked, setChecked] = useState(false);
+  const [rememberMeChecked, setRememberMeChecked] = useState(false);
   
   const { control, watch, handleSubmit, setError, clearErrors, formState: {errors, isValid} } = useForm({
     defaultValues: {
@@ -89,7 +94,7 @@ export default function SignUpScreen({ navigation }) {
             render={({field: { onChange, onBlur, value} }) => (
               <TextInput 
                 placeholder={localization.data.passwordInputText}
-                secureTextEntry={true}
+                secureTextEntry={!showPswChecked}
                 style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={ value => {
@@ -114,7 +119,7 @@ export default function SignUpScreen({ navigation }) {
             render={({field: { onChange, onBlur, value} }) => (
               <TextInput 
                 placeholder={localization.data.repeatPasswordInputText}
-                secureTextEntry={true}
+                secureTextEntry={!showPswChecked}
                 style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={ value => {
@@ -128,6 +133,27 @@ export default function SignUpScreen({ navigation }) {
           {errors.confirmPassword && <Text style={styles.errorMsg}>* Passwords do not match</Text>}
 
           
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 5,
+            margin: 5,
+          }}
+        >
+          <Checkbox
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 5,
+              margin: 15,
+            }}
+            value={showPswChecked}
+            onValueChange={setChecked}
+            color={"#65A3FF"}
+          />
+          <Text style={{ fontSize: 18, fontWeight: '400', width:270 }}>Show password</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)} type>        
             <Text style={styles.buttonTitle}>{localization.data.confirmBtnText}</Text>                            
@@ -170,7 +196,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:40,
+    marginTop:30,
   },
 
   image:{
@@ -185,7 +211,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    marginTop: 80,
+    marginTop: 70,
     minHeight: 75,
     maxHeight: 75,
     flex: 1,
