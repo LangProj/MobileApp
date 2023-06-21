@@ -37,8 +37,8 @@ export default function MainStatsMenuScreen({ navigation }) {
           <View elevation={24} style={styles.statCard} >
             <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
-            <Text style={[styles.whiteButtonTitle, {position:'relative',top:-30,left:260,fontWeight:700,}]}>Amount</Text>
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-33}}>
+            
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
             </View>
           </View>
@@ -47,7 +47,7 @@ export default function MainStatsMenuScreen({ navigation }) {
             <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
             </View>
           </View>
@@ -57,7 +57,7 @@ export default function MainStatsMenuScreen({ navigation }) {
             <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
             </View>
           </View>
@@ -87,7 +87,7 @@ export default function MainStatsMenuScreen({ navigation }) {
       <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainScreen')}>
 
           </TouchableOpacity>
 
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   image:{
     width: 64,
     height: 64,
-    marginTop:20,
+    marginTop:30,
     backgroundColor:'gray',
     borderRadius:50,
   },

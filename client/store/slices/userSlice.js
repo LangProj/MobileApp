@@ -150,9 +150,14 @@ export const getAllWords = createAsyncThunk("getAllWords", async (params) => {
     }
 });
 
-export const genSentence = createAsyncThunk("genSentence", async(params) => {
+export const genSentence = createAsyncThunk("genSentence", async({params, token}) => {
     try {
-        const {data, status} = await axios.post("/generateSentence", params);
+        console.log(token);
+        const {data, status} = await axios.post("/generateSentence", params, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
         return {data: data, status: status};
     } catch (error) {
         console.log(error);

@@ -115,7 +115,9 @@ class UserController {
 
 
     async generateSentence(data) {
-        return await this.store.dispatch(genSentence(data));
+        const token = this.UserModel.token;
+
+        return await this.store.dispatch(genSentence({params: data, token}));
     }
 }
 

@@ -111,6 +111,23 @@ export default function WordListScreen({ navigation }) {
         
 
       </View>
+
+      <View style={styles.navBar}>
+        <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
+
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('MainScreen')}>
+
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('VocabularyScreen')}>
+                        
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('PreSentenceScreen')}>
+                        
+          </TouchableOpacity>
+        </View>
+      </View>
         
       {/* filter menu modal   */}
       <Modal

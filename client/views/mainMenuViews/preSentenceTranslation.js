@@ -429,7 +429,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
           />
           <TouchableOpacity
             style={{ height: 50, backgroundColor: 'gray', width: 50, borderBottomColor: '#65A3FF', borderBottomWidth: 3 }}
-            onPress={() => navigation.navigate('ListScreen')}
+            onPress={() => navigation.navigate('PreSentenceScreen')}
           />
         </View>
       </View>
