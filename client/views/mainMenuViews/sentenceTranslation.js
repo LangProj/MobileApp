@@ -8,49 +8,37 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
 import { settingsController, userController } from '../../store/store';
 
-const ALL_SENTENCES = [
-  {
-    sentence:'sentence 1 sentence 1 sentence 1 sentence 1',
-    sentence_translated:'переклад речення 1 переклад речення 1 переклад речення 1 переклад речення 1 переклад речення 1'
-  },
-  {
-    sentence:'sentence 2 sentence 2 sentence 2 sentence 2',
-    sentence_translated:'переклад речення 2 переклад речення 2 переклад речення 2 переклад речення 2 переклад речення 2'
-  },
-  {
-    sentence:'sentence 3 sentence 3 sentence 3 sentence 3',
-    sentence_translated:'переклад речення 3 переклад речення 3 переклад речення 3 переклад речення 3 переклад речення 3'
-  }
-];
-
 export default function SentenceTranslationScreen({ navigation }) {
   const route = useRoute();
 
   const [chosenTopics, setChosenTopics] = useState(route.params?.data);
   const [allLevels, setAllLevels] = useState([]);
 
-  const [sentence, setSentence] = useState("ssssssssss");
+  const [sentence, setSentence] = useState("");
   const [translatedSentence, setTranslatedSentence] = useState("");
   const [level, setLevel] = useState("");
   const [topic, setTopic] = useState("");
 
-  let [currentWordIndex, setCurrentWordIndex] = useState(0);
-  let [List, setList] = useState(ALL_SENTENCES);
   let [modalVisible, setModalVisible] = useState(false)
   let [inputValue, setInputValue] = useState('');
   
-  let [cardDesc, setCardDesc] = useState(List[currentWordIndex].sentence);
-  let [translatedCardDesc, setTranslatedCardDesc] = useState(List[currentWordIndex].sentence_translated);
   
   
   
   let [buttonState, setButtonState] = useState(true);
   
 
-  const nextWord = () => {
-    setCurrentWordIndex(currentWordIndex + 1)
-    setCardDesc(List[currentWordIndex].sentence)
-    setTranslatedCardDesc(List[currentWordIndex].sentence_translated)
+  const nextWord = async () => {
+    // randomize level & topic
+
+    const levelIndex = Math.floor(Math.random() * allLevels.length);
+    const topicIndex = Math.floor(Math.random() * chosenTopics[allLevels[levelIndex]].length);
+    console.log(topicIndex);
+    setLevel(allLevels[levelIndex]);
+    setTopic(chosenTopics[allLevels[levelIndex]][topicIndex]);
+
+    // generate sentence
+    await generateSentence();
     setButtonState(true)
     setModalVisible(false)
     setInputValue('')
@@ -76,8 +64,10 @@ export default function SentenceTranslationScreen({ navigation }) {
       level: level,
       grammaticalTheme: topic
     });
-    setSentence(result.payload.data.nativeLangSentence);
-    setTranslatedSentence(result.payload.data.englishSentence);
+    const sentence = result.payload.data.nativeLangSentence.replace(/\([^)]*\)/g, '');
+    setSentence(sentence);
+    const translation = result.payload.data.englishSentence.replace(/\([^)]*\)/g, '');
+    setTranslatedSentence(translation);
   };
 
 
@@ -135,8 +125,12 @@ export default function SentenceTranslationScreen({ navigation }) {
 
           
           <View style={[{marginTop:20,marginBottom:-60,height:60,width:300,borderColor:'#00B2FF',borderWidth:2,borderRadius:20,alignItems:'center',justifyContent:'center'}]}>
-            <Text style={{fontSize:22, fontWeight:600,color:'black'}}>{topic}</Text>
+            <Text style={{fontSize:18, fontWeight:600,color:'black'}}>{topic}</Text>
           </View>
+          <View style={[{marginTop:70,marginBottom:-80,height:80,width:300,borderColor:'#FF7676',borderWidth:2,borderRadius:20,alignItems:'center',justifyContent:'center'}]}>
+            <Text style={{fontSize:16, fontWeight:400,color:'black'}}>the sentence generator is still under development and may sometimes not work correctly</Text>
+          </View>
+          
 
           <LinearGradient
             colors={['#4ad3b6', '#4f9ae1']}
