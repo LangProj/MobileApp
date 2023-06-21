@@ -63,6 +63,7 @@ class CardScreen extends Component {
     this.setState({floatProgress: 1/this.words.length/2});
     this.setState({word: this.words[this.currentWordInd].word});
     this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
+    this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
     this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
     this.setState({sentence: this.words[this.currentWordInd].sentence.en});
     this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
@@ -77,6 +78,7 @@ class CardScreen extends Component {
       myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
       backgroundColor: '#fff',
+      category:'',
       word:'',
       wordTranslated:'',
       pronunciation: '',
@@ -100,6 +102,7 @@ class CardScreen extends Component {
       this.setState({myText: 'You swiped left!'});
       console.log(this.currentWordInd);
       this.setState({word: this.words[this.currentWordInd].word});
+      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
       this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
       this.setState({sentence: this.words[this.currentWordInd].sentence.en});
       this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
@@ -125,6 +128,7 @@ class CardScreen extends Component {
       this.currentWordInd++;
       this.setState({myText: 'You swiped right!'});
       this.setState({word: this.words[this.currentWordInd].word});
+      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
       this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
       this.setState({sentence: this.words[this.currentWordInd].sentence.en});
       this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
@@ -203,7 +207,7 @@ class CardScreen extends Component {
 
 
         <View style={styles.topicWrapper}>          
-          <Text style={styles.topicWrapperTitle}>Natural phenomena</Text>                            
+          <Text style={styles.topicWrapperTitle}>{this.state.category}</Text>                            
         </View>
 
 
