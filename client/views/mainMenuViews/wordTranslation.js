@@ -8,9 +8,15 @@ import { settingsController, userController } from '../../store/store';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import { useSelector } from 'react-redux';
+
+
 
 
 export default function WordTranslationScreen({ navigation }) {
+  const localization = useSelector(state => state.localization);
+
+
   const [hasChanged, setHasChanged] = useState(false);
   let [currentWordIndex, setCurrentWordIndex] = useState(0);
   let [words, setWords] = useState(userController.UserModel.words.filter(item => {
@@ -41,9 +47,9 @@ export default function WordTranslationScreen({ navigation }) {
   }, []);
 
   const getPopupStyle = () => {
-    if(translationResult == 'Wrong translation'){
+    if(translationResult == localization.data.wrongTranslationLabesText){
       return styles.wrongTranslation;
-    }else if(translationResult == 'Correct translation'){
+    }else if(translationResult == localization.data.correctTranslateLabelText){
       return styles.correctTranslation;
     }else{
       return styles.disableTranslation;
@@ -79,10 +85,10 @@ export default function WordTranslationScreen({ navigation }) {
           setHasChanged(true);
         }
       }
-      setTranslationResult('Correct translation');
+      setTranslationResult(localization.data.correctTranslateLabelText);
       flipCard();
     }else{
-      setTranslationResult('Wrong translation')
+      setTranslationResult(localization.data.wrongTranslationLabesText);
     }
   };
 
@@ -104,8 +110,8 @@ export default function WordTranslationScreen({ navigation }) {
 
   const Check_skip = () => (
     <View style={[{width:'100%',marginTop:30,maxHeight:50,alignItems:'center',justifyContent:'center',flex:1,flexDirection:'row',}]}>
-      <TouchableOpacity onPress={() => checkWord()} style={[styles.shadow,{borderRadius:10, width:'42%',height:50,backgroundColor:'#70D457',alignItems:'center',justifyContent:'center'}]}><Text style={[{color:'white',fontSize:18,fontWeight:500}]}>Check</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => flipCard()} style={[styles.shadow,{borderRadius:10,marginLeft:20, width:'42%',height:50,backgroundColor:'#FF7676',alignItems:'center',justifyContent:'center'}]}><Text style={[{color:'white',fontSize:18,fontWeight:500}]}>Skip</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => checkWord()} style={[styles.shadow,{borderRadius:10, width:'42%',height:50,backgroundColor:'#70D457',alignItems:'center',justifyContent:'center'}]}><Text style={[{color:'white',fontSize:18,fontWeight:500}]}>{localization.data.checkBtnText}</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => flipCard()} style={[styles.shadow,{borderRadius:10,marginLeft:20, width:'42%',height:50,backgroundColor:'#FF7676',alignItems:'center',justifyContent:'center'}]}><Text style={[{color:'white',fontSize:18,fontWeight:500}]}>{localization.data.skipBtnText}</Text></TouchableOpacity>
     </View>
   );
 
@@ -151,8 +157,8 @@ export default function WordTranslationScreen({ navigation }) {
               color='white'
             />
           </TouchableOpacity>
-          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>Translate</Text>
-          <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
+          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>{localization.data.translateLabelText}</Text>
+          <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:60,height:60}]}></TouchableOpacity>
           {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
         </View>
       
@@ -186,7 +192,7 @@ export default function WordTranslationScreen({ navigation }) {
           <TextInput
             style={styles.input}        
             value={inputValue}         
-            placeholder="Enter translation"
+            placeholder={localization.data.enterTranslationInputText}
             onChangeText={newText => setInputValue(newText)}
           />
 

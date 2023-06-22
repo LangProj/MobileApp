@@ -12,6 +12,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import { useSelector } from 'react-redux';
 
 
 const Item = ({word,word_translated}) => (
@@ -22,6 +23,8 @@ const Item = ({word,word_translated}) => (
 
 
 export default function WordListScreen({ navigation }) {
+  const localization = useSelector(state => state.localization);
+
 
   let [filterUI, setFilterUI] = useState('disabled');
   let [words, setWords] = useState(userController.UserModel.words.length > 0 ? userController.UserModel.words.map((word) => {
@@ -103,7 +106,7 @@ export default function WordListScreen({ navigation }) {
       <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
         <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around', alignItems: 'center'}]}>
           <TouchableOpacity style={[{width:40,height:40,backgroundColor:'transparent'}]} disabled={true} onPress={() => navigation.goBack()}></TouchableOpacity>
-          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>Words</Text>
+          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>{localization.data.wordsLabelText}</Text>
           <TouchableOpacity style={[{}]} onPress={() => setFilterUI('main') }>
             <IonIcon
                 name='filter'

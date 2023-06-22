@@ -16,7 +16,11 @@ import { userController } from '../../store/store';
 
 
 
+
 export default function PassiveRecordScreen({ navigation }) {
+
+    const localization = useSelector(state => state.localization);
+
     let [started, setStarted] = useState(false);
     let [results, setResults] = useState([]);
     let [sortedRes, setSortedRes] = useState([]);
@@ -145,8 +149,8 @@ export default function PassiveRecordScreen({ navigation }) {
                             color='white'
                         />
                     </TouchableOpacity>
-                    <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>Record</Text>
-                    <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
+                    <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>{localization.data.recordLabelText}</Text>
+                    <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:60,height:60}]}></TouchableOpacity>
                 </View>
             
             </View>

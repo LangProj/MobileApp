@@ -16,8 +16,9 @@ import { settingsController } from '../../store/store';
 
 
 
-
 export default function MainStatsMenuScreen({ navigation }) {
+
+  const localization = useSelector(state => state.localization);
   
   const statistics = useSelector(state => state.statistics);
   useEffect(() => {
@@ -75,16 +76,16 @@ export default function MainStatsMenuScreen({ navigation }) {
 
 
           <View elevation={24} style={styles.statCard} >
-            <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
-            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
+            <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>{localization.data.learnedWordsLabelText}</Text>
+            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>({localization.data.todayLabelText})</Text>
             <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-25}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
             </View>
           </View>
 
           <View elevation={24} style={styles.statCard} >
-            <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
-            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
+            <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>{localization.data.learnedWordsLabelText}</Text>
+            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>({localization.data.allTimeLabelText})</Text>
             
             <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-25}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
@@ -94,8 +95,8 @@ export default function MainStatsMenuScreen({ navigation }) {
           
 
           <View elevation={24} style={[styles.statCard,{marginBottom:30}]} >
-            <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
-            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
+            <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>{localization.data.unlearnedWordsLabelText}</Text>
+            <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>({localization.data.inLevelLabelText})</Text>
             
             <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-25,marginTop:-25}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
@@ -105,18 +106,18 @@ export default function MainStatsMenuScreen({ navigation }) {
 
 
           <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('Card')}>
-            <Text style={styles.whiteButtonTitle}>Discover new words</Text>
+            <Text style={styles.whiteButtonTitle}>{localization.data.discoverNewWordsBtnText}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('WordTranslationScreen')}>
-            <Text style={styles.whiteButtonTitle}>Start learning words</Text>
+            <Text style={styles.whiteButtonTitle}>{localization.data.startLearningWordsButtonText}</Text>
           </TouchableOpacity>
 
 
 
           
           <View elevation={24} style={styles.extendedStatCard} >
-            <Text style={[styles.statCardTitle,{color:'#8E761F',flexWrap:'wrap',width:130,textAlign:'center'}]}>RECORD OF THE WEEK</Text>
+            <Text style={[styles.statCardTitle,{color:'#8E761F',flexWrap:'wrap',width:130,textAlign:'center'}]}>{localization.data.recordOfWeekLabelText}</Text>
             <Image source={require('../../assets/img/coin.png')} style={{width:80,height:80}}></Image>
           </View>
 

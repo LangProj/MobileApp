@@ -12,6 +12,9 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { settingsController } from '../../store/store';
 
+import { useSelector } from 'react-redux';
+
+
 const ALL_TOPICS = {
   A1: [
     'Глагол to be',
@@ -105,6 +108,9 @@ const ALL_TOPICS = {
 
 
 export default function PreSentenceTranslationScreen({ navigation }) {
+  const localization = useSelector(state => state.localization);
+
+
   let [USER_LEVEL, setUSER_LEVEL] = useState(() => {
     if (settingsController.SettingsModel.level == 'A1')
       return ['A1'];
@@ -208,7 +214,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
       >
         <View style={{ marginTop: 20, flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems:'center' }}>
           <Text style={{ fontSize: 28, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>
-            Sentences
+            {localization.data.sentencesLabelText}
           </Text>
           {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> */}
         </View>

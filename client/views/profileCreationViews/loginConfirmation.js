@@ -76,7 +76,7 @@ export default function LoginConfirmationScreen({ navigation }) {
           )}
         />
         {errors.username && <Text style={styles.errorMsg}>* Username is required</Text>}
-        {errors.root?.serverError.type === 409 && <Text style={styles.errorMsg}>* Such username is already in use</Text>}
+        {errors.root?.serverError.type === 409 && <Text style={styles.errorMsg}>{localization.data.usernameAlreadyInUseErrorLabelText}</Text>}
         
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit(handleNext)}>          

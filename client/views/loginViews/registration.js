@@ -85,8 +85,8 @@ export default function SignUpScreen({ navigation }) {
               />
             )}
           />
-          {errors.contact && <Text style={styles.errorMsg}>* Invalid email format.</Text>}
-          {errors.root?.serverError.type === 409 && <Text style={styles.errorMsg}>* Such email is already in use</Text>}
+          {errors.contact && <Text style={styles.errorMsg}>{localization.data.emailFormatErrorLabelText}</Text>}
+          {errors.root?.serverError.type === 409 && <Text style={styles.errorMsg}>{localization.data.emailAlreadyRegisteredErrorLabelText}</Text>}
           <Controller
             control={control}
             rules={{
@@ -108,7 +108,7 @@ export default function SignUpScreen({ navigation }) {
               />
             )}
           />
-          {errors.password && <Text style={styles.errorMsg}>* Minimum 8 symbols</Text>}
+          {errors.password && <Text style={styles.errorMsg}>{localization.data.passwordMinCharErrorLabelText}</Text>}
           <Controller
             control={control}
             rules={{
@@ -133,7 +133,7 @@ export default function SignUpScreen({ navigation }) {
               />   
             )}
           />
-          {errors.confirmPassword && <Text style={styles.errorMsg}>* Passwords do not match</Text>}
+          {errors.confirmPassword && <Text style={styles.errorMsg}>{localization.data.passwordsMatchErrorLabelText}</Text>}
 
           
         </View>
@@ -156,7 +156,7 @@ export default function SignUpScreen({ navigation }) {
             onValueChange={setChecked}
             color={"#65A3FF"}
           />
-          <Text style={{ fontSize: 18, fontWeight: '400', width:270 }}>Show password</Text>
+          <Text style={{ fontSize: 18, fontWeight: '400', width:270 }}>{localization.data.showPasswordCheckbox}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)} type>        
             <Text style={styles.buttonTitle}>{localization.data.confirmBtnText}</Text>                            

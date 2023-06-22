@@ -96,8 +96,8 @@ export default function LoginScreen({ navigation }) {
               />
             )}
           />
-          {errors.contact && <Text style={styles.errorMsg}>* One of contacts is required.</Text>}
-          {errors.root?.serverError.type === 404 && <Text style={styles.errorMsg}>* Perhaps you are not registered.</Text>}
+          {errors.contact && <Text style={styles.errorMsg}>{localization.data.emailRequiredErrorLabelText}</Text>}
+          {errors.root?.serverError.type === 404 && <Text style={styles.errorMsg}>{localization.data.notRegisteredErrorLabelText}</Text>}
           <Controller
             control={control}
             rules={{
@@ -119,8 +119,8 @@ export default function LoginScreen({ navigation }) {
               />                      
             )}
           />
-          {errors.password && <Text style={styles.errorMsg}>* Password is required.</Text>}
-          {errors.root?.serverError.type === 400 && <Text style={styles.errorMsg}>* Incorrect password</Text>}
+          {errors.password && <Text style={styles.errorMsg}>{localization.data.pswReauiredErrorLabelText}</Text>}
+          {errors.root?.serverError.type === 400 && <Text style={styles.errorMsg}>{localization.data.incorrectPswErrorLabelText}</Text>}
         </View>
         <View
           style={{
@@ -141,7 +141,7 @@ export default function LoginScreen({ navigation }) {
             onValueChange={setChecked}
             color={"#65A3FF"}
           />
-          <Text style={{ fontSize: 18, fontWeight: '400', width:270 }}>Show password</Text>
+          <Text style={{ fontSize: 18, fontWeight: '400', width:270 }}>{localization.data.showPasswordCheckbox}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>          
           <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
