@@ -187,10 +187,12 @@ export const setUsername = async (req, res) => {
       const newLevel = req.body.level;
   
       const user = await UserModel.findById(userId);
-      user.level = newLevel;
-      await user.save();
-  
-      res.status(200).json({
+      console.log(user.settings);
+      const settings = await SettingsModel.findById(user.settings);
+      console.log(settings.level);
+      settings.level = newLevel;
+      await settings.save();
+      return res.status(200).json({
         message: "User level updated",
         level: newLevel,
       });
