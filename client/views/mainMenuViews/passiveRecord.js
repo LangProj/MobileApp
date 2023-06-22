@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { userController } from '../../store/store';
 
 
 
@@ -18,7 +19,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 export default function PassiveRecordScreen({ navigation }) {
     let [started, setStarted] = useState(false);
     let [results, setResults] = useState([]);
-    let [sortedRes, setSortedRes] = useState([]);
+    let [sortedRes, setSortedRes] = useState(["brother", "hello", "more"]);
     let [needToCheckRecognition, setNeedToCheckRecognition] = useState(false);
     let [resStr, setResStr] = useState("");
     let [resArray, setResArray] = useState([]);
@@ -117,9 +118,14 @@ export default function PassiveRecordScreen({ navigation }) {
         setWordsToSave(new_words);
     }
 
-    const loadSimpleWords = () => {
+    const loadSimpleWords = async () => {
         if (wordsToSave.length < 1)
             setModalVisible(true);
+        else {
+            console.log("Here");
+            const fetchRes = await userController.addWordsToDBByWords(wordsToSave);
+            console.log(fetchRes);
+        }
     };
 
     const backButtonHandler = () => {

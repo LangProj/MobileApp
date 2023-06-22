@@ -107,6 +107,17 @@ export const addNewWordsToDB = createAsyncThunk("user/addNewWordsToDB", async ({
     }
 });
 
+export const addWordsToDbByWords = createAsyncThunk("user/addWordsToDbByWords", async ({data, token}) => {
+    try {
+        const {res, status} = await axios.patch('/addWordsByWord', data);
+        console.log(res);
+        return {data: res, status: status};
+    } catch (error) {
+        console.log("Error", error);
+        return {data: error.response.data.message, status: error.response.status};
+    }
+});
+
 // Returns words from file on user`s device
 export const fetchAllWords = createAsyncThunk("user/fetchAllWords", async() => {
     const path = `${FileSystem.documentDirectory}/words/words.json`;
