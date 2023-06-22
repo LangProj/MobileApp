@@ -67,5 +67,89 @@
   },
   {
     "finishLabelText": "Finish"
+  },
+  {
+    "showPasswordCheckbox": "Show password"
+  },
+  {
+    "emailFormatErrorLabelText": "* Invalid email format"
+  },
+  {
+    "passwordMinCharErrorLabelText": "* Minimum 8 symbols"
+  },
+  {
+    "passwordsMatchErrorLabelText": "* Passwords do not match"
+  },
+  {
+    "emailAlreadyRegisteredErrorLabelText": "* Such email is already in use"
+  },
+  {
+    "usernameAlreadyInUseErrorLabelText": "* Such username is already in use"
+  },
+  {
+    "emailRequiredErrorLabelText": "* Email is required"
+  },
+  {
+    "pswReauiredErrorLabelText": "* Password is required"
+  },
+  {
+    "notRegisteredErrorLabelText": "* Perhaps you are not registered"
+  },
+  {
+    "incorrectPswErrorLabelText": "* Incorrect password"
+  },
+  {
+    "learnedWordsLabelText": "Learned words"
+  },
+  {
+    "todayLabelText": "today"
+  },
+  {
+    "allTimeLabelText": "all time"
+  },
+  {
+    "unlearnedWordsLabelText": "Unlearned words"
+  },
+  {
+    "inLevelLabelText": "in level"
+  },
+  {
+    "discoverNewWordsBtnText": "Discover new words"
+  },
+  {
+    "startLearningWordsButtonText": "Start learning words"
+  },
+  {
+    "recordOfWeekLabelText": "RECORD OF THE WEEK"
+  },
+  {
+    "startRecordingBtnText": "Start recording"
+  },
+  {
+    "recordLabelText": "Record"
+  },
+  {
+    "translateLabelText": "Translate"
+  },
+  {
+    "enterTranslationInputText": "Enter translation"
+  },
+  {
+    "checkBtnText": "Check"
+  },
+  {
+    "skipBtnText": "Skip"
+  },
+  {
+    "correctTranslateLabelText": "Correct translation"
+  },
+  {
+    "wrongTranslationLabesText": "Wrong translation"
+  },
+  {
+    "wordsLabelText": "Words"
+  },
+  {
+    "sentencesLabelText": "Sentences"
   }
 ]

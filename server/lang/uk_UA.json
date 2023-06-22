@@ -67,5 +67,89 @@
   },
   {
     "finishLabelText": "Завершити"
+  },
+  {
+    "showPasswordCheckbox": "Показати пароль"
+  },
+  {
+    "emailFormatErrorLabelText": "* Некоректний формат пошти"
+  },
+  {
+    "passwordMinCharErrorLabelText": "* Мінімум 8 символів"
+  },
+  {
+    "passwordsMatchErrorLabelText": "* Паролі не співпадають"
+  },
+  {
+    "emailAlreadyRegisteredErrorLabelText": "* Користувач з такою поштою вже існую"
+  },
+  {
+    "usernameAlreadyInUseErrorLabelText": "* Таке ім'я вже зайнято"
+  },
+  {
+    "emailRequiredErrorLabelText": "* Пошта обов'язкова"
+  },
+  {
+    "pswReauiredErrorLabelText": "* Пароль обов'язковий"
+  },
+  {
+    "notRegisteredErrorLabelText": "* Можливо ви не зареєстровані"
+  },
+  {
+    "incorrectPswErrorLabelText": "* Невірний пароль"
+  },
+  {
+    "learnedWordsLabelText": "Вивчені слова"
+  },
+  {
+    "todayLabelText": "сьогодні"
+  },
+  {
+    "allTimeLabelText": "весь час"
+  },
+  {
+    "unlearnedWordsLabelText": "Невивчені слова"
+  },
+  {
+    "inLevelLabelText": "у рівні"
+  },
+  {
+    "discoverNewWordsBtnText": "Відкрити нові слова"
+  },
+  {
+    "startLearningWordsButtonText": "Вчити слова"
+  },
+  {
+    "recordOfWeekLabelText": "РЕКОРД ТИЖНЯ"
+  },
+  {
+    "startRecordingBtnText": "начать запись"
+  },
+  {
+    "recordLabelText": "Розпочати запис"
+  },
+  {
+    "translateLabelText": "Переклад"
+  },
+  {
+    "enterTranslationInputText": "Введіть переклад"
+  },
+  {
+    "checkBtnText": "Перевірити"
+  },
+  {
+    "skipBtnText": "Пропустити"
+  },
+  {
+    "correctTranslateLabelText": "Правильно"
+  },
+  {
+    "wrongTranslationLabesText": "неправильно"
+  },
+  {
+    "wordsLabelText": "Слова"
+  },
+  {
+    "sentencesLabelText": "Речення"
   }
 ]

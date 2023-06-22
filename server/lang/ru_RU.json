@@ -67,5 +67,89 @@
   },
   {
     "finishLabelText": "Завершить"
+  },
+  {
+    "showPasswordCheckbox": "Показать пароль"
+  },
+  {
+    "emailFormatErrorLabelText": "* Некорректный формат почты"
+  },
+  {
+    "passwordMinCharErrorLabelText": "* Минимум 8 символов"
+  },
+  {
+    "passwordsMatchErrorLabelText": "* Пароли не совпадают"
+  },
+  {
+    "emailAlreadyRegisteredErrorLabelText": "* Пользователь с такой почтой уже зарегистрирован"
+  },
+  {
+    "usernameAlreadyInUseErrorLabelText": "* Такой имя уже занято"
+  },
+  {
+    "emailRequiredErrorLabelText": "* Почта обязательна"
+  },
+  {
+    "pswReauiredErrorLabelText": "* Пароль обязателен"
+  },
+  {
+    "notRegisteredErrorLabelText": "* Возможно Вы не зарегистрированы"
+  },
+  {
+    "incorrectPswErrorLabelText": "* Неверный пароль"
+  },
+  {
+    "learnedWordsLabelText": "Выученные слова"
+  },
+  {
+    "todayLabelText": "сегодня"
+  },
+  {
+    "allTimeLabelText": "все время"
+  },
+  {
+    "unlearnedWordsLabelText": "Невыученные слова"
+  },
+  {
+    "inLevelLabelText": "в уровне"
+  },
+  {
+    "discoverNewWordsBtnText": "Открыть новые слова"
+  },
+  {
+    "startLearningWordsButtonText": "Учить слова"
+  },
+  {
+    "recordOfWeekLabelText": "РЕКОРД НЕДЕЛИ"
+  },
+  {
+    "startRecordingBtnText": "начать запись"
+  },
+  {
+    "recordLabelText": "Запись"
+  },
+  {
+    "translateLabelText": "Перевод"
+  },
+  {
+    "enterTranslationInputText": "Введите перевод"
+  },
+  {
+    "checkBtnText": "Проверить"
+  },
+  {
+    "skipBtnText": "Пропустить"
+  },
+  {
+    "correctTranslateLabelText": "Верно"
+  },
+  {
+    "wrongTranslationLabesText": "Неверно"
+  },
+  {
+    "wordsLabelText": "Слова"
+  },
+  {
+    "sentencesLabelText": "Предложения"
   }
 ]
