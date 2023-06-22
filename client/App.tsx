@@ -36,6 +36,7 @@ import WordListScreen from './views/mainMenuViews/wordList';
 import WordTranslationScreen from './views/mainMenuViews/wordTranslation';
 import PreSentenceTranslationScreen from './views/mainMenuViews/preSentenceTranslation';
 import SentenceTranslationScreen from './views/mainMenuViews/sentenceTranslation';
+import PassiveRecord from './views/mainMenuViews/passiveRecord';
 
 
 
@@ -64,6 +65,7 @@ export default function App() {
           <Stack.Screen  name="WordsPerDay" component={WordsPerDayScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>       
           <Stack.Screen  name="MainScreen" component={MainStatsMenuScreen} options={{headerShown:false}}/>       
+          <Stack.Screen  name="PassiveRecord" component={PassiveRecord} options={{headerShown:false}}/>
           <Stack.Screen  name="Card" component={CardScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="VocabularyScreen" component={WordListScreen} options={{headerShown:false}}/>
           <Stack.Screen  name="WordTranslationScreen" component={WordTranslationScreen} options={{headerShown:false}}/>

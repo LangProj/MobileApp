@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, Touchable, TouchableWithoutFeedback, Modal} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, Touchable, TouchableWithoutFeedback, Modal, BackHandler} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
@@ -120,6 +120,15 @@ export default function PreSentenceTranslationScreen({ navigation }) {
       C1:false
     }
   );
+
+  useEffect(() => {
+    const onBackPress = () => {
+      navigation.goBack();
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
 
   const handleToggle = (level) => {
     if (USER_LEVEL.includes(level)){

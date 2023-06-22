@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, Modal} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, Modal, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -22,6 +22,15 @@ export default function SentenceTranslationScreen({ navigation }) {
   let [modalVisible, setModalVisible] = useState(false)
   let [inputValue, setInputValue] = useState('');
   
+
+  useEffect(() => {
+    const onBackPress = () => {
+      navigation.goBack();
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
   
   
   

@@ -5,6 +5,10 @@ import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+
+
 
 
 
@@ -38,7 +42,13 @@ export default function MainStatsMenuScreen({ navigation }) {
             <View style={styles.image}></View>
             {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
           </View>
-          
+          <TouchableOpacity style={{position:'absolute', top:45, left: 45, width:50, height: 50}} onPress={()=>navigation.navigate("PassiveRecord")}>
+            <Icon
+              name='record-voice-over'
+              size={40}
+              color='#65A3FF'
+            />
+          </TouchableOpacity>
 
 
           <View elevation={24} style={styles.statCard} >

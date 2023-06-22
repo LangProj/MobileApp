@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import {Alert, Modal,Pressable,SafeAreaView,FlatList,} from 'react-native';
@@ -28,6 +28,14 @@ export default function WordListScreen({ navigation }) {
 
   }));
   let [List, setList] = useState(words);
+  useEffect(() => {
+    const onBackPress = () => {
+      navigation.goBack();
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
 
   let [filter_config, setFilter_config] = useState({
     parts_of_speech:[],
