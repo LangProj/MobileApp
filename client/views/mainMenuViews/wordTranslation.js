@@ -6,6 +6,8 @@ import { Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { settingsController, userController } from '../../store/store';
 
+import IonIcon from 'react-native-vector-icons/Ionicons';
+
 
 
 export default function WordTranslationScreen({ navigation }) {
@@ -24,16 +26,17 @@ export default function WordTranslationScreen({ navigation }) {
   
   let [buttonState, setButtonState] = useState(true);
   
+
+  const onBackPress = async () => {
+    if (hasChanged) {
+      await userController.updateWordsLocaly();
+      await userController.updateWordsInDB();
+    }
+    navigation.goBack();
+    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    return true;
+  };
   useEffect(() => {
-    const onBackPress = () => {
-      if (hasChanged) {
-        userController.updateWordsLocaly();
-        userController.updateWordsInDB();
-      }
-      navigation.goBack();
-      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-      return true;
-    };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
   }, []);
 
@@ -64,6 +67,7 @@ export default function WordTranslationScreen({ navigation }) {
       userController.updateWordsLocaly();
       userController.updateWordsInDB();
     }
+    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     navigation.goBack();
   }
 
@@ -139,9 +143,15 @@ export default function WordTranslationScreen({ navigation }) {
 
     <View style={{flex: 1}}>
       <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
-        <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around'}]}>
-          <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => handleBack()} ></TouchableOpacity>
-          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center',marginTop:20}]}>Translate</Text>
+        <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around', alignItems:'center'}]}>
+          <TouchableOpacity style={[{width:60,height:60}]} onPress={handleBack} >
+            <IonIcon
+              name='chevron-back'
+              size={60}
+              color='white'
+            />
+          </TouchableOpacity>
+          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>Translate</Text>
           <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
           {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
         </View>

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import {useState} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, BackHandler, ImageBackground} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 
 
@@ -39,10 +41,25 @@ export default function MainStatsMenuScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mainWrapper}>   
           <View style={styles.header}>
-            <Image source={require('../../assets/img/profileavatart.png')} style={styles.image}></Image>
+            <View style={{
+                width: 70,
+                height: 70,
+                marginTop:30,
+                backgroundColor:'#E4EFFF',
+                borderRadius:50,
+                borderWidth: 2,
+                borderColor: '#5B9CFD',
+                alignItems:'center', justifyContent: 'center'
+                }}>
+                <FontAwesome5Icon
+                  name='user-alt'
+                  size={40}
+                  color='gray'
+                />
+              </View>
           </View>
           <TouchableOpacity style={{position:'absolute', top:45, left: 45, width:50, height: 50}} onPress={()=>navigation.navigate("PassiveRecord")}>
-            <Icon
+            <MaterialIcon
               name='record-voice-over'
               size={40}
               color='#65A3FF'
@@ -51,39 +68,31 @@ export default function MainStatsMenuScreen({ navigation }) {
 
 
           <View elevation={24} style={styles.statCard} >
-            <ImageBackground source={require('../../assets/img/reqgreen.png')} resizeMode="cover" style={{marginLeft:-10,marginTop:0,width:370,height:139}}>
-            
             <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
-            <Text style={[styles.whiteButtonTitle, {position:'relative',top:-30,left:260,fontWeight:700,}]}>Amount</Text>
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-33}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-25}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
             </View>
-            </ImageBackground>
           </View>
 
           <View elevation={24} style={styles.statCard} >
-            <ImageBackground source={require('../../assets/img/reqblue.png')} resizeMode="cover" style={{marginLeft:-10,marginTop:0,width:370,height:139}}>
             <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-25}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
             </View>
-            </ImageBackground>
           </View>
 
           
 
           <View elevation={24} style={[styles.statCard,{marginBottom:30}]} >
-            <ImageBackground source={require('../../assets/img/reqpurple.png')} resizeMode="cover" style={{marginLeft:-10,marginTop:0,width:370,height:139}}>
             <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-25,marginTop:-25}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
             </View>
-            </ImageBackground>
           </View>
           
 
@@ -111,16 +120,28 @@ export default function MainStatsMenuScreen({ navigation }) {
       <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
-          <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
-            <Image source={require('../../assets/img/home.png')} resizeMode="contain" style={{height:50,width:50}}></Image>
+          <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('MainScreen')}>
+            <MaterialIcon
+              name='home'
+              size={45}
+              color='#65A3FF'
+            />
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,width:50}} onPress={() => navigation.navigate('VocabularyScreen')}>
-            <Image source={require('../../assets/img/dictionary.png')} resizeMode="contain" style={{height:50,width:50}}></Image>         
+          <TouchableOpacity style={{height:50,width:50,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('VocabularyScreen')}>
+          <FontAwesome5Icon
+              name='book-open'
+              size={35}
+              color='#65A3FF'
+            />    
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,width:50}} onPress={() => navigation.navigate('ListScreen')}>
-            <Image source={require('../../assets/img/Subtract.png')} resizeMode="contain" style={{height:50,width:50}}></Image>                   
+          <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('PreSentenceScreen')}>
+          <MaterialCommunityIcon
+              name='text-box'
+              size={45}
+              color='#65A3FF'
+            />                
           </TouchableOpacity>
         </View>
       </View>
@@ -197,7 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 350,
+    width: '80%',
     height: 65,
     backgroundColor: '#FFFFFF',
     borderColor:'#00A3FF',

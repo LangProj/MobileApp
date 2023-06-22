@@ -8,6 +8,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
 import { settingsController, userController } from '../../store/store';
 
+
+import IonIcon from 'react-native-vector-icons/Ionicons';
+
 export default function SentenceTranslationScreen({ navigation }) {
   const route = useRoute();
 
@@ -23,12 +26,12 @@ export default function SentenceTranslationScreen({ navigation }) {
   let [inputValue, setInputValue] = useState('');
   
 
+  const onBackPress = () => {
+    navigation.goBack();
+    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    return true;
+  };
   useEffect(() => {
-    const onBackPress = () => {
-      navigation.goBack();
-      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-      return true;
-    };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
   }, []);
   
@@ -115,9 +118,15 @@ export default function SentenceTranslationScreen({ navigation }) {
 
     <View style={{flex: 1}}>
       <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
-        <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around'}]}>
-          <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => navigation.goBack()} ></TouchableOpacity>
-          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center',marginTop:20}]}>{level}</Text>
+        <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around',alignItems:'center'}]}>
+          <TouchableOpacity style={[{width:60,height:60}]} onPress={onBackPress} >
+            <IonIcon
+              name='chevron-back'
+              size={60}
+              color='white'
+            />
+          </TouchableOpacity>
+          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>{level}</Text>
           <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
           {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
         </View>
@@ -136,14 +145,11 @@ export default function SentenceTranslationScreen({ navigation }) {
           <View style={[{marginTop:20,marginBottom:-60,height:60,width:300,borderColor:'#00B2FF',borderWidth:2,borderRadius:20,alignItems:'center',justifyContent:'center'}]}>
             <Text style={{fontSize:18, fontWeight:600,color:'black'}}>{topic}</Text>
           </View>
-          <View style={[{marginTop:70,marginBottom:-80,height:80,width:300,borderColor:'#FF7676',borderWidth:2,borderRadius:20,alignItems:'center',justifyContent:'center'}]}>
-            <Text style={{fontSize:16, fontWeight:400,color:'black'}}>the sentence generator is still under development and may sometimes not work correctly</Text>
-          </View>
           
 
           <LinearGradient
             colors={['#4ad3b6', '#4f9ae1']}
-            style={[ styles.cardWrapper, {flex:1,alignItems:'center',justifyContent:'center',marginTop:120} ]}>       
+            style={[ styles.cardWrapper, {flex:1,alignItems:'center',justifyContent:'center',marginTop:160} ]}>       
 
             <View style={[{flex:1,alignItems:'center',justifyContent:'center'}]}>          
               <Text style={styles.cardTransciption}>{sentence}</Text>
@@ -176,7 +182,13 @@ export default function SentenceTranslationScreen({ navigation }) {
               <View style={[styles.modalView]}>
                 <View style={[{marginBottom:15,marginTop:20,height:75,flexDirection:'row',width:'100%',justifyContent:'center',alignItems:'center'}]}>
                   <Text style={{fontSize:25, fontWeight:600,color:'black'}}>Recommended</Text>
-                  <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:40,top:0}]} onPress={() => setModalVisible(false)}></TouchableOpacity>
+                  <TouchableOpacity style={[{height:50,width:50,position:'relative',left:40,top:0}]} onPress={() => setModalVisible(false)}>
+                    <IonIcon
+                      name='close'
+                      size={50}
+                      color='black'
+                    />
+                  </TouchableOpacity>
                 </View>
                 <Text style={{fontSize:18, fontWeight:500,color:'gray', width:250, textAlign:'center'}}>{translatedSentence}</Text>
               </View>

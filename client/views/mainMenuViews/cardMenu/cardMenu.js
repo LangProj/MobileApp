@@ -72,17 +72,18 @@ class CardScreen extends Component {
     this.learnedWords = [];
     this.notLearnedWords = [];
 
-    const onBackPress = async () => {
-      if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
-        await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
-        await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
-      }
-      this.props.navigation.goBack();
-      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-      return true;
-    };
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
+  onBackPress = async () => {
+    if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
+      await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
+      await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+    }
+    this.props.navigation.goBack();
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    return true;
+  };
 
   constructor(props) {
     super(props);
@@ -190,6 +191,7 @@ class CardScreen extends Component {
       await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
       await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
     }
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     this.props.navigation.goBack();
   }
 

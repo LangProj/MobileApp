@@ -7,6 +7,13 @@ import {Alert, Modal,Pressable,SafeAreaView,FlatList,} from 'react-native';
 import { settingsController, userController } from '../../store/store.js';
 
 
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+
+
+
 const Item = ({word,word_translated}) => (
   <View style={styles.item}>
     <Text style={[{fontSize:23,fontWeight:600,textAlign:'center'}]}>{word}/{word_translated}</Text>
@@ -17,7 +24,7 @@ const Item = ({word,word_translated}) => (
 export default function WordListScreen({ navigation }) {
 
   let [filterUI, setFilterUI] = useState('disabled');
-  let [words, setWords] = useState(userController.UserModel.words.map((word) => {
+  let [words, setWords] = useState(userController.UserModel.words.length > 0 ? userController.UserModel.words.map((word) => {
     const res = word.word;
     if (word.learned >= 0.8)
       return {...res, status: "Learned"};
@@ -26,7 +33,7 @@ export default function WordListScreen({ navigation }) {
     else
       return {...res, status: "On study"};
 
-  }));
+  }):[]);
   let [List, setList] = useState(words);
   useEffect(() => {
     const onBackPress = () => {
@@ -59,83 +66,118 @@ export default function WordListScreen({ navigation }) {
   };
   
   useEffect(() => {
-    sortList();
-    console.log("Words in useEffect", words);
+    if (words.length > 0) {
+      sortList();
+      console.log("Words in useEffect", words);
+    }
   }, [filter_config]);
   
   
   
   function sortList(){
-    
-    let result = []
-    
-    if(filter_config.parts_of_speech.length == 0 &&
-      filter_config.category.length == 0 &&
-      filter_config.level.length == 0 &&
-      filter_config.word_status.length == 0){
-      result = words
-    }else{
-      for(i = 0;i < words.length;i++){
-        if(filter_config.parts_of_speech.includes(words[i].partOfSpeech) || 
-        filter_config.category.includes(words[i].category) || 
-        filter_config.word_status.includes(words[i].status) || 
-        filter_config.level.includes(words[i].level)){
-          result.push(words[i])
+    let result = [];
+    if (words.length > 0) {
+      
+      if(filter_config.parts_of_speech.length == 0 &&
+        filter_config.category.length == 0 &&
+        filter_config.level.length == 0 &&
+        filter_config.word_status.length == 0){
+        result = words
+      }else{
+        for(i = 0;i < words.length;i++){
+          if(filter_config.parts_of_speech.includes(words[i].partOfSpeech) || 
+          filter_config.category.includes(words[i].category) || 
+          filter_config.word_status.includes(words[i].status) || 
+          filter_config.level.includes(words[i].level)){
+            result.push(words[i])
+          }
         }
       }
-    }  
+    }
     setList(result);
   }
 
 
   return (
-    
-
     <View style={{flex: 1}}>
       <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
-        <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around'}]}>
-          <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => navigation.goBack()}></TouchableOpacity>
-          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center',marginTop:20}]}>Words</Text>
-          <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => setFilterUI('main') }></TouchableOpacity>
+        <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around', alignItems: 'center'}]}>
+          <TouchableOpacity style={[{width:40,height:40,backgroundColor:'transparent'}]} disabled={true} onPress={() => navigation.goBack()}></TouchableOpacity>
+          <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>Words</Text>
+          <TouchableOpacity style={[{}]} onPress={() => setFilterUI('main') }>
+            <IonIcon
+                name='filter'
+                size={40}
+                color='white'
+            />
+          </TouchableOpacity>
           {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
         </View>
         
       </View>
 
         
+      
+      { List.length > 0 ? 
+        <View style={styles.mainWrapper}>   
         
-      <View style={styles.mainWrapper}>   
-      
-      
-        <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[{justifyContent:'center',alignContent:'center',alignItems:'center',marginTop:5}]}
-        style={[{height:500,width:350,backgroundColor:'white',}]}
-        data={List}
-        renderItem={({item}) => <Item word={item.word} word_translated={item.translation[settingsController.SettingsModel.motherTongue]}/>}
-        keyExtractor={item => item._id}/>
-
-      
         
+          <FlatList
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[{justifyContent:'center',alignContent:'center',alignItems:'center',marginTop:5}]}
+          style={[{height:500,width:350,backgroundColor:'white',}]}
+          data={List}
+          renderItem={({item}) => <Item word={item.word} word_translated={item.translation[settingsController.SettingsModel.motherTongue]}/>}
+          keyExtractor={item => item._id}/>
 
-      </View>
+        
+          
+
+        </View>
+      :
+        <Text style={{
+          flex:1,
+          alignItems:'center',
+          zIndex:998,
+          textAlign: 'center',
+          fontSize: 20,
+          color: 'coral',
+          marginTop:30,
+        }}>No words found in dictionary</Text>
+      }
+
+
 
       <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('MainScreen')}>
-
+        <TouchableOpacity style={{height:50,width:50,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('MainScreen')}>
+            <MaterialIcon
+              name='home'
+              size={45}
+              color='#65A3FF'
+            />
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('VocabularyScreen')}>
-                        
+          <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('VocabularyScreen')}>
+          <FontAwesome5Icon
+              name='book-open'
+              size={35}
+              color='#65A3FF'
+            />    
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('PreSentenceScreen')}>
-                        
+          <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('PreSentenceScreen')}>
+          <MaterialCommunityIcon
+              name='text-box'
+              size={45}
+              color='#65A3FF'
+            />                
           </TouchableOpacity>
         </View>
       </View>
+
+      
         
       {/* filter menu modal   */}
       <Modal
@@ -152,7 +194,13 @@ export default function WordListScreen({ navigation }) {
           <View style={[styles.modalView]}>
             <View style={[{marginTop:40,height:50,width:'100%',justifyContent:'center',alignItems:'center'}]}>
               <Text style={[{fontSize:42,fontWeight:600}]}>Filter</Text>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:120,top:-45}]} onPress={() => setFilterUI('disabled')}></TouchableOpacity>
+              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-47}]} onPress={() => setFilterUI('disabled')}>
+                <IonIcon
+                  name='close'
+                  size={50}
+                  color='black'
+                />
+              </TouchableOpacity>
             </View>
             
             <TouchableOpacity style={styles.filterItemDisabled} onPress={() => setFilterUI('parts_of_speech')}>
@@ -192,9 +240,21 @@ export default function WordListScreen({ navigation }) {
         <View style={styles.centeredView}>
           <View style={[styles.modalView,{height:400}]}>
             <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:-120,top:60}]} onPress={() => setFilterUI('main')}></TouchableOpacity>
+              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:63}]} onPress={() => setFilterUI('main')}>
+                <IonIcon
+                    name='chevron-back'
+                    size={50}
+                    color='black'
+                />
+              </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Parts of speech</Text>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:120,top:-55}]} onPress={() => setFilterUI('disabled')}></TouchableOpacity>
+              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-65}]} onPress={() => setFilterUI('disabled')}>
+                <IonIcon
+                  name='close'
+                  size={50}
+                  color='black'
+                />
+              </TouchableOpacity>
             </View>
             
             <TouchableOpacity 
@@ -235,9 +295,21 @@ export default function WordListScreen({ navigation }) {
         <View style={styles.centeredView}>
           <View style={[styles.modalView,{height:400}]}>
             <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:-120,top:60}]} onPress={() => setFilterUI('main')}></TouchableOpacity>
+            <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:63}]} onPress={() => setFilterUI('main')}>
+                <IonIcon
+                    name='chevron-back'
+                    size={50}
+                    color='black'
+                />
+              </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Words status</Text>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:120,top:-55}]} onPress={() => setFilterUI('disabled')}></TouchableOpacity>
+              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-65}]} onPress={() => setFilterUI('disabled')}>
+                <IonIcon
+                  name='close'
+                  size={50}
+                  color='black'
+                />
+              </TouchableOpacity>
             </View>
             
             <TouchableOpacity 
@@ -278,9 +350,21 @@ export default function WordListScreen({ navigation }) {
         <View style={styles.centeredView}>
           <View style={[styles.modalView,{height:470}]}>
             <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:-120,top:40}]} onPress={() => setFilterUI('main')}></TouchableOpacity>
+            <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:45}]} onPress={() => setFilterUI('main')}>
+                <IonIcon
+                    name='chevron-back'
+                    size={50}
+                    color='black'
+                />
+              </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Category</Text>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:120,top:-45}]} onPress={() => setFilterUI('disabled')}></TouchableOpacity>
+              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-47}]} onPress={() => setFilterUI('disabled')}>
+                <IonIcon
+                  name='close'
+                  size={50}
+                  color='black'
+                />
+              </TouchableOpacity>
             </View>
             
             <TouchableOpacity 
@@ -328,9 +412,21 @@ export default function WordListScreen({ navigation }) {
         <View style={styles.centeredView}>
           <View style={[styles.modalView,{height:340}]}>
             <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:-120,top:60}]} onPress={() => setFilterUI('main')}></TouchableOpacity>
-              <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Words status</Text>
-              <TouchableOpacity style={[{height:50,width:50,backgroundColor:'gray',position:'relative',left:120,top:-55}]} onPress={() => setFilterUI('disabled')}></TouchableOpacity>
+            <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:63}]} onPress={() => setFilterUI('main')}>
+                <IonIcon
+                    name='chevron-back'
+                    size={50}
+                    color='black'
+                />
+              </TouchableOpacity>
+              <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Words level</Text>
+              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-65}]} onPress={() => setFilterUI('disabled')}>
+                <IonIcon
+                  name='close'
+                  size={50}
+                  color='black'
+                />
+              </TouchableOpacity>
             </View>
             
             <View>

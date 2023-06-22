@@ -10,34 +10,41 @@ import { Linking } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 
 
 
 export default function PassiveRecordScreen({ navigation }) {
     let [started, setStarted] = useState(false);
-    let [results, setResults] = useState(['Hello', "world", "how", "are", "you", "doing", 'Hello', "world", "how", "are", "you", "doing", 'Hello', "world", "how", "are", "you", "doing", 'Hello', "world", "how", "are", "you", "doing"]);
-    let [sortedRes, setSortedRes] = useState([])
+    let [results, setResults] = useState([]);
+    let [sortedRes, setSortedRes] = useState([]);
+    let [needToCheckRecognition, setNeedToCheckRecognition] = useState(false);
+    let [resStr, setResStr] = useState("");
+    let [resArray, setResArray] = useState([]);
     let [wordsToSave, setWordsToSave] = useState([]);
     let [modalVisible, setModalVisible] = useState(false);
 
+    let [logs, setLogs] = useState([]);
+
+
+    // useEffect(() => {
+    //     // results filtering
+    //     const res = [];
+    //     for (let i = 0; i < results.length; i++) {
+    //         if (!res.includes(results[i]))
+    //             res.push(results[i]);
+    //     }
+    //     setSortedRes(res);
+    // }, [results]);
+
+    const onBackPress = () => {
+        navigation.goBack();
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        return true;
+    };
 
     useEffect(() => {
-        // results filtering
-        const res = [];
-        for (let i = 0; i < results.length; i++) {
-            if (!res.includes(results[i]))
-                res.push(results[i]);
-        }
-        setSortedRes(res);
-    }, [results]);
-
-    useEffect(() => {
-        const onBackPress = () => {
-            navigation.goBack();
-            BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-            return true;
-        };
         BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
         Voice.onSpeechError = onSpeechError;
@@ -49,17 +56,48 @@ export default function PassiveRecordScreen({ navigation }) {
     }, []);
     
     const startSpeechToText = async () => {
-        await Voice.start("en-US", { continuous: true });
         setStarted(true);
+        setNeedToCheckRecognition(true);
+        await Voice.start("en-US", { continuous: true });
+        setInterval(async () => {
+            if (needToCheckRecognition) {
+                await Voice.isRecognizing().then((result) => {
+                    if (result != 1) {
+                        Voice.start("en-US", { continuous: true });
+                      } else {
+                        return true;
+                      }
+                });
+            }
+        }, 2000);
     };
 
     const stopSpeechToText = async () => {
+        setNeedToCheckRecognition(false);
         await Voice.stop();
         setStarted(false);
     };
 
     const onSpeechResults = (result) => {
-        setResults(result.value);
+        let resStr = result.value[0];
+
+        let gotArray = resStr.split(" ");
+
+        let oldRes = results;
+        let res = oldRes.concat(gotArray);
+        setResults(res);
+
+        let resSorted = sortedRes;
+        for (let i = 0; i < res.length; i++) {
+            if (!resSorted.includes(res[i])) {
+                resSorted.push(res[i]);
+            }
+        }
+        setSortedRes(resSorted);
+
+        if (needToCheckRecognition) {
+            startSpeechToText();
+        }
     };
 
     const onSpeechError = (error) => {
@@ -68,12 +106,12 @@ export default function PassiveRecordScreen({ navigation }) {
 
     const toggleSelect = (index) => {
         let new_words = [];
-        if (wordsToSave.includes(results[index])) {
-            new_words = wordsToSave.filter((item) => item !== results[index]);
+        if (wordsToSave.includes(sortedRes[index])) {
+            new_words = wordsToSave.filter((item) => item !== sortedRes[index]);
         }
         else {
             new_words = wordsToSave.filter((item) => true);
-            new_words.push(results[index]);
+            new_words.push(sortedRes[index]);
             console.log(new_words);
         }
         setWordsToSave(new_words);
@@ -82,15 +120,26 @@ export default function PassiveRecordScreen({ navigation }) {
     const loadSimpleWords = () => {
         if (wordsToSave.length < 1)
             setModalVisible(true);
-    }
+    };
 
+    const backButtonHandler = () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        navigation.goBack();
+
+    };
     return (
     
         <View style={{flex: 1, alignItems: 'center'}}>
             <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
-                <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around'}]}>
-                    <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => navigation.goBack()} ></TouchableOpacity>
-                    <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center',marginTop:20}]}>Record</Text>
+                <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around', alignItems:'center'}]}>
+                    <TouchableOpacity style={[{width:60,height:60}]} onPress={backButtonHandler} >
+                        <IonIcon
+                            name='chevron-back'
+                            size={60}
+                            color='white'
+                        />
+                    </TouchableOpacity>
+                    <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center'}]}>Record</Text>
                     <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
                 </View>
             
@@ -105,7 +154,7 @@ export default function PassiveRecordScreen({ navigation }) {
                         <Text style={{color:'white',fontSize:18,fontWeight:500}}>Start Recording</Text>
                     </TouchableOpacity>
                 }
-                <TouchableOpacity style={[styles.shadow,{marginTop:20, marginLeft: 10, borderRadius:10, width:50,height:50,backgroundColor:'#65A3FF',alignItems:'center',justifyContent:'center'}]} onPress={loadSimpleWords}>
+                <TouchableOpacity style={[styles.shadow,{marginTop:20, marginLeft: 10, borderRadius:10, width:50,height:50,backgroundColor:'#65A3FF',alignItems:'center',justifyContent:'center'}]} disabled={started} onPress={loadSimpleWords}>
                     <Icon
                         name='save-alt'
                         size={30}
@@ -114,7 +163,7 @@ export default function PassiveRecordScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{flex: 1,marginTop:40, marginBottom:30, width:'85%', padding:30, borderWidth:1, borderColor: '#65A3FF', borderRadius: 10, textAlign: 'center'}}>
-                {sortedRes.map((result, index) => <TouchableOpacity style={{paddingHorizontal: 20, paddingVertical: 15, verticalAlign: 'middle', borderBottomWidth: 1, borderBottomColor: '#B9C5D7'}} key={index} onPress={() => toggleSelect(index)}>
+                {sortedRes.map((result, index) => <TouchableOpacity style={{paddingHorizontal: 20, paddingVertical: 15, verticalAlign: 'middle', borderBottomWidth: 1, borderBottomColor: '#B9C5D7'}} key={index} disabled={started}  onPress={() => toggleSelect(index)}>
                     {wordsToSave.includes(result) ? <Text style={{fontSize: 18, color:'#65A3FF'}}>{result}</Text> : <Text style={{fontSize: 18, color:'black'}}>{result}</Text>}
                 </TouchableOpacity>)}
                 <Text style={{marginBottom:30}}></Text>
