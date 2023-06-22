@@ -39,8 +39,7 @@ export default function MainStatsMenuScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mainWrapper}>   
           <View style={styles.header}>
-            <View style={styles.image}></View>
-            {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
+            <Image source={require('../../assets/img/profileavatart.png')} style={styles.image}></Image>
           </View>
           <TouchableOpacity style={{position:'absolute', top:45, left: 45, width:50, height: 50}} onPress={()=>navigation.navigate("PassiveRecord")}>
             <Icon
@@ -52,31 +51,39 @@ export default function MainStatsMenuScreen({ navigation }) {
 
 
           <View elevation={24} style={styles.statCard} >
+            <ImageBackground source={require('../../assets/img/reqgreen.png')} resizeMode="cover" style={{marginLeft:-10,marginTop:0,width:370,height:139}}>
+            
             <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
-            
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
+            <Text style={[styles.whiteButtonTitle, {position:'relative',top:-30,left:260,fontWeight:700,}]}>Amount</Text>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-33}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
             </View>
+            </ImageBackground>
           </View>
 
           <View elevation={24} style={styles.statCard} >
+            <ImageBackground source={require('../../assets/img/reqblue.png')} resizeMode="cover" style={{marginLeft:-10,marginTop:0,width:370,height:139}}>
             <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
             </View>
+            </ImageBackground>
           </View>
 
+          
 
           <View elevation={24} style={[styles.statCard,{marginBottom:30}]} >
+            <ImageBackground source={require('../../assets/img/reqpurple.png')} resizeMode="cover" style={{marginLeft:-10,marginTop:0,width:370,height:139}}>
             <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
             </View>
+            </ImageBackground>
           </View>
           
 
@@ -94,7 +101,7 @@ export default function MainStatsMenuScreen({ navigation }) {
           
           <View elevation={24} style={styles.extendedStatCard} >
             <Text style={[styles.statCardTitle,{color:'#8E761F',flexWrap:'wrap',width:130,textAlign:'center'}]}>RECORD OF THE WEEK</Text>
-            <View style={{width:80,height:80,backgroundColor:'gray',borderRadius:50}}></View>
+            <Image source={require('../../assets/img/coin.png')} style={{width:80,height:80}}></Image>
           </View>
 
 
@@ -104,16 +111,16 @@ export default function MainStatsMenuScreen({ navigation }) {
       <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainScreen')}>
-
+          <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
+            <Image source={require('../../assets/img/home.png')} resizeMode="contain" style={{height:50,width:50}}></Image>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('VocabularyScreen')}>
-                        
+          <TouchableOpacity style={{height:50,width:50}} onPress={() => navigation.navigate('VocabularyScreen')}>
+            <Image source={require('../../assets/img/dictionary.png')} resizeMode="contain" style={{height:50,width:50}}></Image>         
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('PreSentenceScreen')}>
-                        
+          <TouchableOpacity style={{height:50,width:50}} onPress={() => navigation.navigate('ListScreen')}>
+            <Image source={require('../../assets/img/Subtract.png')} resizeMode="contain" style={{height:50,width:50}}></Image>                   
           </TouchableOpacity>
         </View>
       </View>
@@ -252,7 +259,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     marginTop:30,
-    backgroundColor:'gray',
+    
     borderRadius:50,
   },
   

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 export default function ProfileCreationScreen() {
   return (
     <View style={styles.container}>        
-      <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>      
+      <Image source={require('../../assets/img/profilecreation1.png')} style={styles.image}></Image>     
       <Text style={styles.title}>Creating profile</Text>
       <Image source={require('../../assets/img/speech_logo.png')} style={styles.loadingGIF}></Image>
     </View>

@@ -28,9 +28,9 @@ export default function PhotoScreen({ navigation }) {
         <Text  style={styles.title}>{localization.data.chooseAvatarLabelText}</Text>
 
         
-        <View style={styles.avatar}>
+        <Image source={require('../../assets/img/photo.png')} style={styles.avatar}>
 
-        </View>
+        </Image>
         
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('WordsPerDay')}>          
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   avatar:{
     width:200,
     height:200,
-    backgroundColor:'gray',
+    
 
   },
   backButton:{

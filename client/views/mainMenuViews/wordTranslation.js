@@ -188,16 +188,16 @@ export default function WordTranslationScreen({ navigation }) {
         {/* <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
-
+          <TouchableOpacity style={{height:50,width:50}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
+            <Image source={require('../../assets/img/home.png')} resizeMode="contain" style={{height:50,width:50}}></Image>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('VocabularyScreen')}>
-                        
+          <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('VocabularyScreen')}>
+            <Image source={require('../../assets/img/dictionary.png')} resizeMode="contain" style={{height:50,width:50}}></Image>             
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('ListScreen')}>
-                        
+          <TouchableOpacity style={{height:50,width:50}} onPress={() => navigation.navigate('ListScreen')}>
+            <Image source={require('../../assets/img/Subtract.png')} resizeMode="contain" style={{height:50,width:50}}></Image>           
           </TouchableOpacity>
         </View>
       </View> */}

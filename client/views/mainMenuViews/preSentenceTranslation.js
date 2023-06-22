@@ -199,14 +199,14 @@ export default function PreSentenceTranslationScreen({ navigation }) {
         </View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.mainWrapper}>
+      <View style={styles.mainWrapper}>
           {/* a1 */}
           <View style={[{ textAlign: 'center',justifyContent:'center',alignItems:'center', width:350, borderRadius: 10, borderColor: '#00B2FF', borderWidth: 2 ,marginTop:20}]}>
             <TouchableOpacity style={[{ textAlign: 'center', margin: 20, height:65,justifyContent:'center',alignItems:'center', width:350, }]} onPress={() => handleToggle('A1')}>
               <Text style={[{ textAlign: 'center', margin: 20,fontSize:20,fontWeight:500 }]} >{`${'A1'}`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[{ position:'relative', height:50, width:50,top:-25 ,left:100,backgroundColor: isExpanded.A1 ? 'green' : 'red',marginTop:-50}]} onPress={() => handleToggle('A1')}/>
-            <TouchableOpacity style={[{ position:'relative',display: USER_LEVEL.includes('A1') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,backgroundColor: 'red',marginTop:-50}]} onPress={() => handleToggle('A1')}/>
+            <Image source={require('../../assets/img/locked.png')} resizeMode="contain" style={[{ position:'relative',display: USER_LEVEL.includes('A1') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,marginTop:-50}]} onPress={() => handleToggle('A1')}/>
             {isExpanded.A1 && (
               <View style={{ marginLeft: 40 ,marginRight:40,marginBottom:20}}>
                 {ALL_TOPICS.A1.map((item, index) => (
@@ -215,22 +215,20 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 10,
+                        marginVertical: 5,
                         margin: 5,
                       }}
                     >
-                      <Checkbox
+                      <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          marginVertical: 5,
-                          margin: 15,
+                          width: 20,
+                          height: 20,
+                          borderRadius: 10,
+                          backgroundColor: checkedItems.A1.includes(item) ? 'green' : 'red',
+                          marginRight: 10,
+                          margin: 5,
                         }}
-                        value={checkedItems.A1.includes(item)}
-                        onValueChange={() => handleCheckboxToggle('A1',item)}
-                        color={"#65A3FF"}
                       />
-
                       <Text style={{ fontSize: 20, fontWeight: '500' , width:270}}>{item}</Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -245,7 +243,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
               <Text style={[{ textAlign: 'center', margin: 20,fontSize:20,fontWeight:500 }]} >{`${'A2'}`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[{ position:'relative', height:50, width:50,top:-25 ,left:100,backgroundColor: isExpanded.A2 ? 'green' : 'red',marginTop:-50}]} onPress={() => handleToggle('A2')}/>
-            <TouchableOpacity style={[{ position:'relative',display: USER_LEVEL.includes('A2') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,backgroundColor: 'red',marginTop:-50}]} onPress={() => handleToggle('A2')}/>
+            <Image source={require('../../assets/img/locked.png')} resizeMode="contain" style={[{ position:'relative',display: USER_LEVEL.includes('A2') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,marginTop:-50}]} onPress={() => handleToggle('A2')}/>
             {isExpanded.A2 && (
               <View style={{ marginLeft: 40 ,marginRight:40,marginBottom:20}}>
                 {ALL_TOPICS.A2.map((item, index) => (
@@ -254,20 +252,19 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 10,
+                        marginVertical: 5,
                         margin: 5,
                       }}
                     >
-                      <Checkbox
+                      <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          marginVertical: 5,
-                          margin: 15,
+                          width: 20,
+                          height: 20,
+                          borderRadius: 10,
+                          backgroundColor: checkedItems.A2.includes(item) ? 'green' : 'red',
+                          marginRight: 10,
+                          margin: 5,
                         }}
-                        value={checkedItems.A2.includes(item)}
-                        onValueChange={() => handleCheckboxToggle('A2',item)}
-                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -284,7 +281,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
               <Text style={[{ textAlign: 'center', margin: 20,fontSize:20,fontWeight:500 }]} >{`${'B1'}`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[{ position:'relative', height:50, width:50,top:-25 ,left:100,backgroundColor: isExpanded.B1 ? 'green' : 'red',marginTop:-50}]} onPress={() => handleToggle('B1')}/>
-            <TouchableOpacity style={[{ position:'relative',display: USER_LEVEL.includes('B1') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,backgroundColor: 'red',marginTop:-50}]} onPress={() => handleToggle('B1')}/>
+            <Image source={require('../../assets/img/locked.png')} resizeMode="contain" style={[{ position:'relative',display: USER_LEVEL.includes('B1') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,marginTop:-50}]} onPress={() => handleToggle('B1')}/>
             {isExpanded.B1 && (
               <View style={{ marginLeft: 40 ,marginRight:40,marginBottom:20}}>
                 {ALL_TOPICS.B1.map((item, index) => (
@@ -293,20 +290,19 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 10,
+                        marginVertical: 5,
                         margin: 5,
                       }}
                     >
-                      <Checkbox
+                      <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          marginVertical: 5,
-                          margin: 15,
+                          width: 20,
+                          height: 20,
+                          borderRadius: 10,
+                          backgroundColor: checkedItems.B1.includes(item) ? 'green' : 'red',
+                          marginRight: 10,
+                          margin: 5,
                         }}
-                        value={checkedItems.B1.includes(item)}
-                        onValueChange={() => handleCheckboxToggle('B1',item)}
-                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -322,7 +318,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
               <Text style={[{ textAlign: 'center', margin: 20,fontSize:20,fontWeight:500 }]} >{`${'B2'}`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[{ position:'relative', height:50, width:50,top:-25 ,left:100,backgroundColor: isExpanded.B2 ? 'green' : 'red',marginTop:-50}]} onPress={() => handleToggle('B2')}/>
-            <TouchableOpacity style={[{ position:'relative',display: USER_LEVEL.includes('B2') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,backgroundColor: 'red',marginTop:-50}]} onPress={() => handleToggle('B2')}/>
+            <Image source={require('../../assets/img/locked.png')} resizeMode="contain" style={[{ position:'relative',display: USER_LEVEL.includes('B2') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,marginTop:-50}]} onPress={() => handleToggle('B2')}/>
             {isExpanded.B2 && (
               <View style={{ marginLeft: 40 ,marginRight:40,marginBottom:20}}>
                 {ALL_TOPICS.B2.map((item, index) => (
@@ -331,20 +327,19 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 10,
+                        marginVertical: 5,
                         margin: 5,
                       }}
                     >
-                      <Checkbox
+                      <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          marginVertical: 5,
-                          margin: 15,
+                          width: 20,
+                          height: 20,
+                          borderRadius: 10,
+                          backgroundColor: checkedItems.B2.includes(item) ? 'green' : 'red',
+                          marginRight: 10,
+                          margin: 5,
                         }}
-                        value={checkedItems.B2.includes(item)}
-                        onValueChange={() => handleCheckboxToggle('B2',item)}
-                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -360,7 +355,7 @@ export default function PreSentenceTranslationScreen({ navigation }) {
               <Text style={[{ textAlign: 'center', margin: 20,fontSize:20,fontWeight:500 }]} >{`${'C1'}`}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[{ position:'relative', height:50, width:50,top:-25 ,left:100,backgroundColor: isExpanded.C1 ? 'green' : 'red',marginTop:-50}]} onPress={() => handleToggle('C1')}/>
-            <TouchableOpacity style={[{ position:'relative',display: USER_LEVEL.includes('C1') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,backgroundColor: 'red',marginTop:-50}]} onPress={() => handleToggle('C1')}/>
+            <Image source={require('../../assets/img/locked.png')} resizeMode="contain" style={[{ position:'relative',display: USER_LEVEL.includes('C1') ? 'none' : 'flex', height:50, width:50,top:-25 ,left:-100,marginTop:-50}]} onPress={() => handleToggle('C1')}/>
             {isExpanded.C1 && (
               <View style={{ marginLeft: 40 ,marginRight:40,marginBottom:20}}>
                 {ALL_TOPICS.C1.map((item, index) => (
@@ -369,20 +364,19 @@ export default function PreSentenceTranslationScreen({ navigation }) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginVertical: 10,
+                        marginVertical: 5,
                         margin: 5,
                       }}
                     >
-                      <Checkbox
+                      <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          marginVertical: 5,
-                          margin: 15,
+                          width: 20,
+                          height: 20,
+                          borderRadius: 10,
+                          backgroundColor: checkedItems.C1.includes(item) ? 'green' : 'red',
+                          marginRight: 10,
+                          margin: 5,
                         }}
-                        value={checkedItems.C1.includes(item)}
-                        onValueChange={() => handleCheckboxToggle('C1',item)}
-                        color={"#65A3FF"}
                       />
                       <Text style={{ fontSize: 20, fontWeight: '500', width:270 }}>{item}</Text>
                     </View>
@@ -429,17 +423,23 @@ export default function PreSentenceTranslationScreen({ navigation }) {
       <View style={styles.navBar}>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
           <TouchableOpacity
-            style={{ height: 50, backgroundColor: 'gray', width: 50 }}
-            onPress={() => navigation.navigate('MainScreen')}
-          />
+            style={{ height: 50, width: 50 }}
+            onPress={() => navigation.navigate('MainStatsMenuScreen')}
+          >
+            <Image source={require('../../assets/img/home.png')} resizeMode="contain" style={{height:50,width:50}}></Image>
+          </TouchableOpacity>
           <TouchableOpacity
-            style={{ height: 50, backgroundColor: 'gray', width: 50 }}
+            style={{ height: 50, width: 50 }}
             onPress={() => navigation.navigate('VocabularyScreen')}
-          />
+          > 
+            <Image source={require('../../assets/img/dictionary.png')} resizeMode="contain" style={{height:50,width:50}}></Image>   
+          </TouchableOpacity>
           <TouchableOpacity
-            style={{ height: 50, backgroundColor: 'gray', width: 50, borderBottomColor: '#65A3FF', borderBottomWidth: 3 }}
-            onPress={() => navigation.navigate('PreSentenceScreen')}
-          />
+            style={{ height: 50, width: 50, borderBottomColor: '#65A3FF', borderBottomWidth: 3 }}
+            onPress={() => navigation.navigate('ListScreen')}
+          >
+           <Image source={require('../../assets/img/Subtract.png')} resizeMode="contain" style={{height:50,width:50}}></Image> 
+          </TouchableOpacity>
         </View>
       </View>
 
