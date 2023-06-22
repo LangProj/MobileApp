@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { settingsController } from '../../store/store';
 
 const ALL_TOPICS = {
   A1: [
@@ -102,11 +103,20 @@ const ALL_TOPICS = {
   ]
 };
 
-const USER_LEVEL = ['A1']
-
 
 export default function PreSentenceTranslationScreen({ navigation }) {
-  let [modalVisible, setModalVisible] = useState(false)
+  let [USER_LEVEL, setUSER_LEVEL] = useState(() => {
+    if (settingsController.SettingsModel.level == 'A1')
+      return ['A1'];
+    else if(settingsController.SettingsModel.level == 'A2')
+      return ['A1', 'A2'];
+    else if(settingsController.SettingsModel.level == 'B1')
+      return ['A1', 'A2', 'B1'];
+    else if(settingsController.SettingsModel.level == 'B2')
+      return ['A1', 'A2', 'B1', 'B2'];
+    else return ['A1', 'A2', 'B1', 'B2', 'C1'];
+  });
+  let [modalVisible, setModalVisible] = useState(false);
   let [checkedItems, setCheckedItems] = useState(
     {
       A1:[],
@@ -133,6 +143,8 @@ export default function PreSentenceTranslationScreen({ navigation }) {
       return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+    console.log(settingsController.SettingsModel.level);
   }, []);
 
   const handleToggle = (level) => {

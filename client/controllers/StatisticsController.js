@@ -91,7 +91,19 @@ class StatisticsController {
     async addWords(words) {
         this.StatisticsModel.wordsADay += +words;
         this.saveWordsADay();
-        this.StatisticsModel.wordsInLevel -= +words;
+        if (this.StatisticsModel.wordsInLevel - +words <= 0) {
+            if (settingsController.SettingsModel.level == 'A1')
+                settingsController.SettingsModel.level = 'A2';
+            else if (settingsController.SettingsModel.level == 'A2')
+                settingsController.SettingsModel.level = 'B1';
+            else if (settingsController.SettingsModel.level == 'B1')
+                settingsController.SettingsModel.level = 'B2';
+            else settingsController.SettingsModel.level = 'C1';
+            await settingsController.saveLevel();
+            await settingsController.updateLevelInDb();
+            this.StatisticsModel.wordsInLevel = await this.getWordsCount();
+        }
+        else this.StatisticsModel.wordsInLevel -= +words;
         this.saveWordsInLevel();
         this.StatisticsModel.wordsAllTime += +words;
         this.saveWordsAllTime();

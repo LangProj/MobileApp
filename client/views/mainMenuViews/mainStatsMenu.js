@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { settingsController } from '../../store/store';
 
 
 
@@ -17,13 +18,15 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 
 export default function MainStatsMenuScreen({ navigation }) {
+  
   const statistics = useSelector(state => state.statistics);
   useEffect(() => {
     setLearnedWordsToday(statistics.wordsADay);
     setUnlearnedWords(statistics.wordsInLevel);
     setLearnedWordsAllTime(statistics.wordsAllTime);
+    setCurrentLevel(settingsController.SettingsModel.level);
   }, [statistics.wordsADay, statistics.wordsInLevel, statistics.wordsAllTime]);
-
+  
   useEffect(() => {
     const onBackPress = () => {
       console.log("System back gesture or click");
@@ -35,16 +38,24 @@ export default function MainStatsMenuScreen({ navigation }) {
   const [LearnedWordsAllTime, setLearnedWordsAllTime] = useState(String(statistics.wordsInLevel));
   const [UnlearnedWords, setUnlearnedWords] = useState(String(statistics.wordsAllTime));
 
+  const [currentLevel, setCurrentLevel] = useState(settingsController.SettingsModel.level);
+  
   return (
     
     <View style={{flex: 1}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mainWrapper}>   
           <View style={styles.header}>
+          <TouchableOpacity style={{width:50, height: 50, marginLeft:10}} onPress={()=>navigation.navigate("PassiveRecord")}>
+            <MaterialIcon
+              name='record-voice-over'
+              size={40}
+              color='#65A3FF'
+            />
+          </TouchableOpacity>
             <View style={{
                 width: 70,
                 height: 70,
-                marginTop:30,
                 backgroundColor:'#E4EFFF',
                 borderRadius:50,
                 borderWidth: 2,
@@ -57,14 +68,10 @@ export default function MainStatsMenuScreen({ navigation }) {
                   color='gray'
                 />
               </View>
+          <Text style={{width:50, height: 50, textAlign:'center', color: "#65A3FF", fontSize:28, fontWeight:900, verticalAlign: 'middle', marginRight:10}}>{currentLevel}</Text>
+
           </View>
-          <TouchableOpacity style={{position:'absolute', top:45, left: 45, width:50, height: 50}} onPress={()=>navigation.navigate("PassiveRecord")}>
-            <MaterialIcon
-              name='record-voice-over'
-              size={40}
-              color='#65A3FF'
-            />
-          </TouchableOpacity>
+          
 
 
           <View elevation={24} style={styles.statCard} >
@@ -255,11 +262,13 @@ const styles = StyleSheet.create({
     marginBottom:40,
   },
   header: {
+    marginTop: 30,
     height: 90 ,
     width: '100%',
-    
+    flexDirection: 'row',
     flex:1,
     alignItems:'center',
+    justifyContent: 'space-around',
   },
   mainWrapper: {
     flex:1,

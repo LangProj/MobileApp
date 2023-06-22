@@ -1,6 +1,7 @@
 import SettingsModel from '../models/SettingsModel.js';
-import { setMotherTongue, setUsername, setAvatar, setLevel, setWordsPerDay, updateSettings, checkUsername } from '../store/slices/settingsSlice.js';
+import { setMotherTongue, setUsername, setAvatar, setLevel, setWordsPerDay, updateSettings, checkUsername, updateLevel } from '../store/slices/settingsSlice.js';
 import * as SecureStore from 'expo-secure-store';
+import { userController } from '../store/store.js';
 
 class UserController {
     constructor(store) {
@@ -56,6 +57,13 @@ class UserController {
     async updateSettings(data) {
         console.log("Updating settings...");
         return await this.store.dispatch(updateSettings(data));
+    }
+
+    async updateLevelInDb() {
+        return await this.store.dispatch(updateLevel({
+            userId: userController.UserModel.id, 
+            newLevel: this.SettingsModel.level
+        }));
     }
 }
 
