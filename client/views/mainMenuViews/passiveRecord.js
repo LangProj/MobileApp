@@ -19,7 +19,7 @@ import { userController } from '../../store/store';
 export default function PassiveRecordScreen({ navigation }) {
     let [started, setStarted] = useState(false);
     let [results, setResults] = useState([]);
-    let [sortedRes, setSortedRes] = useState(["brother", "hello", "more"]);
+    let [sortedRes, setSortedRes] = useState([]);
     let [needToCheckRecognition, setNeedToCheckRecognition] = useState(false);
     let [resStr, setResStr] = useState("");
     let [resArray, setResArray] = useState([]);
