@@ -26,6 +26,7 @@ app.patch('/updateStatistics', UserController.updateStatistics);
 app.post('/getUserWords', checkAuth, UserController.getUserWords);
 app.get('/localization/:locale', SettingsController.getLocalization);
 app.patch('/addNewWords', checkAuth, UserController.addNewWords);
+app.patch('/addWordsByWord', UserController.addWordsByWord);
 app.post('/generateSentence', checkAuth, UserController.generateSentence);
 app.post('/sendConfirmationEmail', UserController.sendConfirmationEmail);
 app.post('/confirmCode', UserController.confirmCode);

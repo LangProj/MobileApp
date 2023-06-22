@@ -50,7 +50,7 @@ export const register = async (req, res) => {
                 },
                 "Phrase123",
                 {
-                    expiresIn: '1d',
+                    expiresIn: '30d',
                 }
             );
 
@@ -105,7 +105,7 @@ export const register = async (req, res) => {
             },
             "Phrase123",
             {
-                expiresIn: '1d',
+                expiresIn: '30d',
             }
         );
 
@@ -154,7 +154,7 @@ export const login = async (req, res) => {
             },
             'Phrase123',
             {
-                expiresIn: '1d',
+                expiresIn: '30d',
             }
         );
 
@@ -181,17 +181,26 @@ export const login = async (req, res) => {
 
 export const getWordsToLearn = async (req, res) => {
     try {
+        console.log("Getting words");
         const userId = req.body.userId;
 
         const user = await UserModel.findById(userId);
         const wordsId = user._doc.words.map(word => new Types.ObjectId(word.get('word')._id));
 
+        const settingsId = user._doc.settings;
+        console.log(settingsId);
+
+        const settingsDoc = await SettingsModel.findById(settingsId);
+        console.log(settingsDoc.level);
 
         const maxWords = parseInt(req.body.maxWords); 
     
     
         const words = await WordModel.aggregate([
-            { $match: { _id: { $nin: wordsId } } }, 
+            { $match: { 
+                _id: { $nin: wordsId },
+                level: settingsDoc.level
+            } }, 
             { $sample: { size: maxWords } }, 
         ]);
         
@@ -208,6 +217,7 @@ export const getWordsToLearn = async (req, res) => {
 
 export const addNewWords = async (req, res) => {
     try {
+        console.log(req.body.newWords);
         const user = await UserModel.findOneAndUpdate(
             {
                 _id: req.body.userId,
@@ -223,10 +233,52 @@ export const addNewWords = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Failed to send new words to db"
+            message: "Failed to add new words to db"
         });
     }
 };
+
+export const addWordsByWord = async(req, res) => {
+    try {
+        const words = req.body.words;
+        console.log("Here")
+        
+        const userr = await UserModel.findById(req.body.userId);
+        console.log("Here")
+        const userWords = userr._doc.words.map(word => word.get('word').word);
+        const wordsObjs = [];
+        for (let i = 0; i < words.length; i++) {
+            if(userWords.includes(words[i]))
+                continue;
+            const wordFromDB = await WordModel.findOne({'word': words[i]});
+            console.log(wordFromDB);
+            wordsObjs.push({
+                word: wordFromDB,
+                learned: 0.1,
+            });
+        }
+        console.log(wordsObjs);
+
+        const user = await UserModel.findOneAndUpdate(
+            {
+                _id: req.body.userId,
+            },
+            {
+                $push: {words: wordsObjs}
+            }
+        );
+
+        await user.save();
+
+        res.status(200).json(user.words);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Failed to add new words to db"
+        });
+    }
+}
 
 export const updateWords = async (req, res) => {
     try {
