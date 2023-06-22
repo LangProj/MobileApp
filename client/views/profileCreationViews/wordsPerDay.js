@@ -48,7 +48,7 @@ export default function WordsPerDayScreen({ navigation }) {
       <View style={styles.mainWrapper}>   
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>          
-                                       
+            <Image resizeMode="cover" source={require('../../assets/img/backblack.png')} style={{ height:40,width:40}}></Image>                           
           </TouchableOpacity>
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
@@ -148,13 +148,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   backButton:{
-    backgroundColor: 'gray',
+    
     width: 64,
     height: 64,
     left:10,
     top:22,
     position:"absolute",
-    
+    alignItems:'center',
+    justifyContent:'center'
   },
   smallWhiteButton:{
     margin:10,

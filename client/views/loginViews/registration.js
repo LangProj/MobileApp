@@ -56,6 +56,9 @@ export default function SignUpScreen({ navigation }) {
     
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.mainWrapper}>
+          <TouchableOpacity style={{position:'relative',top:-20,left:-170, height:30,width:30,marginBottom:-30}}> 
+            <Image resizeMode="cover" source={require('../../assets/img/backblack.png')} style={{ height:30,width:30}}></Image>
+          </TouchableOpacity>
         <View style={styles.wrapper}>
           <View style={styles.container}>
             <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                   

@@ -89,7 +89,9 @@ export default function PassiveRecordScreen({ navigation }) {
         <View style={{flex: 1, alignItems: 'center'}}>
             <View style={[{backgroundColor:'#00B9D2',height:110,width:'100%',justifyContent:'space-around',zIndex:999}]}>
                 <View style={[{marginTop:20,flexDirection:'row',width:'100%',justifyContent:'space-around'}]}>
-                    <TouchableOpacity style={[{width:75,height:75,backgroundColor:'gray'}]} onPress={() => navigation.goBack()} ></TouchableOpacity>
+                <TouchableOpacity style={{ width: 75, height: 75, alignItems:'center',justifyContent:'center' }} onPress={() => navigation.goBack()}>
+                    <Image resizeMode="cover" source={require('../../assets/img/backwhite.png')} style={{ height:40,width:40}}></Image> 
+                </TouchableOpacity>
                     <Text style={[{fontSize:28,color:'white',fontWeight:'bold',textAlign:'center',marginTop:20}]}>Record</Text>
                     <TouchableOpacity style={[{backgroundColor:'#00B9D2',width:75,height:75}]}></TouchableOpacity>
                 </View>

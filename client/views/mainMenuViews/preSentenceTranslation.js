@@ -190,7 +190,9 @@ export default function PreSentenceTranslationScreen({ navigation }) {
         }}
       >
         <View style={{ marginTop: 20, flexDirection: 'row', width: '100%', justifyContent: 'space-around' }}>
-          <TouchableOpacity style={{ width: 75, height: 75, backgroundColor: 'gray' }} onPress={() => test()} />
+          <TouchableOpacity style={{ width: 75, height: 75, alignItems:'center',justifyContent:'center' }} onPress={() => navigation.goBack()}>
+            <Image resizeMode="cover" source={require('../../assets/img/backwhite.png')} style={{ height:40,width:40}}></Image> 
+          </TouchableOpacity>
           <Text style={{ fontSize: 28, color: 'white', fontWeight: 'bold', textAlign: 'center', marginTop: 20 }}>
             Sentences
           </Text>

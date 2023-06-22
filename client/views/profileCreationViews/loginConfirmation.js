@@ -47,7 +47,7 @@ export default function LoginConfirmationScreen({ navigation }) {
       <View style={styles.mainWrapper}>   
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>          
-                                       
+            <Image resizeMode="cover" source={require('../../assets/img/backblack.png')} style={{ height:40,width:40}}></Image>                        
           </TouchableOpacity>
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
@@ -96,13 +96,14 @@ export default function LoginConfirmationScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   backButton:{
-    backgroundColor: 'gray',
+    
     width: 64,
     height: 64,
     left:10,
     top:22,
     position:"absolute",
-    
+    alignItems:'center',
+    justifyContent:'center'
   },
   progresWrapper:{
     marginTop: 150,
