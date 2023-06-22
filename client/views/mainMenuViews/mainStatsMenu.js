@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import {useState} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 import { useSelector } from 'react-redux';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+
 
 
 
@@ -17,7 +21,14 @@ export default function MainStatsMenuScreen({ navigation }) {
     setUnlearnedWords(statistics.wordsInLevel);
     setLearnedWordsAllTime(statistics.wordsAllTime);
   }, [statistics.wordsADay, statistics.wordsInLevel, statistics.wordsAllTime]);
-  
+
+  useEffect(() => {
+    const onBackPress = () => {
+      console.log("System back gesture or click");
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
   const [LearnedWordsToday, setLearnedWordsToday] = useState(String(statistics.wordsADay));
   const [LearnedWordsAllTime, setLearnedWordsAllTime] = useState(String(statistics.wordsInLevel));
   const [UnlearnedWords, setUnlearnedWords] = useState(String(statistics.wordsAllTime));
@@ -31,14 +42,20 @@ export default function MainStatsMenuScreen({ navigation }) {
             <View style={styles.image}></View>
             {/* <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>  */}
           </View>
-          
+          <TouchableOpacity style={{position:'absolute', top:45, left: 45, width:50, height: 50}} onPress={()=>navigation.navigate("PassiveRecord")}>
+            <Icon
+              name='record-voice-over'
+              size={40}
+              color='#65A3FF'
+            />
+          </TouchableOpacity>
 
 
           <View elevation={24} style={styles.statCard} >
             <Text style={[styles.statCardTitle,{color:'#00CB82',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(today)</Text>
-            <Text style={[styles.whiteButtonTitle, {position:'relative',top:-30,left:260,fontWeight:700,}]}>Amount</Text>
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-33}}>
+            
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00CB82' }}>{LearnedWordsToday}</Text>
             </View>
           </View>
@@ -47,7 +64,7 @@ export default function MainStatsMenuScreen({ navigation }) {
             <Text style={[styles.statCardTitle,{color:'#00B9D2',marginTop:20,}]}>Learned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(all time)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#00B9D2' }}>{LearnedWordsAllTime}</Text>
             </View>
           </View>
@@ -57,7 +74,7 @@ export default function MainStatsMenuScreen({ navigation }) {
             <Text style={[styles.statCardTitle,{color:'#778DFF',marginTop:20,}]}>Unlearned words</Text>
             <Text style={[styles.whiteButtonTitle, {marginLeft:19}]}>(in level)</Text>
             
-            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-10}}>
+            <View style={{flex:1,width:'100%',alignItems:'flex-end',marginLeft:-20,marginTop:-20}}>
               <Text style={{fontSize:45,fontWeight:700,color:'#778DFF' }}>{UnlearnedWords}</Text>
             </View>
           </View>
@@ -87,7 +104,7 @@ export default function MainStatsMenuScreen({ navigation }) {
       <View style={styles.navBar}>
         <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',marginTop:10,}}>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainStatsMenuScreen')}>
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,}} onPress={() => navigation.navigate('MainScreen')}>
 
           </TouchableOpacity>
 
@@ -95,7 +112,7 @@ export default function MainStatsMenuScreen({ navigation }) {
                         
           </TouchableOpacity>
 
-          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('ListScreen')}>
+          <TouchableOpacity style={{height:50,backgroundColor:'gray',width:50}} onPress={() => navigation.navigate('PreSentenceScreen')}>
                         
           </TouchableOpacity>
         </View>
@@ -234,7 +251,7 @@ const styles = StyleSheet.create({
   image:{
     width: 64,
     height: 64,
-    marginTop:20,
+    marginTop:30,
     backgroundColor:'gray',
     borderRadius:50,
   },

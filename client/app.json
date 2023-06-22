@@ -31,6 +31,15 @@
       "eas": {
         "projectId": "dffae011-37a9-4e52-8691-2a04b88fd6ef"
       }
-    }
+    },
+    "plugins": [
+      [
+        "@react-native-voice/voice",
+        {
+          "microphonePermission": "Allow Voice to Text Tutorial to access the microphone",
+          "speechRecognitionPermission": "Allow Voice to Text Tutorial to securely recognize user speech"
+        }
+      ]
+    ]
   }
 }

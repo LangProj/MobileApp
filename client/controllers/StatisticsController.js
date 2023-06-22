@@ -72,6 +72,8 @@ class StatisticsController {
         await this.saveWordsADay();
         await this.saveWordsInLevel();
         await this.saveWordsAllTime();
+
+        await this.updateInDB();
     }
 
     async saveStatistics() {

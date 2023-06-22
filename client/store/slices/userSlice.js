@@ -150,6 +150,25 @@ export const getAllWords = createAsyncThunk("getAllWords", async (params) => {
     }
 });
 
+export const genSentence = createAsyncThunk("genSentence", async({params, token}) => {
+    try {
+        console.log(token);
+        const {data, status} = await axios.post("/generateSentence", params, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
+        return {data: data, status: status};
+    } catch (error) {
+        console.log(error);
+        return {data: error.response.data.message, status: error.response.status};
+    }
+})
+
+
+
+
+
 export const userSlice = createSlice({
     name: 'user',
     initialState: {

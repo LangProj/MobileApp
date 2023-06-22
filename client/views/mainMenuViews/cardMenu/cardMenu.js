@@ -10,7 +10,8 @@ import {
   Animated,
   Pressable,
   Image,
-  ScrollView
+  ScrollView,
+  BackHandler
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import cardMenuWrapper from './cardMenuWrapper';
@@ -63,12 +64,24 @@ class CardScreen extends Component {
     this.setState({floatProgress: 1/this.words.length/2});
     this.setState({word: this.words[this.currentWordInd].word});
     this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
+    this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
     this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
     this.setState({sentence: this.words[this.currentWordInd].sentence.en});
     this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
     
     this.learnedWords = [];
     this.notLearnedWords = [];
+
+    const onBackPress = async () => {
+      if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
+        await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
+        await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+      }
+      this.props.navigation.goBack();
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
   }
 
   constructor(props) {
@@ -77,6 +90,7 @@ class CardScreen extends Component {
       myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
       backgroundColor: '#fff',
+      category:'',
       word:'',
       wordTranslated:'',
       pronunciation: '',
@@ -100,6 +114,7 @@ class CardScreen extends Component {
       this.setState({myText: 'You swiped left!'});
       console.log(this.currentWordInd);
       this.setState({word: this.words[this.currentWordInd].word});
+      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
       this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
       this.setState({sentence: this.words[this.currentWordInd].sentence.en});
       this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
@@ -125,6 +140,7 @@ class CardScreen extends Component {
       this.currentWordInd++;
       this.setState({myText: 'You swiped right!'});
       this.setState({word: this.words[this.currentWordInd].word});
+      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
       this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
       this.setState({sentence: this.words[this.currentWordInd].sentence.en});
       this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
@@ -170,8 +186,10 @@ class CardScreen extends Component {
   }
 
   async handleFinish() {
-    await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
-    await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+    if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
+      await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
+      await statisticsController.addWords(this.learnedWords.concat(this.notLearnedWords).length);
+    }
     this.props.navigation.goBack();
   }
 
@@ -203,7 +221,7 @@ class CardScreen extends Component {
 
 
         <View style={styles.topicWrapper}>          
-          <Text style={styles.topicWrapperTitle}>Natural phenomena</Text>                            
+          <Text style={styles.topicWrapperTitle}>{this.state.category}</Text>                            
         </View>
 
 
