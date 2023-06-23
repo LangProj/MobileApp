@@ -11,7 +11,6 @@ export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (l
 
     const path = `${FileSystem.documentDirectory}/lang/${loc}.json`;
     await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}/lang/`, { intermediates: true });
-    
     try {
         console.log("Fetching from client files...");
         let res = await FileSystem.readAsStringAsync(path, {
@@ -39,13 +38,13 @@ export const fetchLocale = createAsyncThunk("localization/fetchLocale", async (l
                     return response;
                 })
                 .catch(async (error) => {
-                    console.log("Fetching default locale...");
                     const result = {}
                     defaultLang.forEach(element => {
                         result[Object.keys(element)[0]] = element[Object.keys(element)[0]];
                     });
+                    console.log("Result", result);
                     return {data: result};
-                });
+            });
             return data;
         });
         return res;
