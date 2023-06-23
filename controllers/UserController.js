@@ -181,19 +181,14 @@ export const login = async (req, res) => {
 
 export const getWordsToLearn = async (req, res) => {
     try {
-        console.log("Getting words");
         const userId = req.body.userId;
-        console.log(userId);
-        console.log(req.body.maxWords);
 
         const user = await UserModel.findById(userId);
         const wordsId = user._doc.words.map(word => new Types.ObjectId(word.get('word')._id));
 
         const settingsId = user._doc.settings;
-        console.log(settingsId);
 
         const settingsDoc = await SettingsModel.findById(settingsId);
-        console.log(settingsDoc.level);
 
         const maxWords = parseInt(req.body.maxWords); 
     
@@ -210,9 +205,9 @@ export const getWordsToLearn = async (req, res) => {
             words: words 
         });
         } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Failed to retrieve words to learn",
+            console.log(err);
+            res.status(500).json({
+                message: "Failed to retrieve words to learn",
         });
     }
 };
