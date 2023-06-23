@@ -8,7 +8,7 @@ export default function LoadingScreen({navigation}) {
     async function fetchFromLocalStorage() {
       localizationController.fetchCurrentLocale();
       const response = await userController.loadLocalData();
-      if ((typeof response === 'object' && response === null) || (typeof response === 'string') && response == "null") {
+      if ((typeof response === 'object' && response !== null) || (typeof response === 'string') && response != "null") {
         await settingsController.loadLocalData();
         await statisticsController.loadLocalData();
         navigation.navigate("MainScreen");
