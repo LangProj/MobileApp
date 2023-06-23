@@ -20,6 +20,7 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/', (req, res)=>res.status(200).json({message: "hello"}));
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
 app.post('/getWordsToLearn', checkAuth, UserController.getWordsToLearn);
