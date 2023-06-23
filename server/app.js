@@ -6,11 +6,13 @@ import * as UserController from './controllers/UserController.js';
 import * as SettingsController from './controllers/SettingsController.js';
 
 import handleValidationErrors from './utils/handleValidationErrors.js';
-import checkAuth from './utils/checkAuth.js'
+import checkAuth from './utils/checkAuth.js';
 
+import dotenv from 'dotenv';
+dotenv.config();
 
 mongoose
-.connect("mongodb+srv://totskaiasonia:gc66WkdNxoZ4Nl9A@cluster0.wupwzix.mongodb.net/?retryWrites=true&w=majority")
+.connect(process.env.DATABASE_URL)
 .then(() => console.log("DB connected"))
 .catch((err) => console.log("DB error", err));
 
