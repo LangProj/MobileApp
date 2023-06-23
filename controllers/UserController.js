@@ -183,6 +183,8 @@ export const getWordsToLearn = async (req, res) => {
     try {
         console.log("Getting words");
         const userId = req.body.userId;
+        console.log(userId);
+        console.log(req.body.maxWords);
 
         const user = await UserModel.findById(userId);
         const wordsId = user._doc.words.map(word => new Types.ObjectId(word.get('word')._id));
@@ -249,6 +251,8 @@ export const addWordsByWord = async(req, res) => {
         const wordsObjs = [];
         for (let i = 0; i < words.length; i++) {
             if(userWords.includes(words[i]))
+                continue;
+            if (words[i] == 'null')
                 continue;
             const wordFromDB = await WordModel.findOne({'word': words[i]});
             console.log(wordFromDB);
