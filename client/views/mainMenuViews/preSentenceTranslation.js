@@ -612,51 +612,6 @@ export default function PreSentenceTranslationScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  input:{
-    width:300,
-    height:50,
-    borderWidth:1,
-    borderColor:'grey',
-    borderRadius:15,
-    marginTop:50,
-    textAlign: 'center'
-  },
-  correctTranslation:{
-    width:350,
-    height:50, 
-    position:'absolute',
-    alignItems:'center',
-    justifyContent:'center', 
-    top:35, 
-    backgroundColor:'#4DBA6B', 
-    borderRadius:10, 
-    display: 'flex'
-  },
-
-  wrongTranslation:{
-    width:350,
-    height:50, 
-    position:'absolute',
-    alignItems:'center',
-    justifyContent:'center', 
-    top:35, 
-    backgroundColor:'#FF5454', 
-    borderRadius:10, 
-    display: 'flex'
-  },
-
-  disableTranslation:{
-    width:350,
-    height:50, 
-    position:'absolute',
-    alignItems:'center',
-    justifyContent:'center', 
-    top:35, 
-    backgroundColor:'#FF5454', 
-    borderRadius:10, 
-    display: 'none'
-  },
-
 
 
   navBar:{
@@ -666,108 +621,9 @@ const styles = StyleSheet.create({
     borderTopWidth:3,
     height:75,
   },
-
-
-
-  statCardTitle:{
-    fontSize:25,
-    fontWeight:700,    
-    marginLeft:20,
-  },
-  extendedStatCard:{
-    marginTop:30,
-    minHeight: 190,
-    maxHeight: 190,
-    height: 190,
-    flexDirection:'row',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 350,
-    borderRadius:21,
-    backgroundColor:'white',
-    shadowColor: "#000000",
-    shadowOpacity: 1,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 11,
-      width: 11
-    },
-    marginBottom:50
-    
-  },
-
-  statCard:{
-    marginTop: 20,
-    minHeight: 125,
-    maxHeight: 125,
-    height: 125,
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    width: 350,
-    borderRadius:21,
-    backgroundColor:'white',
-    shadowColor: "#000000",
-    shadowOpacity: 1,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 11,
-      width: 11
-    },
-    marginBottom: 10,
-    
-  },
-  
-  whiteButton:{
-    marginTop: 10,
-    minHeight: 65,
-    maxHeight: 65,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 350,
-    height: 65,
-    backgroundColor: '#FFFFFF',
-    borderColor:'#00A3FF',
-    borderWidth:1,
-    borderRadius: 55,
-    marginBottom: 10,
-  },
-  whiteButtonActive:{
-    marginTop: 20,
-    minHeight: 85,
-    maxHeight: 85,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 350,
-    height: 85,
-    backgroundColor: '#00A3FF',
-    borderColor:'#00A3FF',
-    borderWidth:1,
-    borderRadius: 55,
-    marginBottom: 10,
-  },
-  whiteButtonTitle:{
-    fontSize:21,
-    color:'#000000',
-  },
   whiteButtonTitleActive:{
     fontSize:21,
     color:'#FFFFFF',
-  },
-  title:{
-    fontSize:24,
-    marginTop:120,
-    marginBottom:40,
-  },
-  header: {
-    height: 90 ,
-    width: '100%',
-    
-    flex:1,
-    alignItems:'center',
   },
   mainWrapper: {
     flex:1,
@@ -776,14 +632,6 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start',
   },
   
-  
-  wrapper: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop:40,
-  },
 
   image:{
     width: 64,
@@ -828,25 +676,7 @@ const styles = StyleSheet.create({
 
     elevation: 16,
   },
-  cardWord:{
-    color:'white',
-    fontSize:36,
-    
-    fontWeight: 500,
-  },
 
-  cardTransciption:{
-    color:'white',
-    fontSize:20,
-    display:'flex',
-    textAlign:'center'
-  },
-  disabledCardTransciption:{
-    color:'white',
-    fontSize:20,
-    display:'none',
-    textAlign:'center'
-  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',

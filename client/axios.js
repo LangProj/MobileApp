@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://speech-app-exam-420814446b2c.herokuapp.com',
+    baseURL: 'http://192.168.0.12:3000',
 });
 
 export default instance;

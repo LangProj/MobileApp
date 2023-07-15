@@ -48,29 +48,29 @@ export default function App() {
 
       <NavigationContainer>        
         <Stack.Navigator>       
-          <Stack.Screen  name="Loading" component={LoadingScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="Loading" component={LoadingScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="Guest" component={GuestScreen} options={{headerShown:false, animation: 'none'}}/>
 
-          <Stack.Screen  name="SignUp" component={SignUpScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="CodeConfirmation" component={CodeConfirmationScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="SignUp" component={SignUpScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="CodeConfirmation" component={CodeConfirmationScreen} options={{headerShown:false, animation: 'none'}}/>
 
-          <Stack.Screen  name="Login" component={LogInScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="Login" component={LogInScreen} options={{headerShown:false, animation: 'none'}}/>
 
-          <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="PasswordChangeRequest" component={PasswordChangeRequestScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="PasswordChange" component={PasswordChangeScreen} options={{headerShown:false, animation: 'none'}}/>
 
-          <Stack.Screen  name="MotherTongue" component={MotherTongueScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="Photo" component={PhotoScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="WordsPerDay" component={WordsPerDayScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false}}/>       
-          <Stack.Screen  name="MainScreen" component={MainStatsMenuScreen} options={{headerShown:false}}/>       
-          <Stack.Screen  name="PassiveRecord" component={PassiveRecord} options={{headerShown:false}}/>
-          <Stack.Screen  name="Card" component={CardScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="VocabularyScreen" component={WordListScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="WordTranslationScreen" component={WordTranslationScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="PreSentenceScreen" component={PreSentenceTranslationScreen} options={{headerShown:false}}/>
-          <Stack.Screen  name="SentenceScreen" component={SentenceTranslationScreen} options={{headerShown:false}}/>
+          <Stack.Screen  name="MotherTongue" component={MotherTongueScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="LoginConfirmation" component={LoginConfirmationScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="Photo" component={PhotoScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="WordsPerDay" component={WordsPerDayScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="LanguageLevel" component={LanguageLevelScreen} options={{headerShown:false, animation: 'none'}}/>       
+          <Stack.Screen  name="MainScreen" component={MainStatsMenuScreen} options={{headerShown:false, animation: 'none'}}/>       
+          <Stack.Screen  name="PassiveRecord" component={PassiveRecord} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="Card" component={CardScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="VocabularyScreen" component={WordListScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="WordTranslationScreen" component={WordTranslationScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="PreSentenceScreen" component={PreSentenceTranslationScreen} options={{headerShown:false, animation: 'none'}}/>
+          <Stack.Screen  name="SentenceScreen" component={SentenceTranslationScreen} options={{headerShown:false, animation: 'none'}}/>
 
         </Stack.Navigator>
       </NavigationContainer>
