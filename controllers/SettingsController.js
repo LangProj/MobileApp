@@ -5,7 +5,7 @@ import fs from 'fs';
 
 export const getLocalization = async (req, res) => {
     try {
-        fs.access(`../lang/${req.params.locale}.json`, fs.constants.R_OK, err => {
+        fs.access(`./lang/${req.params.locale}.json`, fs.constants.R_OK, err => {
             if (err) {
                 console.log(err);
                 res.status(404).json({
@@ -13,7 +13,7 @@ export const getLocalization = async (req, res) => {
                 });
             }
             else {
-                fs.readFile(`../lang/${req.params.locale}.json`, 'utf-8', (err, data) => {
+                fs.readFile(`./lang/${req.params.locale}.json`, 'utf-8', (err, data) => {
                     if (err) {
                         console.log(err);
                         res.status(404).json({
