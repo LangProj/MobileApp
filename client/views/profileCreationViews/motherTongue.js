@@ -47,7 +47,7 @@ export default function MotherTongueScreen({ navigation }) {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.mainWrapper}>   
         <View style={styles.header}>
-        <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
+          <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
         <Text  style={styles.title}>{localization.data.motherTongueLabelText}</Text>
 
@@ -139,11 +139,13 @@ const styles = StyleSheet.create({
     marginBottom:40,
   },
   header: {
-    height: 90 ,
+    height: 100 ,
     width: '100%',
     backgroundColor:'#87E2FF',
     flex:1,
     alignItems:'center',
+    flexDirection:'row',
+    justifyContent:'center',
   },
   mainWrapper: {
     flex:1,

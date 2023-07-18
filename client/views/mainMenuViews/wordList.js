@@ -157,7 +157,7 @@ export default function WordListScreen({ navigation }) {
         <TouchableOpacity style={{height:50,width:50,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('MainScreen')}>
             <MaterialIcon
               name='home'
-              size={45}
+              size={40}
               color='#65A3FF'
             />
           </TouchableOpacity>
@@ -165,7 +165,7 @@ export default function WordListScreen({ navigation }) {
           <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('VocabularyScreen')}>
           <FontAwesome5Icon
               name='book-open'
-              size={35}
+              size={30}
               color='#65A3FF'
             />    
           </TouchableOpacity>
@@ -173,7 +173,7 @@ export default function WordListScreen({ navigation }) {
           <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('PreSentenceScreen')}>
           <MaterialCommunityIcon
               name='text-box'
-              size={45}
+              size={40}
               color='#65A3FF'
             />                
           </TouchableOpacity>

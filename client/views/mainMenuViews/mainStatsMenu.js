@@ -47,29 +47,30 @@ export default function MainStatsMenuScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mainWrapper}>   
           <View style={styles.header}>
-          <TouchableOpacity style={{width:50, height: 50, marginLeft:10}} onPress={()=>navigation.navigate("PassiveRecord")}>
-            <MaterialIcon
-              name='record-voice-over'
-              size={40}
-              color='#65A3FF'
-            />
-          </TouchableOpacity>
+            <TouchableOpacity style={{width:50, height: 50, marginLeft:10}} onPress={()=>navigation.navigate("PassiveRecord")}>
+              <MaterialIcon
+                name='record-voice-over'
+                size={44}
+                color='#65A3FF'
+              />
+            </TouchableOpacity>
             <View style={{
-                width: 70,
-                height: 70,
-                backgroundColor:'#E4EFFF',
-                borderRadius:50,
-                borderWidth: 2,
-                borderColor: '#5B9CFD',
-                alignItems:'center', justifyContent: 'center'
-                }}>
-                <FontAwesome5Icon
-                  name='user-alt'
-                  size={40}
-                  color='gray'
-                />
-              </View>
-          <Text style={{width:50, height: 50, textAlign:'center', color: "#65A3FF", fontSize:28, fontWeight:900, verticalAlign: 'middle', marginRight:10}}>{currentLevel}</Text>
+              width: 70,
+              height: 70,
+              backgroundColor:'#E4EFFF',
+              borderRadius:50,
+              borderWidth: 2,
+              borderColor: '#5B9CFD',
+              alignItems:'center', justifyContent: 'center'
+            }}>
+            <FontAwesome5Icon
+              name='user-alt'
+              size={40}
+              color='gray'
+            />
+            </View>
+
+            <Text style={{width:50, height: 50, textAlign:'center', color: "#65A3FF", fontSize:33, fontWeight:900, verticalAlign: 'middle', marginRight:10}}>{currentLevel}</Text>
 
           </View>
           
@@ -131,7 +132,7 @@ export default function MainStatsMenuScreen({ navigation }) {
           <TouchableOpacity style={{height:50,width:50, borderBottomColor:'#65A3FF', borderBottomWidth:3,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('MainScreen')}>
             <MaterialIcon
               name='home'
-              size={45}
+              size={40}
               color='#65A3FF'
             />
           </TouchableOpacity>
@@ -139,7 +140,7 @@ export default function MainStatsMenuScreen({ navigation }) {
           <TouchableOpacity style={{height:50,width:50,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('VocabularyScreen')}>
           <FontAwesome5Icon
               name='book-open'
-              size={35}
+              size={30}
               color='#65A3FF'
             />    
           </TouchableOpacity>
@@ -147,7 +148,7 @@ export default function MainStatsMenuScreen({ navigation }) {
           <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('PreSentenceScreen')}>
           <MaterialCommunityIcon
               name='text-box'
-              size={45}
+              size={40}
               color='#65A3FF'
             />                
           </TouchableOpacity>

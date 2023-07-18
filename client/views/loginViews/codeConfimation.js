@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ScrollView, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
 import { useSelector } from 'react-redux';
 import { userController } from '../../store/store';
+
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 
 
@@ -20,23 +22,37 @@ export default function CodeConfirmationScreen({ navigation }) {
       navigation.navigate('MotherTongue');
   };
 
+  const onBackPress = () => {
+    navigation.goBack();
+    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      <TouchableOpacity style={styles.backBtn} onPress={onBackPress} >
+        <IonIcon
+            name='chevron-back'
+            size={60}
+            color='#4f94e5'
+        />
+      </TouchableOpacity>
       <View style={styles.wrapper}>
-        <TouchableOpacity style={{position:'relative',top:-20,left:-170, height:30,width:30,marginBottom:-30}}> 
-          <Image resizeMode="cover" source={require('../../assets/img/backblack.png')} style={{ height:30,width:30}}></Image>
-        </TouchableOpacity>
         <View style={styles.wrapper}>
           <View style={styles.container}>
             <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image>                    
           </View>
           <Text style={styles.description}>{localization.data.confirmLabelText}</Text>
-          <TextInput placeholder={localization.data.confirmInputText} value={code} onChangeText={newValue => setCode(newValue)} style={styles.textInput} />
+          <TextInput keyboardType='numeric' placeholder={localization.data.confirmInputText} value={code} onChangeText={newValue => setCode(newValue)} style={styles.textInput} />
                               
           
         </View>
         <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>          
-            <Text style={styles.buttonTitle}>{localization.data.logInBtnText}</Text>                              
+            <Text style={styles.buttonTitle}>{localization.data.confirmBtnText}</Text>                              
         </TouchableOpacity>
         <Text style={styles.footer}>{localization.data.haveQuestionsLabelText}<Text style={styles.innerfooter} onPress={() => Linking.openURL('http://google.com')}> {localization.data.writeBtnText}</Text></Text>
       </View>
@@ -68,10 +84,12 @@ const styles = StyleSheet.create({
     borderRadius: 55,
   },
   description: {
-    fontSize:21,
-    paddingLeft:50,
-    paddingRight:50,
-    paddingBottom:30,
+    fontSize:19,
+    paddingLeft:20,
+    paddingRight:20,
+    paddingBottom:20,
+    height: 120,
+    verticalAlign: 'middle',
     textAlign:'center',
   },
   wrapper: {
@@ -148,4 +166,11 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     color:'#12bddb',
   },
+  backBtn: {
+    height: 60,
+    width: 60,
+    position: 'absolute',
+    top: 44,
+    left: 25,
+  }
 });

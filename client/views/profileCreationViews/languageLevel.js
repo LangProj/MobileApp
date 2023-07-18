@@ -1,6 +1,6 @@
 import React from 'react';
-import {useState} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Linking } from 'react-native';
 
@@ -8,6 +8,7 @@ import { userController, settingsController, statisticsController } from '../../
 
 import { useSelector } from 'react-redux';
 
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 
 export default function LanguageLevelScreen({ navigation }) {
@@ -28,6 +29,17 @@ export default function LanguageLevelScreen({ navigation }) {
       setActive(item)   
     } 
   };
+
+  const onBackPress = () => {
+    navigation.goBack();
+    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  }, []);
+
 
 
   const confirmValidation = async () => {
@@ -55,9 +67,13 @@ export default function LanguageLevelScreen({ navigation }) {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.mainWrapper}>   
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>          
-            <Image resizeMode="cover" source={require('../../assets/img/backblack.png')} style={{ height:40,width:40}}></Image>                          
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.backBtn} onPress={onBackPress} >
+          <IonIcon
+              name='chevron-back'
+              size={54}
+              color='black'
+          />
+        </TouchableOpacity>
           
           <Image source={require('../../assets/img/speech_logo.png')} style={styles.image}></Image> 
         </View>
@@ -214,11 +230,13 @@ const styles = StyleSheet.create({
     paddingRight:80,
   },
   header: {
-    height: 90 ,
+    height: 100 ,
     width: '100%',
     backgroundColor:'#87E2FF',
     flex:1,
     alignItems:'center',
+    flexDirection:'row',
+    justifyContent:'center',
   },
   mainWrapper: {
     flex:1,
@@ -259,7 +277,13 @@ const styles = StyleSheet.create({
     color:'white',
   },
   
-  
+  backBtn: {
+    height: 60,
+    width: 60,
+    position: 'absolute',
+    top: 33,
+    left: 15,
+  }
  
   
 });
