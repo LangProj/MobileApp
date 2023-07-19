@@ -177,6 +177,14 @@ export default function WordListScreen({ navigation }) {
               color='#65A3FF'
             />                
           </TouchableOpacity>
+
+          <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('MainScreen')}>
+            <FontAwesome5Icon
+              name='user-alt'
+              size={30}
+              color='#65A3FF'
+            />
+          </TouchableOpacity>
         </View>
       </View>
 

@@ -8,11 +8,19 @@ import { useSelector } from 'react-redux';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+
 import { settingsController } from '../../store/store';
 
 
 
-
+const LEVEL_COLORS = {
+  'A1': '#e3ffdb',
+  'A2': '#f6fcd7',
+  'B1': '#fcf0d7',
+  'B2': '#ffe4d9',
+  'C1': '#ffdbdb'
+};
 
 
 
@@ -47,30 +55,40 @@ export default function MainStatsMenuScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mainWrapper}>   
           <View style={styles.header}>
-            <TouchableOpacity style={{width:50, height: 50, marginLeft:10}} onPress={()=>navigation.navigate("PassiveRecord")}>
+            <TouchableOpacity style={{width:40, height: 40, marginLeft:10}} onPress={()=>navigation.navigate("PassiveRecord")}>
               <MaterialIcon
                 name='record-voice-over'
-                size={44}
+                size={40}
                 color='#65A3FF'
               />
             </TouchableOpacity>
             <View style={{
-              width: 70,
-              height: 70,
-              backgroundColor:'#E4EFFF',
+              width: 80,
+              height: 80,
+              backgroundColor:'#e3ffdb',
               borderRadius:50,
               borderWidth: 2,
               borderColor: '#5B9CFD',
               alignItems:'center', justifyContent: 'center'
             }}>
-            <FontAwesome5Icon
-              name='user-alt'
-              size={40}
-              color='gray'
-            />
+            <Text style={{
+              width:80, 
+              height: 80, 
+              textAlign:'center', 
+              color: "#454863", 
+              fontSize:37, 
+              fontWeight:600, 
+              verticalAlign: 'middle',
+            }}>{currentLevel}</Text>
+              
             </View>
-
-            <Text style={{width:50, height: 50, textAlign:'center', color: "#65A3FF", fontSize:33, fontWeight:900, verticalAlign: 'middle', marginRight:10}}>{currentLevel}</Text>
+            <TouchableOpacity style={{width:40, height: 40, marginRight:10}}>
+              <IonIcon
+                name='notifications'
+                size={40}
+                color='#65A3FF'
+              />
+            </TouchableOpacity>
 
           </View>
           
@@ -138,19 +156,27 @@ export default function MainStatsMenuScreen({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity style={{height:50,width:50,alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('VocabularyScreen')}>
-          <FontAwesome5Icon
-              name='book-open'
-              size={30}
-              color='#65A3FF'
-            />    
+            <FontAwesome5Icon
+                name='book-open'
+                size={30}
+                color='#65A3FF'
+              />    
           </TouchableOpacity>
 
           <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('PreSentenceScreen')}>
-          <MaterialCommunityIcon
-              name='text-box'
-              size={40}
+            <MaterialCommunityIcon
+                name='text-box'
+                size={40}
+                color='#65A3FF'
+              />                
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{height:50,width:50, alignItems:'center', justifyContent: 'center'}} onPress={() => navigation.navigate('MainScreen')}>
+            <FontAwesome5Icon
+              name='user-alt'
+              size={30}
               color='#65A3FF'
-            />                
+            />
           </TouchableOpacity>
         </View>
       </View>
