@@ -65,7 +65,7 @@ export default function MainStatsMenuScreen({ navigation }) {
             <View style={{
               width: 80,
               height: 80,
-              backgroundColor:'#e3ffdb',
+              backgroundColor:LEVEL_COLORS[currentLevel],
               borderRadius:50,
               borderWidth: 2,
               borderColor: '#5B9CFD',
