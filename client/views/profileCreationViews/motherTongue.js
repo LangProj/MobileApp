@@ -66,7 +66,7 @@ export default function MotherTongueScreen({ navigation }) {
         </TouchableOpacity>
         
         <View style={styles.progresWrapper}>
-          <Text style={styles.progresWrapperTitle}>1/5</Text>
+          <Text style={styles.progresWrapperTitle}>1/4</Text>
         </View>
 
 
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   buttonTitle:{
-    fontSize:25,
+    fontSize:22,
     color:'white',
   },
   

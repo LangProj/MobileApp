@@ -38,7 +38,7 @@ export default function LoginConfirmationScreen({ navigation }) {
     }
     else {
       await settingsController.saveUsername();
-      navigation.navigate('Photo');
+      navigation.navigate('WordsPerDay');
     }
   };
 
@@ -102,7 +102,7 @@ export default function LoginConfirmationScreen({ navigation }) {
         
         
         <View style={styles.progresWrapper}>
-          <Text style={styles.progresWrapperTitle}>2/5</Text>
+          <Text style={styles.progresWrapperTitle}>2/4</Text>
         </View>
 
       </View>
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   buttonTitle:{
-    fontSize:25,
+    fontSize:22,
     color:'white',
   },
   errorMsg: {

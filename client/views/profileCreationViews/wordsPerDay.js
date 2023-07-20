@@ -94,11 +94,11 @@ export default function WordsPerDayScreen({ navigation }) {
 
 
         <TouchableOpacity style={styles.button} onPress={() => confirmValidation()}>          
-          <Text style={styles.buttonTitle}>{localization.data.confirmBtnText}</Text>                            
+          <Text style={styles.buttonTitle}>{localization.data.nextBtnText}</Text>                            
         </TouchableOpacity>
         
         <View style={styles.progresWrapper}>
-          <Text style={styles.progresWrapperTitle}>4/5</Text>
+          <Text style={styles.progresWrapperTitle}>3/4</Text>
         </View>
 
 
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   buttonTitle:{
-    fontSize:25,
+    fontSize:22,
     color:'white',
   },
   

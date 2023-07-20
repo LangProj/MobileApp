@@ -109,7 +109,7 @@ export default function LanguageLevelScreen({ navigation }) {
         </TouchableOpacity>
         
         <View style={styles.progresWrapper}>
-          <Text style={styles.progresWrapperTitle}>5/5</Text>
+          <Text style={styles.progresWrapperTitle}>4/4</Text>
         </View>
 
 
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   buttonTitle:{
-    fontSize:25,
+    fontSize:22,
     color:'white',
   },
   
