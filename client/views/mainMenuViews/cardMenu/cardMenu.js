@@ -478,11 +478,13 @@ const styles = StyleSheet.create({
     marginBottom:40,
   },
   header: {
-    maxHeight: 90 ,
+    maxHeight: 100,
     width: '100%',
     backgroundColor:'#87E2FF',
     flex:1,
     alignItems:'center',
+    flexDirection:'row',
+    justifyContent:'center',
   },
   mainWrapper: {
     flex:1,
