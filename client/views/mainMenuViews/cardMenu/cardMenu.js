@@ -17,6 +17,8 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import cardMenuWrapper from './cardMenuWrapper';
 import { settingsController, statisticsController, userController } from '../../../store/store.js';
 
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import * as Speech from 'expo-speech';
 
 
 class CardScreen extends Component {
@@ -195,6 +197,12 @@ class CardScreen extends Component {
     this.props.navigation.goBack();
   }
 
+
+  startPronounce() {
+    console.log("Pressed button");
+    Speech.speak(this.state.word, {language: 'en'});
+  }
+
   render() {
     const {localization} = this.props;
     const frontAnimatedStyle = {
@@ -210,74 +218,79 @@ class CardScreen extends Component {
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <GestureRecognizer onSwipe={(direction, state) => this.onSwipe(direction, state)}
         
-        onSwipeLeft={(state) => this.onSwipeLeft(state)}
-        onSwipeRight={(state) => this.onSwipeRight(state)}>
-        <View style={styles.mainWrapper}>
+          <View style={styles.mainWrapper}>
 
 
-        <View style={styles.header}>
-        <Image source={require('../../../assets/img/speech_logo.png')} style={styles.image}></Image> 
-        </View>
+            <View style={styles.header}>
+              <Image source={require('../../../assets/img/speech_logo.png')} style={styles.image}></Image> 
+            </View>
 
 
-        <View style={styles.topicWrapper}>          
-          <Text style={styles.topicWrapperTitle}>{this.state.category}</Text>                            
-        </View>
+            <View style={styles.topicWrapper}>          
+              <Text style={styles.topicWrapperTitle}>{this.state.category}</Text>                            
+            </View>
 
 
-
-        <View>
-          <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]} onPress={() => this.flipCard()}>
-            <LinearGradient
-              colors={['#4ad3b6', '#4f9ae1']}
-              style={[ styles.cardWrapper ]}
-              >
-              <Text style={styles.cardWord} >{this.state.word}</Text>
-              <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
-              <View style={styles.cardFooter}>
-                <Text style={styles.cardSentence}>{this.state.sentence}</Text>
-                         
-              </View>     
-              <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
-            </LinearGradient>
-          </Animated.View>
-          <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
-            <LinearGradient
-              colors={['#4ad3b6', '#4f9ae1']}
-              style={[ styles.cardWrapper ]}>
-              <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
-              <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
-              <View style={styles.cardFooter}>
-                <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
-                      
-              </View>    
-              <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
-            </LinearGradient>
-          </Animated.View>
-        </View>
-
-
-        <Text style={styles.progressBarTitle}>{localization.data.progressLabelText}</Text>
-        <Progress.Bar style={styles.progressBar} progress={this.state.floatProgress} width={310} color={'#00D22E'}  unfilledColor={'#E8E8E8'} borderWidth={0}/>
-
-
-
-        <TouchableOpacity style={styles.button} onPress={() => this.handleFinish()}>
-          <Text style={styles.buttonTitle}>{localization.data.finishLabelText}</Text>
-        </TouchableOpacity>
-
+            <GestureRecognizer style={{width: '100%', marginTop:50}} onSwipe={(direction, state) => this.onSwipe(direction, state)}
+                            onSwipeLeft={(state) => this.onSwipeLeft(state)}
+                            onSwipeRight={(state) => this.onSwipeRight(state)}>
+                <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]} onPress={() => this.flipCard()}>
+                  <LinearGradient
+                    colors={['#4ad3b6', '#4f9ae1']}
+                    style={[ styles.cardWrapper ]}
+                    >
+                    <Text style={styles.cardWord}>{this.state.word}</Text>
+                    <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
+                    <View style={styles.cardFooter}>
+                      <Text style={styles.cardSentence}>{this.state.sentence}</Text>
+                              
+                    </View>     
+                    <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
+                  </LinearGradient>
+                </Animated.View>
+                <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
+                  <LinearGradient
+                    colors={['#4ad3b6', '#4f9ae1']}
+                    style={[ styles.cardWrapper ]}>
+                    <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
+                    <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
+                    <View style={styles.cardFooter}>
+                      <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
+                            
+                    </View>    
+                    <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
+                  </LinearGradient>
+                </Animated.View>
+              <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}></Pressable>
+              <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce()}>
+                <IonIcon
+                  name='volume-medium'
+                    size={45}
+                    color='white'
+                />
+              </TouchableOpacity>
+            </GestureRecognizer>
 
 
-
-        <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}></Pressable>
+            <Text style={styles.progressBarTitle}>{localization.data.progressLabelText}</Text>
+            <Progress.Bar style={styles.progressBar} progress={this.state.floatProgress} width={310} color={'#00D22E'}  unfilledColor={'#E8E8E8'} borderWidth={0}/>
 
 
 
+            <TouchableOpacity style={styles.button} onPress={() => this.handleFinish()}>
+              <Text style={styles.buttonTitle}>{localization.data.finishLabelText}</Text>
+            </TouchableOpacity>
 
-        </View>
-        </GestureRecognizer>
+
+
+
+            
+
+
+
+
+          </View>
         
       </ScrollView>
     );
@@ -285,6 +298,13 @@ class CardScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  pronounceBtn: {
+    width:45,
+    height:45,
+    top: 23,
+    right: 25,
+    position: 'absolute'
+  },
   progressBarTitle:{
     marginTop:80,
     fontSize:20,
@@ -301,11 +321,10 @@ const styles = StyleSheet.create({
     minWidth: 360,
     borderRadius:26,
     
-    
     opacity:0.3,
     position:'absolute',
-    left:30,
-    top:280,
+    left:0,
+    top:0,
   },
   container: {
     flex: 1,
@@ -313,11 +332,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   flipCard: {
-    width: 200,
     height: 200,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:20,
     backfaceVisibility: 'hidden',
   },
   flipCardBack: {
@@ -386,7 +403,6 @@ const styles = StyleSheet.create({
     minHeight: 200,
     minWidth: 360,
     borderRadius:26,
-    marginTop:50,
     backfaceVisibility:'hidden',
   },
 
