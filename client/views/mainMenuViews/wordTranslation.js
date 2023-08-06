@@ -24,7 +24,7 @@ export default function WordTranslationScreen({ navigation }) {
   }));
   let [List, setList] = useState(words);
   let [isCardFlipped, setIsCardFlipped] = useState(false);
-  let [cardTitle, setCardTitle] = useState(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue]);
+  let [cardTitle, setCardTitle] = useState(List.length > 0 ? List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue] : "");
   let [cardDesc, setCardDesc] = useState('word desc');
 
   let [inputValue, setInputValue] = useState('');
@@ -62,8 +62,10 @@ export default function WordTranslationScreen({ navigation }) {
       
     }else{
       setIsCardFlipped(true);
-      setCardTitle(List[currentWordIndex].word.word);
-      setCardDesc(List[currentWordIndex].word.sentence.en);
+      if (List.length > 0) {
+        setCardTitle(List[currentWordIndex].word.word);
+        setCardDesc(List[currentWordIndex].word.sentence.en);
+      }
       setButtonState(false);
     }
   };
@@ -141,7 +143,8 @@ export default function WordTranslationScreen({ navigation }) {
 
 
   useEffect(() => {
-    setCardTitle(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue]);
+    if (List.length > 0)
+      setCardTitle(List[currentWordIndex].word.translation[settingsController.SettingsModel.motherTongue]);
   }, [currentWordIndex, List]);
  
   return (
@@ -163,6 +166,9 @@ export default function WordTranslationScreen({ navigation }) {
         </View>
       
       </View>
+      {
+      List.length > 0 
+      ?
       <ScrollView showsVerticalScrollIndicator={false}>
         
         <View style={styles.mainWrapper}>   
@@ -218,7 +224,23 @@ export default function WordTranslationScreen({ navigation }) {
         </View>
       </View> */}
       </ScrollView>
-      
+      :
+      <View style={{
+        flex:1,
+        alignItems:'center',
+      }}>
+        <Text style={{
+          alignItems:'center',
+          textAlign: 'center',
+          fontSize: 20,
+          color: 'coral',
+          marginTop:25,
+        }}>No words in dictionary</Text>
+        <TouchableOpacity style={styles.whiteButton} onPress={() => navigation.navigate('Card')}>
+          <Text style={styles.whiteButtonTitleActive}>{localization.data.discoverNewWordsBtnText}</Text>
+        </TouchableOpacity>
+      </View>
+      }
     </View>
   );
 }
@@ -332,19 +354,17 @@ const styles = StyleSheet.create({
   },
   
   whiteButton:{
-    marginTop: 10,
+    marginTop: 50,
     minHeight: 65,
     maxHeight: 65,
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 350,
+    width: '80%',
     height: 65,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#00A3FF',
     borderColor:'#00A3FF',
     borderWidth:1,
     borderRadius: 55,
-    marginBottom: 10,
   },
   whiteButtonActive:{
     marginTop: 20,
