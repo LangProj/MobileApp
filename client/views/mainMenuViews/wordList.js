@@ -17,7 +17,8 @@ import { useSelector } from 'react-redux';
 
 const Item = ({word,word_translated}) => (
   <View style={styles.item}>
-    <Text style={[{fontSize:23,fontWeight:600,textAlign:'center'}]}>{word}/{word_translated}</Text>
+    <Text style={[{fontSize:18,fontWeight:400,textAlign:'center', width: '50%', borderRightWidth: 1}]}>{word}</Text>
+    <Text style={[{fontSize:18,fontWeight:400,textAlign:'center', width: '50%'}]}>{word_translated}</Text>
   </View>
 );
 
@@ -126,12 +127,13 @@ export default function WordListScreen({ navigation }) {
         
         
           <FlatList
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={[{justifyContent:'center',alignContent:'center',alignItems:'center',marginTop:5}]}
-          style={[{height:500,width:350,backgroundColor:'white',}]}
-          data={List}
-          renderItem={({item}) => <Item word={item.word} word_translated={item.translation[settingsController.SettingsModel.motherTongue]}/>}
-          keyExtractor={item => item._id}/>
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={[{justifyContent:'center',alignContent:'center', paddingBottom:20, alignItems:'center',marginTop:5}]}
+            style={[{height:500, width: '100%',backgroundColor:'white',}]}
+            data={List}
+            renderItem={({item}) => <Item word={item.word} word_translated={item.translation[settingsController.SettingsModel.motherTongue]}/>}
+            keyExtractor={item => item._id}
+          />
 
         
           
@@ -203,9 +205,11 @@ export default function WordListScreen({ navigation }) {
         <View style={styles.centeredView}>
           
           <View style={[styles.modalView]}>
-            <View style={[{marginTop:40,height:50,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-              <Text style={[{fontSize:42,fontWeight:600}]}>Filter</Text>
-              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-47}]} onPress={() => setFilterUI('disabled')}>
+            <View style={[styles.modalHeader]}>
+              <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('disabled')}>
+              </TouchableOpacity>
+              <Text style={[{fontSize:35,fontWeight:600}]}>Filter</Text>
+              <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('disabled')}>
                 <IonIcon
                   name='close'
                   size={50}
@@ -249,9 +253,9 @@ export default function WordListScreen({ navigation }) {
           
         }}>
         <View style={styles.centeredView}>
-          <View style={[styles.modalView,{height:400}]}>
-            <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:63}]} onPress={() => setFilterUI('main')}>
+          <View style={[styles.modalView,{height:430}]}>
+            <View style={[styles.modalHeader, {height:75, paddingLeft: 10, paddingRight: 10,}]}>
+              <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('main')}>
                 <IonIcon
                     name='chevron-back'
                     size={50}
@@ -259,7 +263,7 @@ export default function WordListScreen({ navigation }) {
                 />
               </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Parts of speech</Text>
-              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-65}]} onPress={() => setFilterUI('disabled')}>
+              <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('disabled')}>
                 <IonIcon
                   name='close'
                   size={50}
@@ -304,9 +308,9 @@ export default function WordListScreen({ navigation }) {
           
         }}>
         <View style={styles.centeredView}>
-          <View style={[styles.modalView,{height:400}]}>
-            <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-            <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:63}]} onPress={() => setFilterUI('main')}>
+          <View style={[styles.modalView,{height:430}]}>
+            <View style={[styles.modalHeader, {height:75}]}>
+              <TouchableOpacity style={[{height:50,width:50,}]} onPress={() => setFilterUI('main')}>
                 <IonIcon
                     name='chevron-back'
                     size={50}
@@ -314,7 +318,7 @@ export default function WordListScreen({ navigation }) {
                 />
               </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Words status</Text>
-              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-65}]} onPress={() => setFilterUI('disabled')}>
+              <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('disabled')}>
                 <IonIcon
                   name='close'
                   size={50}
@@ -359,9 +363,9 @@ export default function WordListScreen({ navigation }) {
           
         }}>
         <View style={styles.centeredView}>
-          <View style={[styles.modalView,{height:470}]}>
-            <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-            <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:45}]} onPress={() => setFilterUI('main')}>
+          <View style={[styles.modalView]}>
+            <View style={[styles.modalHeader]}>
+              <TouchableOpacity style={[{height:50,width:50,position:'absolute',left:30,top:0}]} onPress={() => setFilterUI('main')}>
                 <IonIcon
                     name='chevron-back'
                     size={50}
@@ -369,7 +373,7 @@ export default function WordListScreen({ navigation }) {
                 />
               </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Category</Text>
-              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-47}]} onPress={() => setFilterUI('disabled')}>
+              <TouchableOpacity style={[{height:50,width:50,position:'absolute',right:30,top:0}]} onPress={() => setFilterUI('disabled')}>
                 <IonIcon
                   name='close'
                   size={50}
@@ -421,9 +425,9 @@ export default function WordListScreen({ navigation }) {
           
         }}>
         <View style={styles.centeredView}>
-          <View style={[styles.modalView,{height:340}]}>
-            <View style={[{marginBottom:15,marginTop:20,height:75,width:'100%',justifyContent:'center',alignItems:'center'}]}>
-            <TouchableOpacity style={[{height:50,width:50,position:'relative',left:-120,top:63}]} onPress={() => setFilterUI('main')}>
+          <View style={[styles.modalView,{height:370}]}>
+            <View style={[styles.modalHeader, {height:75, marginBottom: 20}]}>
+            <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('main')}>
                 <IonIcon
                     name='chevron-back'
                     size={50}
@@ -431,7 +435,7 @@ export default function WordListScreen({ navigation }) {
                 />
               </TouchableOpacity>
               <Text style={[{fontSize:30,fontWeight:600,width:150,textAlign:'center'}]}>Words level</Text>
-              <TouchableOpacity style={[{height:50,width:50,position:'relative',left:120,top:-65}]} onPress={() => setFilterUI('disabled')}>
+              <TouchableOpacity style={[{height:50,width:50}]} onPress={() => setFilterUI('disabled')}>
                 <IonIcon
                   name='close'
                   size={50}
@@ -489,10 +493,22 @@ export default function WordListScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  modalHeader: {
+    marginTop:30, 
+    marginBottom: 10,
+    height:50,
+    width:'100%',
+    justifyContent:'space-around',
+    alignItems:'center', 
+    flexDirection: 'row',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
   smallFilterItemActive: {
     margin:5,
     width:90,
     height:50,
+    borderRadius: 15,
     backgroundColor:'#5498FF',
     borderColor:'black',
     borderWidth:1,
@@ -504,6 +520,7 @@ const styles = StyleSheet.create({
     margin:5,
     width:90,
     height:50,
+    borderRadius: 15,
     backgroundColor:'white',
     borderColor:'black',
     borderWidth:1,
@@ -515,6 +532,7 @@ const styles = StyleSheet.create({
     marginTop:20,
     width:300,
     height:50,
+    borderRadius: 15,
     backgroundColor:'#5498FF',
     borderColor:'black',
     borderWidth:1,
@@ -526,6 +544,7 @@ const styles = StyleSheet.create({
     marginTop:20,
     width:300,
     height:50,
+    borderRadius: 15,
     backgroundColor:'white',
     borderColor:'black',
     borderWidth:1,
@@ -551,12 +570,11 @@ const styles = StyleSheet.create({
     zIndex:999,
   },
   modalView: {
-    height:450,
+    height:480,
     width:340,
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 15,
-    
     alignItems: 'center',
     
   },
@@ -588,15 +606,16 @@ const styles = StyleSheet.create({
     // justifyContent:'center',
     // alignItems:'center',
     // marginHorizontal: 16,
-    height:120,
-    marginTop:20,
-    width:300,
+    height:80,
+    marginTop:10,
+    width: 350,
     backgroundColor:'white',
     borderRadius:10,
     borderColor:'#00B2FF',
-    borderWidth:3,
+    borderWidth: 1.5,
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'space-around',
+    flexDirection: 'row'
   },
   title: {
     // color:'black',          
@@ -722,7 +741,7 @@ const styles = StyleSheet.create({
   mainWrapper: {
     flex:1,
     alignItems:'center',
-    zIndex:998
+    zIndex:998,
   },
   
   
@@ -744,7 +763,7 @@ const styles = StyleSheet.create({
   
   
   button:{
-    marginTop: 20,
+    marginTop: 40,
     minHeight: 45,
     maxHeight: 45,
     flex: 1,
