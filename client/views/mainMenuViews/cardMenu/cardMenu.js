@@ -127,6 +127,7 @@ class CardScreen extends Component {
       category:'',
       wordProgress:``,
       floatProgress:0.01,
+      notShow: true,
       CardsData,
     };
   }
@@ -201,6 +202,8 @@ class CardScreen extends Component {
         useNativeDriver: true
       }).start();
     }
+    setTimeout(() => this.setState({notShow:!this.state.notShow}), 130);
+    
 
   }
 
@@ -267,25 +270,51 @@ class CardScreen extends Component {
                 onSwipedRight={(state) => this.onSwipeRight(state)}
                 onSwipedLeft={(state) => this.onSwipeLeft(state)}
                 renderCard={(card) => (
-                  <LinearGradient
+                  <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}>
+                    <Animated.View style={[styles.flipCard, frontAnimatedStyle, {display: this.state.notShow ? 'flex' : 'none', opacity: this.frontOpacity}]}>
+                      <LinearGradient
+                            colors={['#4ad3b6', '#4f9ae1']}
+                            style={[ styles.cardWrapper ]}>
+                          <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                            <Text style={styles.cardWord}>{card.word}</Text>
+                            <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
+                                <IonIcon
+                                  name='volume-medium'
+                                  size={45}
+                                  color='white'
+                                />
+                            </TouchableOpacity>
+                          </View>
+                          <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
+                          <View style={styles.cardFooter}>
+                            <Text style={styles.cardSentence}>{card.sentence}</Text>                        
+                          </View>     
+                          <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
+                      </LinearGradient>
+                    </Animated.View>
+                    <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {display: this.state.notShow ? 'none' : 'flex', opacity: this.backOpacity}]}>
+                      <LinearGradient
                         colors={['#4ad3b6', '#4f9ae1']}
                         style={[ styles.cardWrapper ]}>
-                      <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
-                        <Text style={styles.cardWord}>{card.word}</Text>
-                        <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
-                            <IonIcon
-                              name='volume-medium'
-                              size={45}
-                              color='white'
-                            />
-                        </TouchableOpacity>
-                      </View>
-                      <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
-                      <View style={styles.cardFooter}>
-                        <Text style={styles.cardSentence}>{card.sentence}</Text>                        
-                      </View>     
-                      <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
-                    </LinearGradient>
+                        <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                            <Text style={styles.cardWord}>{card.wordTranslated}</Text>
+                            <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
+                                <IonIcon
+                                  name='volume-medium'
+                                  size={45}
+                                  color='white'
+                                />
+                            </TouchableOpacity>
+                          </View>
+                        <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
+                        <View style={styles.cardFooter}>
+                          <Text style={styles.cardSentence}>{card.sentenceTranslated}</Text>
+                                
+                        </View>    
+                        <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
+                      </LinearGradient>
+                </Animated.View>
+                  </Pressable>
                 )}
               />
             </View>
@@ -384,8 +413,6 @@ const styles = StyleSheet.create({
   cardPressHandler:{
     
     maxWidth: 360,
-    
-    backgroundColor: 'red',
 
     minHeight: 200,
     minWidth: 360,
