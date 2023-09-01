@@ -9,17 +9,41 @@ import {
   TouchableOpacity,
   Animated,
   Pressable,
+  TouchableWithoutFeedback,
   Image,
   ScrollView,
   BackHandler
 } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
+import CardsSwipe from 'react-native-cards-swipe';
+
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+
+
 import cardMenuWrapper from './cardMenuWrapper';
 import { settingsController, statisticsController, userController } from '../../../store/store.js';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import * as Speech from 'expo-speech';
 
+const Card = (word, wordTranslated, pronounce, sentence) => {};
+
+const CardElem = (bg) => {
+  return (
+    <View style={{backgroundColor: bg, width: 100, height: 70}}><Text>Hello</Text></View>
+  );
+}
+
+
+const CardsData = [
+  { bg: 'red' },
+  { bg: 'blue' },
+  { bg: 'white' },
+  { bg: 'red' },
+];
 
 class CardScreen extends Component {
   UNSAFE_componentWillMount() {
@@ -62,17 +86,25 @@ class CardScreen extends Component {
     });
     console.log(this.words);
     this.currentWordInd = 0;
-    this.setState({wordProgress: `1/${this.words.length}`});
-    this.setState({floatProgress: 1/this.words.length/2});
-    this.setState({word: this.words[this.currentWordInd].word});
-    this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
-    this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
-    this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
-    this.setState({sentence: this.words[this.currentWordInd].sentence.en});
-    this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
-    
-    this.learnedWords = [];
-    this.notLearnedWords = [];
+    if (this.words != undefined) {
+      this.setState({wordProgress: `1/${this.words.length}`});
+      this.setState({floatProgress: 1/this.words.length/2});
+      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
+      const crData = [];
+      for (let i = 0; i < this.words.length; i++) {
+        crData.push({
+          word: this.words[i].word,
+          wordTranslated: this.words[i].translation[settingsController.SettingsModel.motherTongue],
+          category: this.words[i].category[settingsController.SettingsModel.motherTongue],
+          pronunciation: this.words[i].pronunciation,
+          sentence: this.words[i].sentence.en,
+          sentenceTranslated: this.words[i].sentence[settingsController.SettingsModel.motherTongue]
+        });
+      }
+      this.setState({CardsData: crData});
+      this.learnedWords = [];
+      this.notLearnedWords = [];
+    }
 
     
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -90,69 +122,53 @@ class CardScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myText: 'I\'m ready to get swiped!',
       gestureName: 'none',
       backgroundColor: '#fff',
       category:'',
-      word:'',
-      wordTranslated:'',
-      pronunciation: '',
-      sentence:'',
-      sentenceTranslated:'sentence Translated',
       wordProgress:``,
       floatProgress:0.01,
+      CardsData,
     };
   }
 
   onSwipeLeft(gestureState) {
     //this code is triggered on swipe left
-    if (this.currentWordInd == this.words.length - 1) {
+    if (this.words != undefined && this.learnedWords != undefined) {
       this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
-      this.currentWordInd++;
-      this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
-    }
-    else if (this.currentWordInd < this.words.length - 1) {
-      this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
-      this.currentWordInd++;
-      this.setState({myText: 'You swiped left!'});
-      console.log(this.currentWordInd);
-      this.setState({word: this.words[this.currentWordInd].word});
-      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
-      this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
-      this.setState({sentence: this.words[this.currentWordInd].sentence.en});
-      this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
-      if (this.currentWordInd == 1)
-        this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
-      else
+      if (this.currentWordInd == this.words.length - 1) {
+        this.currentWordInd++;
         this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+      }
+      else if (this.currentWordInd < this.words.length - 1) {
+        this.currentWordInd++;
+        this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
+        if (this.currentWordInd == 1)
+          this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
+        else
+          this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
 
-      this.setState({wordProgress: this.currentWordInd+1 + `/${this.words.length}`});
-      this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+        this.setState({wordProgress: this.currentWordInd+1 + `/${this.words.length}`});
+      }
     }
   }
  
   onSwipeRight(gestureState) {
     //this code is triggered on swipe right
-    if (this.currentWordInd == this.words.length - 1) {
+    if (this.words != undefined && this.learnedWords != undefined) {
       this.notLearnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
-      this.currentWordInd++;
-      this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
-    }
-    else if (this.currentWordInd < this.words.length - 1) {
-      this.notLearnedWords.push({ word: this.words[this.currentWordInd], learned: 0.1});
-      this.currentWordInd++;
-      this.setState({myText: 'You swiped right!'});
-      this.setState({word: this.words[this.currentWordInd].word});
-      this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
-      this.setState({wordTranslated: this.words[this.currentWordInd].translation[settingsController.SettingsModel.motherTongue]});
-      this.setState({sentence: this.words[this.currentWordInd].sentence.en});
-      this.setState({sentenceTranslated: this.words[this.currentWordInd].sentence[settingsController.SettingsModel.motherTongue]});
-      if (this.currentWordInd == 1)
-        this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
-      else
+      if (this.currentWordInd == this.words.length - 1) {
+        this.currentWordInd++;
         this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
-      this.setState({wordProgress: this.currentWordInd+1 + `/${this.words.length}`});
-      this.setState({pronunciation: this.words[this.currentWordInd].pronunciation});
+      }
+      else if (this.currentWordInd < this.words.length - 1) {
+        this.currentWordInd++;
+        this.setState({category: this.words[this.currentWordInd].category[settingsController.SettingsModel.motherTongue]});
+        if (this.currentWordInd == 1)
+          this.setState({floatProgress: this.state.floatProgress + 1/this.words.length/2});
+        else
+          this.setState({floatProgress: this.state.floatProgress + 1/this.words.length});
+        this.setState({wordProgress: this.currentWordInd+1 + `/${this.words.length}`});
+      }
     }
   }
 
@@ -188,6 +204,20 @@ class CardScreen extends Component {
 
   }
 
+  startPronounce(word) {
+    console.log("Pressed button");
+    Speech.speak(word, {language: 'en'});
+  }
+
+  handleButtonClick(btnType) {
+    if (btnType == 'flip') {
+      this.flipCard();
+    }
+    else if (btnType == 'pronounce') {
+      this.startPronounce();
+    }
+  }
+
   async handleFinish() {
     if (this.learnedWords != undefined && this.notLearnedWords != undefined) {
       await userController.addWords(this.learnedWords.concat(this.notLearnedWords));
@@ -198,10 +228,7 @@ class CardScreen extends Component {
   }
 
 
-  startPronounce() {
-    console.log("Pressed button");
-    Speech.speak(this.state.word, {language: 'en'});
-  }
+  
 
   render() {
     const {localization} = this.props;
@@ -217,6 +244,7 @@ class CardScreen extends Component {
     }
 
     return (
+      <GestureHandlerRootView>
       <ScrollView showsVerticalScrollIndicator={false}>
         
           <View style={styles.mainWrapper}>
@@ -230,47 +258,82 @@ class CardScreen extends Component {
             <View style={styles.topicWrapper}>          
               <Text style={styles.topicWrapperTitle}>{this.state.category}</Text>                            
             </View>
+            <View style={styles.cardsContainer}>
+              <CardsSwipe
+                cards={this.state.CardsData}
+                loop={false}
+                lowerCardZoom={0.7}
+                rotationAngle={20}
+                onSwipedRight={(state) => this.onSwipeRight(state)}
+                onSwipedLeft={(state) => this.onSwipeLeft(state)}
+                renderCard={(card) => (
+                  <LinearGradient
+                        colors={['#4ad3b6', '#4f9ae1']}
+                        style={[ styles.cardWrapper ]}>
+                      <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                        <Text style={styles.cardWord}>{card.word}</Text>
+                        <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
+                            <IonIcon
+                              name='volume-medium'
+                              size={45}
+                              color='white'
+                            />
+                        </TouchableOpacity>
+                      </View>
+                      <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
+                      <View style={styles.cardFooter}>
+                        <Text style={styles.cardSentence}>{card.sentence}</Text>                        
+                      </View>     
+                      <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
+                    </LinearGradient>
+                )}
+              />
+            </View>
 
 
-            <GestureRecognizer style={{width: '100%', marginTop:50}} onSwipe={(direction, state) => this.onSwipe(direction, state)}
+              {/* 
+              <GestureRecognizer style={{width: '100%', marginTop:150}} onSwipe={(direction, state) => this.onSwipe(direction, state)}
                             onSwipeLeft={(state) => this.onSwipeLeft(state)}
                             onSwipeRight={(state) => this.onSwipeRight(state)}>
-                <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]} onPress={() => this.flipCard()}>
+                <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}>
+                <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
                   <LinearGradient
-                    colors={['#4ad3b6', '#4f9ae1']}
-                    style={[ styles.cardWrapper ]}
-                    >
-                    <Text style={styles.cardWord}>{this.state.word}</Text>
+                      colors={['#4ad3b6', '#4f9ae1']}
+                      style={[ styles.cardWrapper ]}>
+                    <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                      <Text style={styles.cardWord}>{this.state.word}</Text>
+                      <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce()}>
+                          <IonIcon
+                            name='volume-medium'
+                            size={45}
+                            color='white'
+                          />
+                      </TouchableOpacity>
+                    </View>
                     <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
                     <View style={styles.cardFooter}>
-                      <Text style={styles.cardSentence}>{this.state.sentence}</Text>
-                              
+                      <Text style={styles.cardSentence}>{this.state.sentence}</Text>                        
                     </View>     
                     <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
                   </LinearGradient>
                 </Animated.View>
                 <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
-                  <LinearGradient
-                    colors={['#4ad3b6', '#4f9ae1']}
-                    style={[ styles.cardWrapper ]}>
-                    <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
-                    <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
-                    <View style={styles.cardFooter}>
-                      <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
-                            
-                    </View>    
-                    <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
-                  </LinearGradient>
+                    <LinearGradient
+                      colors={['#4ad3b6', '#4f9ae1']}
+                      style={[ styles.cardWrapper ]}>
+                      <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
+                      <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
+                      <View style={styles.cardFooter}>
+                        <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
+                              
+                      </View>    
+                      <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
+                    </LinearGradient>
                 </Animated.View>
-              <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}></Pressable>
-              <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce()}>
-                <IonIcon
-                  name='volume-medium'
-                    size={45}
-                    color='white'
-                />
-              </TouchableOpacity>
-            </GestureRecognizer>
+                </Pressable>
+
+              </GestureRecognizer> 
+              */}
 
 
             <Text style={styles.progressBarTitle}>{localization.data.progressLabelText}</Text>
@@ -293,17 +356,22 @@ class CardScreen extends Component {
           </View>
         
       </ScrollView>
+      </GestureHandlerRootView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  cardsContainer: {
+    marginTop: 170,
+    flex: 1,
+    marginBottom: 100
+  },
   pronounceBtn: {
     width:45,
     height:45,
-    top: 23,
-    right: 25,
-    position: 'absolute'
+    marginRight:20,
+    marginTop:10,
   },
   progressBarTitle:{
     marginTop:80,
@@ -317,14 +385,11 @@ const styles = StyleSheet.create({
     
     maxWidth: 360,
     
+    backgroundColor: 'red',
+
     minHeight: 200,
     minWidth: 360,
     borderRadius:26,
-    
-    opacity:0.3,
-    position:'absolute',
-    left:0,
-    top:0,
   },
   container: {
     flex: 1,
