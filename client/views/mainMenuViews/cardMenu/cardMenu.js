@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
 import {
@@ -8,17 +8,18 @@ import {
   View,
   TouchableOpacity,
   Animated,
+  PanResponder,
   Pressable,
   TouchableWithoutFeedback,
   Image,
   ScrollView,
-  BackHandler
+  BackHandler,
 } from 'react-native';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import GestureRecognizer, {swipeDirections,} from 'react-native-swipe-gestures';
+
 
 import CardsSwipe from 'react-native-cards-swipe';
 
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
@@ -27,15 +28,11 @@ import cardMenuWrapper from './cardMenuWrapper';
 import { settingsController, statisticsController, userController } from '../../../store/store.js';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as Speech from 'expo-speech';
 
-const Card = (word, wordTranslated, pronounce, sentence) => {};
+import { Shadow } from 'react-native-shadow-2';
 
-const CardElem = (bg) => {
-  return (
-    <View style={{backgroundColor: bg, width: 100, height: 70}}><Text>Hello</Text></View>
-  );
-}
 
 
 const CardsData = [
@@ -47,6 +44,119 @@ const CardsData = [
 
 class CardScreen extends Component {
   UNSAFE_componentWillMount() {
+    this.pan = new Animated.ValueXY();
+    this.panResponder = PanResponder.create({
+        // Asking to be a responder
+        onStartShouldSetPanResponder: (evt, gestureState) => true,
+        onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
+        onMoveShouldSetPanResponder: (evt, gestureState) => true,
+        onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
+
+        //onShouldBlockNativeResponder: (evt, gestureState) => false,
+        // gesture started
+        onPanResponderGrant: (e, gestureState) => {
+          console.log("Started");
+        },
+        // moving
+        onPanResponderMove: (e, gestureState) => {
+          console.log("Moving", gestureState);
+          if(gestureState.dx < -10) {
+            this.setState({scaleKnow: 0.45});
+            this.setState({rightOpacity: 0.55});
+          }
+          if(gestureState.dx < -20) {
+            this.setState({scaleKnow: 0.5});
+            this.setState({rightOpacity: 0.6});
+          }
+          if(gestureState.dx < -30) {
+            this.setState({scaleKnow: 0.55});
+          }
+          if(gestureState.dx < -40) {
+            this.setState({scaleKnow: 0.6});
+            this.setState({rightOpacity: 0.65});
+          }
+          if(gestureState.dx < -50) {
+            this.setState({scaleKnow: 0.65});
+          }
+          if(gestureState.dx < -60) {
+            this.setState({scaleKnow: 0.7});
+            this.setState({rightOpacity: 0.7});
+          }
+          if(gestureState.dx < -70) {
+            this.setState({scaleKnow: 0.75});
+          }
+          if(gestureState.dx < -80) {
+            this.setState({scaleKnow: 0.8});
+            this.setState({rightOpacity: 0.75});
+          }
+          if(gestureState.dx < -90) {
+            this.setState({scaleKnow: 0.85});
+          }
+          if(gestureState.dx < -100) {
+            this.setState({scaleKnow: 0.9});
+            this.setState({rightOpacity: 0.8});
+          }
+
+
+
+          if(gestureState.dx > 10) {
+            this.setState({scaleNotKnow: 0.45});
+            this.setState({rightOpacity: 0.55});
+          }
+          if(gestureState.dx > 20) {
+            this.setState({scaleNotKnow: 0.5});
+            this.setState({rightOpacity: 0.6});
+          }
+          if(gestureState.dx > 30) {
+            this.setState({scaleNotKnow: 0.55});
+          }
+          if(gestureState.dx > 40) {
+            this.setState({scaleNotKnow: 0.6});
+            this.setState({rightOpacity: 0.65});
+          }
+          if(gestureState.dx > 50) {
+            this.setState({scaleNotKnow: 0.65});
+          }
+          if(gestureState.dx > 60) {
+            this.setState({scaleNotKnow: 0.7});
+            this.setState({rightOpacity: 0.7});
+          }
+          if(gestureState.dx > 70) {
+            this.setState({scaleNotKnow: 0.75});
+          }
+          if(gestureState.dx > 80) {
+            this.setState({scaleNotKnow: 0.8});
+            this.setState({rightOpacity: 0.75});
+          }
+          if(gestureState.dx > 90) {
+            this.setState({scaleNotKnow: 0.85});
+          }
+          if(gestureState.dx > 100) {
+            this.setState({scaleNotKnow: 0.9});
+            this.setState({rightOpacity: 0.8});
+          }
+
+        },
+
+        onPanResponderTerminationRequest: (evt, gestureState) => false,
+        onPanResponderRelease: () => {
+          console.log("Workkkkk");
+          this.setState({scaleKnow: 0.4});
+          this.setState({scaleNotKnow: 0.4});
+          this.setState({rightOpacity: 0.5});
+          this.pan.extractOffset();
+        },
+      });
+    this.flipPanResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+        onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+        onMoveShouldSetPanResponder: (evt, gestureState) => true,
+        onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+        //onShouldBlockNativeResponder: (evt, gestureState) => false,
+
+    });
+
+
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
     this.animatedValue.addListener(({ value }) => {
@@ -71,8 +181,11 @@ class CardScreen extends Component {
   }
 
   async componentDidMount() {
-
-    const { user, settings } = this.props;
+    const { user, settings} = this.props;
+    
+    console.log(typeof parseInt(this.pan.x));
+    console.log(this.pan.y);
+    console.log(this.panResponder);
     this.words = await userController.getNewWords({
       userId: user.userData.personalData.id,
       maxWords: settings.settings.wordsPerDay
@@ -104,6 +217,8 @@ class CardScreen extends Component {
       this.setState({CardsData: crData});
       this.learnedWords = [];
       this.notLearnedWords = [];
+      // this.setState({translatex: parseInt(this.props.pan.x)});
+      // console.log("did", this.state.translateX);
     }
 
     
@@ -122,6 +237,9 @@ class CardScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      scaleKnow: 0.4,
+      scaleNotKnow: 0.4,
+      rightOpacity: 0.5,
       gestureName: 'none',
       backgroundColor: '#fff',
       category:'',
@@ -130,10 +248,32 @@ class CardScreen extends Component {
       notShow: true,
       CardsData,
     };
+    //console.log("Ctor", this.state.translateX);
+  }
+
+  onCardMove(event) {
+    const { translationX, translationY } = event.nativeEvent;
+    console.log(translationX, translationY);
+  }
+
+  // onPanGestureEvent = Animated.event(
+  //   [
+  //     {
+  //       nativeEvent: {
+  //         translationX: this.translateX,
+  //       },
+  //     },
+  //   ],
+  //   { useNativeDriver: true }
+  // );
+
+  onSwipeStart(event) {
+    console.log(event);
   }
 
   onSwipeLeft(gestureState) {
     //this code is triggered on swipe left
+    console.log(gestureState);
     if (this.words != undefined && this.learnedWords != undefined) {
       this.learnedWords.push({ word: this.words[this.currentWordInd], learned: 0.8 });
       if (this.currentWordInd == this.words.length - 1) {
@@ -202,7 +342,7 @@ class CardScreen extends Component {
         useNativeDriver: true
       }).start();
     }
-    setTimeout(() => this.setState({notShow:!this.state.notShow}), 130);
+    setTimeout(() => this.setState({notShow:!this.state.notShow}), 120);
     
 
   }
@@ -234,6 +374,7 @@ class CardScreen extends Component {
   
 
   render() {
+    
     const {localization} = this.props;
     const frontAnimatedStyle = {
       transform: [
@@ -261,110 +402,96 @@ class CardScreen extends Component {
             <View style={styles.topicWrapper}>          
               <Text style={styles.topicWrapperTitle}>{this.state.category}</Text>                            
             </View>
-            <View style={styles.cardsContainer}>
-              <CardsSwipe
-                cards={this.state.CardsData}
-                loop={false}
-                lowerCardZoom={0.7}
-                rotationAngle={20}
-                onSwipedRight={(state) => this.onSwipeRight(state)}
-                onSwipedLeft={(state) => this.onSwipeLeft(state)}
-                renderCard={(card) => (
-                  <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}>
-                    <Animated.View style={[styles.flipCard, frontAnimatedStyle, {display: this.state.notShow ? 'flex' : 'none', opacity: this.frontOpacity}]}>
-                      <LinearGradient
+
+              <View style={styles.cardsContainer}>
+                <Shadow startColor={'#32f078'} endColor={'#32f078'} distance={15} stretch={true} paintInside={true} 
+                        containerStyle={{zIndex: 3, position: 'relative', left: -75, opacity: this.state.rightOpacity, transform: [{scale: this.state.scaleKnow}]}}
+                        >
+                  <View style={[styles.knowLabel,]}>
+                    <FontAwesome
+                      name='check'
+                      size={45}
+                      color='white'
+                      style={{
+                        marginRight: 7,
+                        opacity: 0.8
+                      }}
+                    />
+                  </View>
+                </Shadow>
+                  <CardsSwipe
+                    cards={this.state.CardsData}
+                    loop={false}
+                    lowerCardZoom={0.7}
+                    rotationAngle={20}
+                    onSwipedRight={(state) => this.onSwipeRight(state)}
+                    onSwipedLeft={(state) => this.onSwipeLeft(state)}
+                    onSwipeStart={() => console.log("Swipe swipe swipe")}
+                    renderCard={(card) => (
+                      <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}>
+                        <Animated.View style={[styles.flipCard, frontAnimatedStyle, {display: this.state.notShow ? 'flex' : 'none', opacity: this.frontOpacity}]}  {...this.panResponder.panHandlers}>
+                          <LinearGradient
+                                colors={['#4ad3b6', '#4f9ae1']}
+                                style={[ styles.cardWrapper ]}>
+                              <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                                <Text style={styles.cardWord}>{card.word}</Text>
+                                <TouchableOpacity style={styles.pronounceBtn} onPressIn={() => this.startPronounce(card.word)}>
+                                    <IonIcon
+                                      name='volume-medium'
+                                      size={45}
+                                      color='white'
+                                    />
+                                </TouchableOpacity>
+                              </View>
+                              <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
+                              <View style={styles.cardFooter}>
+                                <Text style={styles.cardSentence}>{card.sentence}</Text>                        
+                              </View>     
+                              <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
+                          </LinearGradient>
+                        </Animated.View>
+                        <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {display: this.state.notShow ? 'none' : 'flex', opacity: this.backOpacity}]}>
+                          <LinearGradient
                             colors={['#4ad3b6', '#4f9ae1']}
                             style={[ styles.cardWrapper ]}>
-                          <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
-                            <Text style={styles.cardWord}>{card.word}</Text>
-                            <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
-                                <IonIcon
-                                  name='volume-medium'
-                                  size={45}
-                                  color='white'
-                                />
-                            </TouchableOpacity>
-                          </View>
-                          <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
-                          <View style={styles.cardFooter}>
-                            <Text style={styles.cardSentence}>{card.sentence}</Text>                        
-                          </View>     
-                          <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
-                      </LinearGradient>
+                            <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                                <Text style={styles.cardWord}>{card.wordTranslated}</Text>
+                                <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
+                                    <IonIcon
+                                      name='volume-medium'
+                                      size={45}
+                                      color='white'
+                                    />
+                                </TouchableOpacity>
+                              </View>
+                            <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
+                            <View style={styles.cardFooter}>
+                              <Text style={styles.cardSentence}>{card.sentenceTranslated}</Text>
+                                    
+                            </View>    
+                            <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
+                          </LinearGradient>
                     </Animated.View>
-                    <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {display: this.state.notShow ? 'none' : 'flex', opacity: this.backOpacity}]}>
-                      <LinearGradient
-                        colors={['#4ad3b6', '#4f9ae1']}
-                        style={[ styles.cardWrapper ]}>
-                        <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
-                            <Text style={styles.cardWord}>{card.wordTranslated}</Text>
-                            <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce(card.word)}>
-                                <IonIcon
-                                  name='volume-medium'
-                                  size={45}
-                                  color='white'
-                                />
-                            </TouchableOpacity>
-                          </View>
-                        <Text style={styles.cardTransciption}>{card.pronunciation}</Text>
-                        <View style={styles.cardFooter}>
-                          <Text style={styles.cardSentence}>{card.sentenceTranslated}</Text>
-                                
-                        </View>    
-                        <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
-                      </LinearGradient>
-                </Animated.View>
-                  </Pressable>
-                )}
-              />
-            </View>
+                      </Pressable>                    
+                    )}/>
+                <Shadow startColor={'#f23f51'} endColor={'#f23f51'} distance={15} stretch={true} paintInside={true} 
+                        containerStyle={{zIndex: 3, position: 'relative', left: 75, opacity: this.state.rightOpacity, transform: [{scale: this.state.scaleNotKnow}]}}
+                        >
+                  <View style={[styles.notKnowLabel,]}>
+                    <FontAwesome
+                      name='close'
+                      size={50}
+                      color='white'
+                      style={{
+                        marginLeft: 7,
+                        opacity: 0.8
+                      }}
+                    />
+                  </View>
+                </Shadow>
+              </View>
 
-
-              {/* 
-              <GestureRecognizer style={{width: '100%', marginTop:150}} onSwipe={(direction, state) => this.onSwipe(direction, state)}
-                            onSwipeLeft={(state) => this.onSwipeLeft(state)}
-                            onSwipeRight={(state) => this.onSwipeRight(state)}>
-                <Pressable style={styles.cardPressHandler} onPress={() => this.flipCard()}>
-                <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
-                  <LinearGradient
-                      colors={['#4ad3b6', '#4f9ae1']}
-                      style={[ styles.cardWrapper ]}>
-                    <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
-                      <Text style={styles.cardWord}>{this.state.word}</Text>
-                      <TouchableOpacity style={styles.pronounceBtn} onPress={() => this.startPronounce()}>
-                          <IonIcon
-                            name='volume-medium'
-                            size={45}
-                            color='white'
-                          />
-                      </TouchableOpacity>
-                    </View>
-                    <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
-                    <View style={styles.cardFooter}>
-                      <Text style={styles.cardSentence}>{this.state.sentence}</Text>                        
-                    </View>     
-                    <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>
-                  </LinearGradient>
-                </Animated.View>
-                <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
-                    <LinearGradient
-                      colors={['#4ad3b6', '#4f9ae1']}
-                      style={[ styles.cardWrapper ]}>
-                      <Text style={styles.cardWord}>{this.state.wordTranslated}</Text>
-                      <Text style={styles.cardTransciption}>{this.state.pronunciation}</Text>
-                      <View style={styles.cardFooter}>
-                        <Text style={styles.cardSentence}>{this.state.sentenceTranslated}</Text>
-                              
-                      </View>    
-                      <Text style={styles.cardProgress}>{this.state.wordProgress}</Text>    
-                    </LinearGradient>
-                </Animated.View>
-                </Pressable>
-
-              </GestureRecognizer> 
-              */}
-
-
+             
             <Text style={styles.progressBarTitle}>{localization.data.progressLabelText}</Text>
             <Progress.Bar style={styles.progressBar} progress={this.state.floatProgress} width={310} color={'#00D22E'}  unfilledColor={'#E8E8E8'} borderWidth={0}/>
 
@@ -373,14 +500,6 @@ class CardScreen extends Component {
             <TouchableOpacity style={styles.button} onPress={() => this.handleFinish()}>
               <Text style={styles.buttonTitle}>{localization.data.finishLabelText}</Text>
             </TouchableOpacity>
-
-
-
-
-            
-
-
-
 
           </View>
         
@@ -392,9 +511,39 @@ class CardScreen extends Component {
 
 const styles = StyleSheet.create({
   cardsContainer: {
-    marginTop: 170,
+    marginTop: 90,
     flex: 1,
-    marginBottom: 100
+    marginBottom: 50,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  knowLabel: {
+    width: 130,
+    borderTopStartRadius: 0,
+    borderBottomStartRadius: 0,
+    borderTopEndRadius: 130,
+    borderBottomEndRadius: 130,
+    height: 130,
+    backgroundColor: '#32f078',
+    justifyContent: 'center',
+    alignItems: 'flex-end'
+  },
+  notKnowLabel: {
+    width: 130,
+    borderTopStartRadius: 130,
+    borderBottomStartRadius: 130,
+    borderTopEndRadius: 0,
+    borderBottomEndRadius: 0,
+    height: 130,
+    backgroundColor: '#f23f51',
+    justifyContent: 'center',
+    alignItems: 'flex-start'
+  },
+  elevation: {
+    elevation: 10,
+    height: 10,
+    shadowColor: '#52006A',
   },
   pronounceBtn: {
     width:45,
